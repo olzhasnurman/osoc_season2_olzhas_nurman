@@ -78,16 +78,16 @@ module alu_decoder
                 endcase 
 
             // CSR.
-            3'b100: 
-                case ( i_func_3[1:0] ) 
-                    2'b01: o_alu_control = 5'b10000;
-                    2'b10: o_alu_control = 5'b10001;
-                    2'b11: o_alu_control = 5'b10010;
-                    default: begin
-                        o_alu_control   = '0;
-                        o_illegal_instr = 1'b1; 
-                    end
-                endcase
+            // 3'b100: 
+            //     case ( i_func_3[1:0] ) 
+            //         2'b01: o_alu_control = 5'b10000;
+            //         2'b10: o_alu_control = 5'b10001;
+            //         2'b11: o_alu_control = 5'b10010;
+            //         default: begin
+            //             o_alu_control   = '0;
+            //             o_illegal_instr = 1'b1; 
+            //         end
+            //     endcase
             
             default: begin
                 o_alu_control   = '0;

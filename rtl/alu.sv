@@ -49,9 +49,9 @@ module alu
     localparam SRAW  = 5'b01110;
     localparam ADDIW = 5'b01111;
     
-    localparam CSRRW = 5'b10000;
-    localparam CSRRS = 5'b10001;
-    localparam CSRRC = 5'b10010;
+    // localparam CSRRW = 5'b10000;
+    // localparam CSRRS = 5'b10001;
+    // localparam CSRRC = 5'b10010;
 
 
 
@@ -147,9 +147,9 @@ module alu
 
             ADDIW: o_alu_result = { { 32{s_add_out[31]} }, s_add_out[31:0] };
 
-            CSRRW: o_alu_result = i_src_1;
-            CSRRS: o_alu_result = s_or_out;
-            CSRRC: o_alu_result = ( ~ i_src_1) & i_src_2;
+            // CSRRW: o_alu_result = i_src_1;
+            // CSRRS: o_alu_result = s_or_out;
+            // CSRRC: o_alu_result = ( ~ i_src_1) & i_src_2;
 
             default: begin
                 o_alu_result    = 'b0;

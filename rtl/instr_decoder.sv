@@ -52,7 +52,7 @@ module instr_decoder
             7'b0010011: o_imm_src = 3'b000; // I type.
             7'b1100111: o_imm_src = 3'b000; // I type.
             7'b0011011: o_imm_src = 3'b000; // I type.
-            7'b1110011: o_imm_src = 3'b101; // CSR. 
+            // 7'b1110011: o_imm_src = 3'b101; // CSR. 
             default:    o_imm_src = 3'b000; // Default = for I type.
         endcase
     end
