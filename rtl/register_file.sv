@@ -1,0 +1,53 @@
+/* Copyright (c) 2024 Maveric NU. All rights reserved. */
+
+// ----------------------------------------------------------------------------
+// This is a register file component of processor based on RISC-V architecture.
+// ----------------------------------------------------------------------------
+
+module ysyx_201979054_register_file
+// Parameters.
+#(
+    parameter DATA_WIDTH = 64,
+              ADDR_WIDTH = 5,
+              REG_DEPTH  = 32
+)
+// Port decleration. 
+(   
+    // Common clock, enable & reset signal.
+    input  logic                      i_clk,
+    input  logic                      i_write_en_3,
+    input  logic                      i_rst,
+
+    //Input interface. 
+    input  logic [ ADDR_WIDTH - 1:0 ] i_addr_1,
+    input  logic [ ADDR_WIDTH - 1:0 ] i_addr_2,
+    input  logic [ ADDR_WIDTH - 1:0 ] i_addr_3,
+    input  logic [ DATA_WIDTH - 1:0 ] i_write_data_3,
+    
+    // Output interface.
+    output logic [ DATA_WIDTH - 1:0 ] o_read_data_1,
+    output logic [ DATA_WIDTH - 1:0 ] o_read_data_2
+);
+
+    // Register block.
+    logic [ DATA_WIDTH - 1:0 ] mem_block [ REG_DEPTH - 1:0 ];
+
+    // Write logic.
+    always_ff @( posedge i_clk, posedge i_rst ) begin 
+        if ( i_rst ) begin
+            for ( int i = 0; i < REG_DEPTH; i++ ) begin
+                mem_block [ i ] <= '0;
+            end 
+        end
+        else if ( i_write_en_3 ) begin
+            mem_block [ i_addr_3 ] <= i_write_data_3;
+            mem_block [ 0        ] <= '0;
+        end
+    end
+
+    // Read logic.
+    assign o_read_data_1 = mem_block [ i_addr_1 ];
+    assign o_read_data_2 = mem_block [ i_addr_2 ];
+
+    
+endmodule
