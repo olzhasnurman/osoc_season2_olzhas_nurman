@@ -15,7 +15,7 @@ module alu
 // Port decleration.
 (
     // ALU control signal.
-    input  logic [ CONTROL_WIDTH - 1:0 ] alu_control,
+    input  logic [ CONTROL_WIDTH - 1:0 ] i_alu_control,
 
     // Input interface.
     input  logic [ DATA_WIDTH    - 1:0 ] i_src_1,
@@ -24,8 +24,8 @@ module alu
     // Output interface.
     output logic [ DATA_WIDTH    - 1:0 ] o_alu_result,
     output logic                         o_zero_flag,
-    output logic                         o_slt_flag,
-    output logic                         o_sltu_flag
+    output logic                         o_lt_flag,
+    output logic                         o_ltu_flag
 );
 
     // ---------------
@@ -114,10 +114,10 @@ module alu
 
     // Flags. 
     assign o_zero_flag = !(|o_alu_result);
-    assign o_slt_flag  = less_than;
-    assign o_sltu_flag = less_than_u;
+    assign o_lt_flag   = less_than;
+    assign o_ltu_flag  = less_than_u;
     // assign s_overflow      = (o_alu_result[DATA_WIDTH - 1] ^ i_src_1[DATA_WIDTH - 1]) & 
-    //                          (i_src_2[DATA_WIDTH - 1] ~^ i_src_1[DATA_WIDTH - 1] ~^ alu_control[0]);
+    //                          (i_src_2[DATA_WIDTH - 1] ~^ i_src_1[DATA_WIDTH - 1] ~^ i_alu_control[0]);
 
 
     // ---------------------------
@@ -127,7 +127,7 @@ module alu
         // Default values.
         o_alu_result    = '0;
 
-        case ( alu_control )
+        case ( i_alu_control )
             ADD  : o_alu_result = s_add_out;
             SUB  : o_alu_result = s_sub_out;
             AND  : o_alu_result = s_and_out;
