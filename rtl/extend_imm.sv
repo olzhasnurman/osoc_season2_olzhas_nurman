@@ -33,8 +33,8 @@ module extend_imm
     assign s_i_type = { { 52 { i_imm [ 24 ] } }, i_imm [ 24:13 ] };
     assign s_s_type = { { 52 { i_imm [ 24 ] } }, i_imm [ 24:18 ], i_imm [ 4 :0  ] };
     assign s_b_type = { { 52 { i_imm [ 24 ] } }, i_imm [ 0     ], i_imm [ 23:18 ], i_imm[ 4 :1  ], 1'b0 };
-    assign s_j_type = { { 44 { i_imm [ 24 ] } }, i_imm [ 12:5  ], i_imm [ 13 ],    i_imm[ 23:14 ], 1'b0 };
-    assign s_u_type = { { 32 { i_imm [ 24 ] } }, i_imm [ 24:5  ], {12{1'b0}} };
+    assign s_j_type = { { 44 { i_imm [ 24 ] } }, i_imm [ 12:5  ], i_imm [ 13    ], i_imm[ 23:14 ], 1'b0 };
+    assign s_u_type = { { 32 { i_imm [ 24 ] } }, i_imm [ 24:5  ], { 12 { 1'b0 } } };
     // assign csr_type = { 59'b0, i_imm[12:8] };
 
     // MUX to choose output based on instruction type.
