@@ -42,7 +42,7 @@ module alu
     localparam SRL   = 5'b01000;
     localparam SRA   = 5'b01001;
 
-    localparam ADDW  = 5'b01010;
+    localparam ADDW  = 5'b01010; // ADDW and ADDIW are the same in terms of ALU usage.
     localparam SUBW  = 5'b01011;
     localparam SLLW  = 5'b01100;
     localparam SRLW  = 5'b01101;
@@ -74,7 +74,6 @@ module alu
     logic less_than_u;
 
     // ALU word operation outputs.
-    logic [ WORD_WIDTH - 1:0 ] s_addw_out;
     logic [ WORD_WIDTH - 1:0 ] s_subw_out;
     logic [ WORD_WIDTH - 1:0 ] s_sllw_out;
     logic [ WORD_WIDTH - 1:0 ] s_srlw_out;
@@ -105,7 +104,6 @@ module alu
     assign less_than_u = i_src_1 < i_src_2;
 
     // ALU word operations.
-    assign s_addw_out = i_src_1[31:0] + i_src_2[31:0];
     assign s_subw_out = $unsigned($signed(i_src_1[31:0]) -  $signed(i_src_2[31:0])); 
     assign s_sllw_out = i_src_1[31:0] << i_src_2[4:0];
     assign s_srlw_out = i_src_1[31:0] >> i_src_2[4:0];
@@ -113,7 +111,7 @@ module alu
 
 
     // Flags. 
-    assign o_zero_flag = !(|o_alu_result);
+    assign o_zero_flag = ~ ( | o_alu_result );
     assign o_lt_flag   = less_than;
     assign o_ltu_flag  = less_than_u;
     // assign s_overflow      = (o_alu_result[DATA_WIDTH - 1] ^ i_src_1[DATA_WIDTH - 1]) & 
@@ -139,13 +137,11 @@ module alu
             SRL  : o_alu_result = s_srl_out;
             SRA  : o_alu_result = s_sra_out;
 
-            ADDW : o_alu_result = { { 32{s_addw_out[31]} }, s_addw_out };
-            SUBW : o_alu_result = { { 32{s_subw_out[31]} }, s_subw_out };
-            SLLW : o_alu_result = { { 32{s_sllw_out[31]} }, s_sllw_out };
-            SRLW : o_alu_result = { { 32{s_srlw_out[31]} }, s_srlw_out };
-            SRAW : o_alu_result = { { 32{s_sraw_out[31]} }, s_sraw_out };
-
-            ADDIW: o_alu_result = { { 32{s_add_out[31]} }, s_add_out[31:0] };
+            ADDW : o_alu_result = { { 32 { s_add_out  [ 31 ] } }, s_add_out[31:0] };
+            SUBW : o_alu_result = { { 32 { s_subw_out [ 31 ] } }, s_subw_out      };
+            SLLW : o_alu_result = { { 32 { s_sllw_out [ 31 ] } }, s_sllw_out      };
+            SRLW : o_alu_result = { { 32 { s_srlw_out [ 31 ] } }, s_srlw_out      };
+            SRAW : o_alu_result = { { 32 { s_sraw_out [ 31 ] } }, s_sraw_out      };
 
             // CSRRW: o_alu_result = i_src_1;
             // CSRRS: o_alu_result = s_or_out;
