@@ -8,29 +8,18 @@
 module instr_decoder 
 // Parameters.
 #(
-    parameter OP_WIDTH  = 7,
+    parameter WIDTH     = 4,
               OUT_WIDTH = 3
 )
 // Ports. 
 (
-    input  logic [ OP_WIDTH  - 1:0 ] i_op,
+    input  logic [ WIDTH     - 1:0 ] i_instr,
     output logic [ OUT_WIDTH - 1:0 ] o_imm_src
 ); 
 
     //Decoder logic.
     /*
-    __________________
-    | OP      | Type |
-    |---------|------|
-    | 0000011 | I    |
-    | 0010011 | I    |
-    | 1100111 | I    |
-    | 0100011 | S    |
-    | 1100011 | B    |
-    | 1101111 | J    |
-    |________________|
-
-     ___________________________________
+    ____________________________________
     | control signal | instuction type |
     |________________|_________________|
     | 000            | I type          |
@@ -38,22 +27,22 @@ module instr_decoder
     | 010            | B type          |
     | 011            | J type          |
     | 100            | U type          |
+    | 101            | R type          |
     |__________________________________|
     */
 
     always_comb begin
-        case ( i_op )
-            7'b1101111: o_imm_src = 3'b011; // J type.
-            7'b1100011: o_imm_src = 3'b010; // B type.
-            7'b0100011: o_imm_src = 3'b001; // S type.
-            7'b0010111: o_imm_src = 3'b100; // U type.
-            7'b0110111: o_imm_src = 3'b100; // U type. 
-            7'b0000011: o_imm_src = 3'b000; // I type.
-            7'b0010011: o_imm_src = 3'b000; // I type.
-            7'b1100111: o_imm_src = 3'b000; // I type.
-            7'b0011011: o_imm_src = 3'b000; // I type.
-            // 7'b1110011: o_imm_src = 3'b101; // CSR. 
-            default:    o_imm_src = 3'b000; // Default = for I type.
+        case ( i_instr )
+            4'b0000,                     // I type. ex: LB.
+            4'b0001,                     // I type. ex: ADDI.
+            4'b0010,                     // I type. ex: JALR.
+            4'b0011: o_imm_src = 3'b000; // I type. ex: ADDIW.
+            4'b0100: o_imm_src = 3'b001; // S type. ex: SB.
+            4'b0111: o_imm_src = 3'b010; // B type. ex: BEQ.
+            4'b1000: o_imm_src = 3'b011; // J type. ex: JAL.
+            4'b1001,                     // U type. ex: AUIPC.
+            4'b1010: o_imm_src = 3'b100; // U type. ex: LUI.
+            default: o_imm_src = 3'b101; // Default to R type.
         endcase
     end
 
