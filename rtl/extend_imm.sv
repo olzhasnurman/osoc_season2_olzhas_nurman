@@ -4,6 +4,8 @@
 // This is a module to extend immediate input depending on type of instruction.
 // ----------------------------------------------------------------------------
 
+/*NOTE: Might optimize the mux width since upper 32 bits are always i_imm[24]*/
+
 module extend_imm
 // Parameters.
 #(
