@@ -15,6 +15,9 @@ module fetch_stage
     input  logic                       i_arst,
     input  logic [ ADDR_WIDTH  - 1:0 ] i_pc_target,
     input  logic                       i_pc_src,
+    input  logic                       i_stallF,
+    input  logic                       i_stallD,
+    input  logic                       i_flashD,
 
     // Output interface.
     output logic [ INSTR_WIDTH - 1:0 ] o_instruction,
@@ -29,6 +32,7 @@ module fetch_stage
     logic [ ADDR_WIDTH - 1:0 ] s_pc_next;
     logic [ ADDR_WIDTH - 1:0 ] s_pc_reg;
 
+    logic [ INSTR_WIDTH - 1:0 ] s_instruction;
 
 
     //-----------------------------
@@ -44,8 +48,9 @@ module fetch_stage
     );
 
     // PC register.
-    register PC_REG (
+    register_en PC_REG (
         .i_clk        ( i_clk     ),
+        .i_write_en   ( i_stallF  ),
         .i_arst       ( i_arst    ),
         .i_write_data ( s_pc_next ),
         .o_read_data  ( s_pc_reg  )
@@ -63,14 +68,42 @@ module fetch_stage
         .i_clk       ( i_clk             ),
         .i_arst      ( i_arst            ),
         .i_addr      ( s_pc_reg [ 9:0 ]  ),
-        .o_read_data ( o_instruction     )
+        .o_read_data ( s_instruction     )
     );
 
 
-    //-----------------------------
-    // Continious assignments.
-    //-----------------------------
-    assign o_pc_plus4 = s_pc_plus4;
-    assign o_pc       = s_pc_reg;
+    //-------------------------------------------------------------------------
+    // Registers. With enable & clear for stalling and flushing, respectively.
+    //-------------------------------------------------------------------------
+
+    // Instruction pipeline register.
+    register_clr_en # ( .DATA_WIDTH ( INSTR_WIDTH ) ) INSTR_PREG (
+        .i_clk        ( i_clk         ),
+        .i_arst       ( i_arst        ),
+        .i_clr        ( i_flashD      ),
+        .i_enable     ( i_stallD      ),
+        .i_write_data ( s_instruction ),
+        .o_read_data  ( o_instruction )
+    );
+
+    // PC register.
+    register_clr_en # ( .DATA_WIDTH ( ADDR_WIDTH ) ) PCP4_PREG (
+        .i_clk        ( i_clk      ),
+        .i_arst       ( i_arst     ),
+        .i_clr        ( i_flashD   ),
+        .i_enable     ( i_stallD   ),
+        .i_write_data ( s_pc_plus4 ),
+        .o_read_data  ( o_pc_plus4 )
+    );
+
+    // PCPlus4 register
+    register_clr_en # ( .DATA_WIDTH ( ADDR_WIDTH ) ) PC_PREG (
+        .i_clk        ( i_clk    ),
+        .i_arst       ( i_arst   ),
+        .i_clr        ( i_flashD ),
+        .i_enable     ( i_stallD ),
+        .i_write_data ( s_pc_reg ),
+        .o_read_data  ( o_pc     )
+    );
 
 endmodule
