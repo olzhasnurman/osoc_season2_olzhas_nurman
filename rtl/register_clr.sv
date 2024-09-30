@@ -4,7 +4,7 @@
 // This is a nonarchitectural register with clear, but without enable signal.
 // ---------------------------------------------------------------------------
 
-module register
+module register_clr
 // Parameters.
 #(
     parameter DATA_WIDTH = 64
