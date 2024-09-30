@@ -25,11 +25,11 @@ module fetch_stage
     //-----------------------------
     // Internal nets.
     //-----------------------------
-
-    // MUX signals.
     logic [ ADDR_WIDTH - 1:0 ] s_pc_plus4;
     logic [ ADDR_WIDTH - 1:0 ] s_pc_next;
     logic [ ADDR_WIDTH - 1:0 ] s_pc_reg;
+
+
 
     //-----------------------------
     // Lower level modules.
