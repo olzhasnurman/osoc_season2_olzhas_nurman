@@ -16,7 +16,7 @@ module register_file
     // Common clock, enable & reset signal.
     input  logic                      i_clk,
     input  logic                      i_write_en_3,
-    input  logic                      i_rst,
+    input  logic                      i_arst,
 
     //Input interface. 
     input  logic [ ADDR_WIDTH - 1:0 ] i_addr_1,
@@ -33,8 +33,8 @@ module register_file
     logic [ DATA_WIDTH - 1:0 ] mem_block [ REG_DEPTH - 1:0 ];
 
     // Write logic.
-    always_ff @( posedge i_clk, posedge i_rst ) begin 
-        if ( i_rst ) begin
+    always_ff @( posedge i_clk, posedge i_arst ) begin 
+        if ( i_arst ) begin
             for ( int i = 0; i < REG_DEPTH; i++ ) begin
                 mem_block [ i ] <= '0;
             end 
