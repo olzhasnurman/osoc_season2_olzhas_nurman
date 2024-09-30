@@ -17,7 +17,7 @@ module fetch_stage
     input  logic                       i_pc_src,
     input  logic                       i_stallF,
     input  logic                       i_stallD,
-    input  logic                       i_flashD,
+    input  logic                       i_flushD,
 
     // Output interface.
     output logic [ INSTR_WIDTH - 1:0 ] o_instruction,
@@ -80,7 +80,7 @@ module fetch_stage
     register_clr_en # ( .DATA_WIDTH ( INSTR_WIDTH ) ) INSTR_PREG (
         .i_clk        ( i_clk         ),
         .i_arst       ( i_arst        ),
-        .i_clr        ( i_flashD      ),
+        .i_clr        ( i_flushD      ),
         .i_enable     ( i_stallD      ),
         .i_write_data ( s_instruction ),
         .o_read_data  ( o_instruction )
@@ -90,7 +90,7 @@ module fetch_stage
     register_clr_en # ( .DATA_WIDTH ( ADDR_WIDTH ) ) PCP4_PREG (
         .i_clk        ( i_clk      ),
         .i_arst       ( i_arst     ),
-        .i_clr        ( i_flashD   ),
+        .i_clr        ( i_flushD   ),
         .i_enable     ( i_stallD   ),
         .i_write_data ( s_pc_plus4 ),
         .o_read_data  ( o_pc_plus4 )
@@ -100,7 +100,7 @@ module fetch_stage
     register_clr_en # ( .DATA_WIDTH ( ADDR_WIDTH ) ) PC_PREG (
         .i_clk        ( i_clk    ),
         .i_arst       ( i_arst   ),
-        .i_clr        ( i_flashD ),
+        .i_clr        ( i_flushD ),
         .i_enable     ( i_stallD ),
         .i_write_data ( s_pc_reg ),
         .o_read_data  ( o_pc     )
