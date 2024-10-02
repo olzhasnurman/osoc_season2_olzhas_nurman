@@ -49,11 +49,11 @@ module fetch_stage
 
     // PC register.
     register_en PC_REG (
-        .i_clk        ( i_clk     ),
-        .i_write_en   ( i_stallF  ),
-        .i_arst       ( i_arst    ),
-        .i_write_data ( s_pc_next ),
-        .o_read_data  ( s_pc_reg  )
+        .i_clk        ( i_clk       ),
+        .i_write_en   ( ~ i_stallF  ),
+        .i_arst       ( i_arst      ),
+        .i_write_data ( s_pc_next   ),
+        .o_read_data  ( s_pc_reg    )
     );
 
     // Adder to calculate next PC value.
@@ -72,38 +72,20 @@ module fetch_stage
     );
 
 
-    //-------------------------------------------------------------------------
-    // Registers. With enable & clear for stalling and flushing, respectively.
-    //-------------------------------------------------------------------------
-
-    // Instruction pipeline register.
-    register_clr_en # ( .DATA_WIDTH ( INSTR_WIDTH ) ) INSTR_PREG (
-        .i_clk        ( i_clk         ),
-        .i_arst       ( i_arst        ),
-        .i_clr        ( i_flushD      ),
-        .i_enable     ( i_stallD      ),
-        .i_write_data ( s_instruction ),
-        .o_read_data  ( o_instruction )
-    );
-
-    // PC register.
-    register_clr_en # ( .DATA_WIDTH ( ADDR_WIDTH ) ) PCP4_PREG (
-        .i_clk        ( i_clk      ),
-        .i_arst       ( i_arst     ),
-        .i_clr        ( i_flushD   ),
-        .i_enable     ( i_stallD   ),
-        .i_write_data ( s_pc_plus4 ),
-        .o_read_data  ( o_pc_plus4 )
-    );
-
-    // PCPlus4 register
-    register_clr_en # ( .DATA_WIDTH ( ADDR_WIDTH ) ) PC_PREG (
-        .i_clk        ( i_clk    ),
-        .i_arst       ( i_arst   ),
-        .i_clr        ( i_flushD ),
-        .i_enable     ( i_stallD ),
-        .i_write_data ( s_pc_reg ),
-        .o_read_data  ( o_pc     )
+    //---------------------------------------------------------------------------------
+    // Pipeline Register. With enable & clear for stalling and flushing, respectively.
+    //---------------------------------------------------------------------------------
+    preg_fetch PREG_F0 (
+        .i_clk      ( i_clk         ),
+        .i_arst     ( i_arst        ),
+        .i_flushD   ( i_flushD      ),
+        .i_stallD   ( i_stallD      ),
+        .i_instr    ( s_instruction ),
+        .i_pc       ( s_pc_reg      ),
+        .i_pc_plus4 ( s_pc_plus4    ),
+        .o_instr    ( o_instruction ),
+        .o_pc       ( o_pc          ),
+        .o_pc_plus4 ( o_pc_plus4    )
     );
 
 endmodule
