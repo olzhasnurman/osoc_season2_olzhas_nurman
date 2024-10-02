@@ -4,6 +4,8 @@
 // This is a data memory in RISC-V architecture. Later to be replaced with cache.
 // -------------------------------------------------------------------------------
 
+`define PATH_TO_MEM "./test/tests/instr/riscv-tests/rv64ui-p-xori.txt" // Later to be defined properly.
+
 module d_mem
 // Parameters.
 #(
@@ -16,6 +18,7 @@ module d_mem
     // Common clock, enable signal.
     input  logic                      i_clk,
     input  logic                      i_write_en,
+    input  logic                      i_arst,
 
     //Input interface. 
     input  logic [ ADDR_WIDTH - 1:0 ] i_addr,
@@ -30,9 +33,8 @@ module d_mem
 
     // Write logic.
     always_ff @( posedge i_clk ) begin 
-        if ( i_write_en ) begin
-            mem_block [ i_addr ] <= i_write_data;
-        end
+        if ( i_arst ) $readmemh ( `PATH_TO_MEM, mem_block );
+        else if ( i_write_en ) mem_block [ i_addr ] <= i_write_data;
     end
 
     // Read logic.
