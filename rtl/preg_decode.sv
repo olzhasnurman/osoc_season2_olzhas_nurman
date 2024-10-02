@@ -32,6 +32,7 @@ module preg_decode
     input  logic [ REG_ADDR_W  - 1:0 ] i_rs1_addr,
     input  logic [ REG_ADDR_W  - 1:0 ] i_rs2_addr,
     input  logic [ REG_ADDR_W  - 1:0 ] i_rd_addr,
+    input  logic [               2:0 ] i_func3,
     
     // Output interface.
     output logic [               2:0 ] o_result_src,
@@ -48,7 +49,8 @@ module preg_decode
     output logic [ DATA_WIDTH  - 1:0 ] o_rs2_data,
     output logic [ REG_ADDR_W  - 1:0 ] o_rs1_addr,
     output logic [ REG_ADDR_W  - 1:0 ] o_rs2_addr,
-    output logic [ REG_ADDR_W  - 1:0 ] o_rd_addr
+    output logic [ REG_ADDR_W  - 1:0 ] o_rd_addr,
+    output logic [               2:0 ] o_func3
 );
 
     // Write logic.

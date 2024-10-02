@@ -24,6 +24,7 @@ module decode_stage
     input  logic                       i_flushE,
 
     // Output interface.
+    output logic [               2:0 ] o_func3,
     output logic [ ADDR_WIDTH  - 1:0 ] o_pc,
     output logic [ ADDR_WIDTH  - 1:0 ] o_pc_plus4,
     output logic [ DATA_WIDTH  - 1:0 ] o_rs1_data,
@@ -38,7 +39,7 @@ module decode_stage
     output logic                       o_reg_we,
     output logic                       o_alu_src,
     output logic                       o_branch,
-    output logic                       o_jump,
+    output logic                       o_jump
 );
 
     //-------------------------------------
@@ -149,6 +150,7 @@ module decode_stage
         .i_rs1_addr    ( s_rs1_addr    ),
         .i_rs2_addr    ( s_rs2_addr    ),
         .i_rd_addr     ( s_rd_addr     ),
+        .i_func3       ( s_func3       ),
         .o_result_src  ( o_result_src  ),
         .o_alu_control ( o_alu_control ),
         .o_mem_we      ( o_mem_we      ),
@@ -163,7 +165,8 @@ module decode_stage
         .o_rs2_data    ( o_rs2_data    ),
         .o_rs1_addr    ( o_rs1_addr    ),
         .o_rs2_addr    ( o_rs2_addr    ),
-        .o_rd_addr     ( o_rd_addr     )
+        .o_rd_addr     ( o_rd_addr     ),
+        .o_func3       ( o_func3       )
     );
     
 endmodule
