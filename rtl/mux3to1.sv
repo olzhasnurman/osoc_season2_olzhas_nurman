@@ -4,7 +4,7 @@
 // This is a 3-to-1 mux module.
 // ------------------------------------------------------
 
-module mux2to1
+module mux3to1
 // Parameters. 
 #(
     parameter DATA_WIDTH = 64
