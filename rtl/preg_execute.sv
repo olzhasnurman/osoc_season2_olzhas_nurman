@@ -54,7 +54,7 @@ module preg_execute
         else begin
             o_result_src  <= i_result_src;
             o_mem_we      <= i_mem_we;
-            o_reg_we      <= o_reg_we;
+            o_reg_we      <= i_reg_we;
             o_pc_plus4    <= i_pc_plus4;
             o_pc_target   <= i_pc_target;
             o_imm_ext     <= i_imm_ext;

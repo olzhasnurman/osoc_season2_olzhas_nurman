@@ -93,7 +93,7 @@ module preg_decode
             o_result_src  <= i_result_src;
             o_alu_control <= i_alu_control;
             o_mem_we      <= i_mem_we;
-            o_reg_we      <= o_reg_we;
+            o_reg_we      <= i_reg_we;
             o_alu_src     <= i_alu_src;  
             o_branch      <= i_branch;
             o_jump        <= i_jump;
