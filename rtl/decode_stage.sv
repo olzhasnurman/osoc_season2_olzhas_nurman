@@ -24,6 +24,14 @@ module decode_stage
     input  logic                       i_flushE,
 
     // Output interface.
+    output logic [ ADDR_WIDTH  - 1:0 ] o_pc,
+    output logic [ ADDR_WIDTH  - 1:0 ] o_pc_plus4,
+    output logic [ DATA_WIDTH  - 1:0 ] o_rs1_data,
+    output logic [ DATA_WIDTH  - 1:0 ] o_rs2_data,
+    output logic [ REG_ADDR_W  - 1:0 ] o_rs1_addr,
+    output logic [ REG_ADDR_W  - 1:0 ] o_rs2_addr,
+    output logic [ REG_ADDR_W  - 1:0 ] o_rd_addr,
+    output logic [ DATA_WIDTH  - 1:0 ] o_imm_ext,
     output logic [               2:0 ] o_result_src,
     output logic [               4:0 ] o_alu_control,
     output logic                       o_mem_we,
@@ -31,14 +39,6 @@ module decode_stage
     output logic                       o_alu_src,
     output logic                       o_branch,
     output logic                       o_jump,
-    output logic [ ADDR_WIDTH  - 1:0 ] o_pc_plus4,
-    output logic [ ADDR_WIDTH  - 1:0 ] o_pc,
-    output logic [ DATA_WIDTH  - 1:0 ] o_imm_ext,
-    output logic [ DATA_WIDTH  - 1:0 ] o_rs1_data,
-    output logic [ DATA_WIDTH  - 1:0 ] o_rs2_data,
-    output logic [ REG_ADDR_W  - 1:0 ] o_rs1_addr,
-    output logic [ REG_ADDR_W  - 1:0 ] o_rs2_addr,
-    output logic [ REG_ADDR_W  - 1:0 ] o_rd_addr
 );
 
     //-------------------------------------
