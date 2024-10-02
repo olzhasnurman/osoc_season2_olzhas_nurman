@@ -32,8 +32,8 @@ module decode_stage
     input  logic                      i_jump,
     input  logic [ DATA_WIDTH - 1:0 ] i_result,
     input  logic [ DATA_WIDTH - 1:0 ] i_alu_result,
-    input  logic [              1:0 ] i_forward_rs1,
-    input  logic [              1:0 ] i_forward_rs2,
+    input  logic [              1:0 ] i_forward_rs1_exec,
+    input  logic [              1:0 ] i_forward_rs2_exec,
 
     // Output interface.
     output logic [ ADDR_WIDTH - 1:0 ] o_pc_plus4,
@@ -93,20 +93,20 @@ module decode_stage
 
     // 3-to-1 ALU SrcA MUX.
     mux3to1 MUX0 (
-        .i_control_signal ( i_forward_rs1 ),
-        .i_mux_0          ( i_rs1_data    ),
-        .i_mux_1          ( i_result      ),
-        .i_mux_2          ( i_alu_result  ),
-        .o_mux            ( s_alu_srcA    )
+        .i_control_signal ( i_forward_rs1_exec ),
+        .i_mux_0          ( i_rs1_data         ),
+        .i_mux_1          ( i_result           ),
+        .i_mux_2          ( i_alu_result       ),
+        .o_mux            ( s_alu_srcA         )
     );
 
     // 3-to-1 write data MUX.
     mux3to1 MUX1 (
-        .i_control_signal ( i_forward_rs2 ),
-        .i_mux_0          ( i_rs2_data    ),
-        .i_mux_1          ( i_result      ),
-        .i_mux_2          ( i_alu_result  ),
-        .o_mux            ( s_write_data  )
+        .i_control_signal ( i_forward_rs2_exec ),
+        .i_mux_0          ( i_rs2_data         ),
+        .i_mux_1          ( i_result           ),
+        .i_mux_2          ( i_alu_result       ),
+        .o_mux            ( s_write_data       )
     );
 
     // 2-to-1 ALU SrcB MUX.

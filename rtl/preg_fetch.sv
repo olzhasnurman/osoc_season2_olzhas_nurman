@@ -15,8 +15,8 @@ module preg_fetch
     //Input interface. 
     input  logic                       i_clk,
     input  logic                       i_arst,
-    input  logic                       i_flushD,
-    input  logic                       i_stallD,
+    input  logic                       i_flush_dec,
+    input  logic                       i_stall_dec,
     input  logic [ INSTR_WIDTH - 1:0 ] i_instr,
     input  logic [ DATA_WIDTH  - 1:0 ] i_pc,
     input  logic [ DATA_WIDTH  - 1:0 ] i_pc_plus4,
@@ -34,12 +34,12 @@ module preg_fetch
             o_pc       <= '0;
             o_pc_plus4 <= '0;
         end
-        else if ( i_flushD ) begin
+        else if ( i_flush_dec ) begin
             o_instr    <= '0;
             o_pc       <= '0;
             o_pc_plus4 <= '0;
         end
-        else if ( ~ i_stallD ) begin
+        else if ( ~ i_stall_dec ) begin
             o_instr    <= i_instr;
             o_pc       <= i_pc;
             o_pc_plus4 <= i_pc_plus4;

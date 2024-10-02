@@ -15,9 +15,9 @@ module fetch_stage
     input  logic                       i_arst,
     input  logic [ ADDR_WIDTH  - 1:0 ] i_pc_target,
     input  logic                       i_pc_src,
-    input  logic                       i_stallF,
-    input  logic                       i_stallD,
-    input  logic                       i_flushD,
+    input  logic                       i_stall_fetch,
+    input  logic                       i_stall_dec,
+    input  logic                       i_flush_dec,
 
     // Output interface.
     output logic [ INSTR_WIDTH - 1:0 ] o_instruction,
@@ -49,11 +49,11 @@ module fetch_stage
 
     // PC register.
     register_en PC_REG (
-        .i_clk        ( i_clk       ),
-        .i_write_en   ( ~ i_stallF  ),
-        .i_arst       ( i_arst      ),
-        .i_write_data ( s_pc_next   ),
-        .o_read_data  ( s_pc_reg    )
+        .i_clk        ( i_clk            ),
+        .i_write_en   ( ~ i_stall_fetch  ),
+        .i_arst       ( i_arst           ),
+        .i_write_data ( s_pc_next        ),
+        .o_read_data  ( s_pc_reg         )
     );
 
     // Adder to calculate next PC value.
@@ -76,16 +76,16 @@ module fetch_stage
     // Pipeline Register. With enable & clear for stalling and flushing, respectively.
     //---------------------------------------------------------------------------------
     preg_fetch PREG_F0 (
-        .i_clk      ( i_clk         ),
-        .i_arst     ( i_arst        ),
-        .i_flushD   ( i_flushD      ),
-        .i_stallD   ( i_stallD      ),
-        .i_instr    ( s_instruction ),
-        .i_pc       ( s_pc_reg      ),
-        .i_pc_plus4 ( s_pc_plus4    ),
-        .o_instr    ( o_instruction ),
-        .o_pc       ( o_pc          ),
-        .o_pc_plus4 ( o_pc_plus4    )
+        .i_clk       ( i_clk         ),
+        .i_arst      ( i_arst        ),
+        .i_flush_dec ( i_flush_dec   ),
+        .i_stall_dec ( i_stall_dec   ),
+        .i_instr     ( s_instruction ),
+        .i_pc        ( s_pc_reg      ),
+        .i_pc_plus4  ( s_pc_plus4    ),
+        .o_instr     ( o_instruction ),
+        .o_pc        ( o_pc          ),
+        .o_pc_plus4  ( o_pc_plus4    )
     );
 
 endmodule
