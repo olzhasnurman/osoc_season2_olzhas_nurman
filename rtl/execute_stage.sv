@@ -1,8 +1,8 @@
 /* Copyright (c) 2024 Maveric NU. All rights reserved. */
 
-// ----------------------------------------------------------------------------------------
-// This module contains instantiation of all functional units residing in the decode stage.
-// ----------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
+// This module contains instantiation of all functional units residing in the execute stage.
+// -------------------------------------------------------------------------------------------
 
 module decode_stage
 #(
