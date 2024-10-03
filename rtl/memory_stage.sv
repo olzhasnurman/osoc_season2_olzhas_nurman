@@ -4,7 +4,7 @@
 // This module contains instantiation of all functional units residing in the memory stage.
 // ----------------------------------------------------------------------------------------
 
-module decode_stage
+module memory_stage
 #(
     parameter ADDR_WIDTH  = 64,
               DATA_WIDTH  = 64,

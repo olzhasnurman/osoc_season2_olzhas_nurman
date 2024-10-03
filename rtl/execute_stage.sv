@@ -4,7 +4,7 @@
 // This module contains instantiation of all functional units residing in the execute stage.
 // -------------------------------------------------------------------------------------------
 
-module decode_stage
+module execute_stage
 #(
     parameter ADDR_WIDTH  = 64,
               DATA_WIDTH  = 64,
