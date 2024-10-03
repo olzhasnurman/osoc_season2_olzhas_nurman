@@ -29,7 +29,9 @@ module datapath
     output logic [ REG_ADDR_W - 1:0 ] o_rs2_addr_exec,
     output logic [ REG_ADDR_W - 1:0 ] o_rd_addr_exec,
     output logic [ REG_ADDR_W - 1:0 ] o_rd_addr_mem,
-    output logic [ REG_ADDR_W - 1:0 ] o_rd_addr_wb
+    output logic [ REG_ADDR_W - 1:0 ] o_rd_addr_wb,
+    output logic                      o_reg_we_mem,
+    output logic                      o_reg_we_wb
 );
 
     //-------------------------------------------------------------
@@ -240,5 +242,7 @@ module datapath
     // Continious assignment of outputs.
     //-------------------------------------------------------------
     assign o_rd_addr_wb = s_rd_addr_dec;
+    assign o_reg_we_mem = s_reg_we_mem;
+    assign o_reg_we_wb  = s_reg_we_wb;
 
 endmodule
