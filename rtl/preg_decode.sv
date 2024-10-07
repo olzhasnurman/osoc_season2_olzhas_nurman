@@ -33,6 +33,7 @@ module preg_decode
     input  logic [ REG_ADDR_W  - 1:0 ] i_rs2_addr,
     input  logic [ REG_ADDR_W  - 1:0 ] i_rd_addr,
     input  logic [               2:0 ] i_func3,
+    input  logic                       i_load_instr,
     
     // Output interface.
     output logic [               2:0 ] o_result_src,
@@ -50,7 +51,8 @@ module preg_decode
     output logic [ REG_ADDR_W  - 1:0 ] o_rs1_addr,
     output logic [ REG_ADDR_W  - 1:0 ] o_rs2_addr,
     output logic [ REG_ADDR_W  - 1:0 ] o_rd_addr,
-    output logic [               2:0 ] o_func3
+    output logic [               2:0 ] o_func3,
+    output logic                       o_load_instr
 );
 
     // Write logic.
@@ -71,6 +73,8 @@ module preg_decode
             o_rs1_addr    <= '0;
             o_rs2_addr    <= '0;
             o_rd_addr     <= '0;
+            o_func3       <= '0;
+            o_load_instr  <= '0;
         end
         else if ( i_flush_exec ) begin
             o_result_src  <= '0;
@@ -88,6 +92,8 @@ module preg_decode
             o_rs1_addr    <= '0;
             o_rs2_addr    <= '0;
             o_rd_addr     <= '0;
+            o_func3       <= '0;
+            o_load_instr  <= '0;
         end
         else begin
             o_result_src  <= i_result_src;
@@ -105,6 +111,8 @@ module preg_decode
             o_rs1_addr    <= i_rs1_addr;
             o_rs2_addr    <= i_rs2_addr;
             o_rd_addr     <= i_rd_addr;
+            o_func3       <= i_func3;
+            o_load_instr  <= i_load_instr;
         end
     end
     

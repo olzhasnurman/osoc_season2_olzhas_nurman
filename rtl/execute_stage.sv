@@ -32,6 +32,7 @@ module execute_stage
     input  logic                      i_jump,
     input  logic [ DATA_WIDTH - 1:0 ] i_result,
     input  logic [ DATA_WIDTH - 1:0 ] i_alu_result,
+    input  logic                      i_load_instr,
     input  logic [              1:0 ] i_forward_rs1_exec,
     input  logic [              1:0 ] i_forward_rs2_exec,
 
@@ -49,7 +50,8 @@ module execute_stage
     output logic [              2:0 ] o_result_src,
     output logic                      o_mem_we,
     output logic                      o_reg_we,
-    output logic                      o_pc_src
+    output logic                      o_pc_src,
+    output logic                      o_load_instr
 );
 
     //-------------------------------------
@@ -163,9 +165,10 @@ module execute_stage
     //--------------------------------------
     // Continious assignment of outputs.
     //--------------------------------------
-    assign o_pc_target = s_pc_target;
-    assign o_rs1_addr  = i_rs1_addr;
-    assign o_rs2_addr  = i_rs2_addr;
-    assign o_rd_addr   = i_rd_addr;
+    assign o_pc_target  = s_pc_target;
+    assign o_rs1_addr   = i_rs1_addr;
+    assign o_rs2_addr   = i_rs2_addr;
+    assign o_rd_addr    = i_rd_addr;
+    assign o_load_instr = i_load_instr;
 
 endmodule

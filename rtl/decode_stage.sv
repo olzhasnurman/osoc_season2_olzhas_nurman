@@ -62,6 +62,7 @@ module decode_stage
     logic         s_alu_src;
     logic         s_branch;
     logic         s_jump;
+    logic         s_load_instr;
     
     // Extend imm signal.
     logic [             24:0 ] s_imm_data;
@@ -106,7 +107,7 @@ module decode_stage
         .o_alu_src     ( s_alu_src     ),
         .o_branch      ( s_branch      ),
         .o_jump        ( s_jump        ),
-        .o_load_instr  ( o_load_instr  )
+        .o_load_instr  ( s_load_instr  )
     );
 
     // Extend immediate module.
@@ -155,6 +156,7 @@ module decode_stage
         .i_rs2_addr    ( s_rs2_addr      ),
         .i_rd_addr     ( s_rd_addr       ),
         .i_func3       ( s_func3         ),
+        .i_load_instr  ( s_load_instr    ),
         .o_result_src  ( o_result_src    ),
         .o_alu_control ( o_alu_control   ),
         .o_mem_we      ( o_mem_we        ),
@@ -170,7 +172,8 @@ module decode_stage
         .o_rs1_addr    ( o_rs1_addr_preg ),
         .o_rs2_addr    ( o_rs2_addr_preg ),
         .o_rd_addr     ( o_rd_addr       ),
-        .o_func3       ( o_func3         )
+        .o_func3       ( o_func3         ),
+        .o_load_instr  ( o_load_instr    )
     );
 
 

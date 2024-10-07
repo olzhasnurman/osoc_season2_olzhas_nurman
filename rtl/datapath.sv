@@ -33,7 +33,7 @@ module datapath
     output logic                      o_reg_we_mem,
     output logic                      o_reg_we_wb,
     output logic                      o_pc_src_exec,
-    output logic                      o_load_instr_dec
+    output logic                      o_load_instr_exec
 );
 
     //-------------------------------------------------------------
@@ -51,6 +51,7 @@ module datapath
     logic [ ADDR_WIDTH  - 1:0 ] s_pc_dec;
     logic [ REG_ADDR_W  - 1:0 ] s_rd_addr_dec;
     logic                       s_reg_we_dec;
+    logic                       s_load_instr_exec;
 
 
     // Execute stage signals.
@@ -149,7 +150,7 @@ module datapath
         .o_alu_src       ( s_alu_src_exec     ),
         .o_branch        ( s_branch_exec      ),
         .o_jump          ( s_jump_exec        ),
-        .o_load_instr    ( o_load_instr_dec   )
+        .o_load_instr    ( s_load_instr_exec  )
     );
 
     //-------------------------------------
@@ -176,6 +177,7 @@ module datapath
         .i_jump             ( s_jump_exec        ),
         .i_result           ( s_result_wb        ),
         .i_alu_result       ( s_alu_result_exec  ),
+        .i_load_instr       ( s_load_instr_exec  ),
         .i_forward_rs1_exec ( i_forward_rs1      ),
         .i_forward_rs2_exec ( i_forward_rs2      ),
         .o_pc_plus4         ( s_pc_plus4_mem     ),
@@ -191,7 +193,8 @@ module datapath
         .o_result_src       ( s_result_src_mem   ),
         .o_mem_we           ( s_mem_we_mem       ),
         .o_reg_we           ( s_reg_we_mem       ),
-        .o_pc_src           ( s_pc_src_fetch     )
+        .o_pc_src           ( s_pc_src_fetch     ),
+        .o_load_instr       ( o_load_instr_exec  )
     );
 
 
