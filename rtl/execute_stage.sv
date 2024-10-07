@@ -31,7 +31,8 @@ module execute_stage
     input  logic                      i_branch,
     input  logic                      i_jump,
     input  logic [ DATA_WIDTH - 1:0 ] i_result,
-    input  logic [ DATA_WIDTH - 1:0 ] i_alu_result,
+    input  logic [ DATA_WIDTH - 1:0 ] i_forward_value,
+    input  logic [              1:0 ] i_forward_src,
     input  logic                      i_load_instr,
     input  logic [              1:0 ] i_forward_rs1_exec,
     input  logic [              1:0 ] i_forward_rs2_exec,
@@ -48,6 +49,7 @@ module execute_stage
     output logic [ REG_ADDR_W - 1:0 ] o_rd_addr_preg,
     output logic [ DATA_WIDTH - 1:0 ] o_imm_ext,
     output logic [              2:0 ] o_result_src,
+    output logic [              1:0 ] o_forward_src,
     output logic                      o_mem_we,
     output logic                      o_reg_we,
     output logic                      o_pc_src,
@@ -98,7 +100,7 @@ module execute_stage
         .i_control_signal ( i_forward_rs1_exec ),
         .i_mux_0          ( i_rs1_data         ),
         .i_mux_1          ( i_result           ),
-        .i_mux_2          ( i_alu_result       ),
+        .i_mux_2          ( i_forward_value    ),
         .o_mux            ( s_alu_srcA         )
     );
 
@@ -107,7 +109,7 @@ module execute_stage
         .i_control_signal ( i_forward_rs2_exec ),
         .i_mux_0          ( i_rs2_data         ),
         .i_mux_1          ( i_result           ),
-        .i_mux_2          ( i_alu_result       ),
+        .i_mux_2          ( i_forward_value    ),
         .o_mux            ( s_write_data       )
     );
 
@@ -139,26 +141,28 @@ module execute_stage
     // Pipeline Register.
     //-------------------------------------
     preg_execute PREG_E (
-        .i_clk        ( i_clk            ),
-        .i_arst       ( i_arst           ),
-        .i_result_src ( i_result_src     ),
-        .i_mem_we     ( i_mem_we         ),
-        .i_reg_we     ( i_reg_we         ),
-        .i_pc_plus4   ( i_pc_plus4       ),
-        .i_pc_target  ( s_pc_target      ),
-        .i_imm_ext    ( i_imm_ext        ),
-        .i_alu_result ( s_alu_result     ),
-        .i_write_data ( s_write_data     ),
-        .i_rd_addr    ( i_rd_addr        ),
-        .o_result_src ( o_result_src     ),
-        .o_mem_we     ( o_mem_we         ),
-        .o_reg_we     ( o_reg_we         ),
-        .o_pc_plus4   ( o_pc_plus4       ),
-        .o_pc_target  ( o_pc_target_preg ),
-        .o_imm_ext    ( o_imm_ext        ),
-        .o_alu_result ( o_alu_result     ),
-        .o_write_data ( o_write_data     ),
-        .o_rd_addr    ( o_rd_addr_preg   )
+        .i_clk         ( i_clk            ),
+        .i_arst        ( i_arst           ),
+        .i_result_src  ( i_result_src     ),
+        .i_mem_we      ( i_mem_we         ),
+        .i_reg_we      ( i_reg_we         ),
+        .i_pc_plus4    ( i_pc_plus4       ),
+        .i_pc_target   ( s_pc_target      ),
+        .i_imm_ext     ( i_imm_ext        ),
+        .i_alu_result  ( s_alu_result     ),
+        .i_write_data  ( s_write_data     ),
+        .i_forward_src ( i_forward_src    ),
+        .i_rd_addr     ( i_rd_addr        ),
+        .o_result_src  ( o_result_src     ),
+        .o_mem_we      ( o_mem_we         ),
+        .o_reg_we      ( o_reg_we         ),
+        .o_pc_plus4    ( o_pc_plus4       ),
+        .o_pc_target   ( o_pc_target_preg ),
+        .o_imm_ext     ( o_imm_ext        ),
+        .o_alu_result  ( o_alu_result     ),
+        .o_write_data  ( o_write_data     ),
+        .o_forward_src ( o_forward_src    ),
+        .o_rd_addr     ( o_rd_addr_preg   )
     );
 
 

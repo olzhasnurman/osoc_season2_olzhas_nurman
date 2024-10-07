@@ -71,7 +71,8 @@ module datapath
     logic                      s_alu_src_exec;
     logic                      s_branch_exec;
     logic                      s_jump_exec;
-    logic [ DATA_WIDTH - 1:0 ] s_alu_result_exec;
+    logic [              1:0 ] s_forward_src_exec;
+    logic [ DATA_WIDTH - 1:0 ] s_forward_value_exec;
 
 
     // Memory stage signals.
@@ -84,6 +85,7 @@ module datapath
     logic [              2:0 ] s_result_src_mem;
     logic                      s_mem_we_mem;
     logic                      s_reg_we_mem;
+    logic [              1:0 ] s_forward_src_mem;
 
 
     // Write-back stage signals.
@@ -150,6 +152,7 @@ module datapath
         .o_alu_src       ( s_alu_src_exec     ),
         .o_branch        ( s_branch_exec      ),
         .o_jump          ( s_jump_exec        ),
+        .o_forward_src   ( s_forward_src_exec ),
         .o_load_instr    ( s_load_instr_exec  )
     );
 
@@ -157,44 +160,46 @@ module datapath
     // Execute stage module.
     //-------------------------------------
     execute_stage EXEC_STAGE3 (
-        .i_clk              ( i_clk              ),
-        .i_arst             ( i_arst             ),
-        .i_pc               ( s_pc_exec          ),
-        .i_pc_plus4         ( s_pc_plus4_exec    ),
-        .i_rs1_data         ( s_rs1_data_exec    ),
-        .i_rs2_data         ( s_rs2_data_exec    ),
-        .i_rs1_addr         ( s_rs1_addr_exec    ),
-        .i_rs2_addr         ( s_rs2_addr_exec    ),
-        .i_rd_addr          ( s_rd_addr_exec     ),
-        .i_imm_ext          ( s_imm_ext_exec     ),
-        .i_func3            ( s_func3_exec       ),
-        .i_result_src       ( s_result_src_exec  ),
-        .i_alu_control      ( s_alu_control_exec ),
-        .i_mem_we           ( s_mem_we_exec      ),
-        .i_reg_we           ( s_reg_we_exec      ),
-        .i_alu_src          ( s_alu_src_exec     ),
-        .i_branch           ( s_branch_exec      ),
-        .i_jump             ( s_jump_exec        ),
-        .i_result           ( s_result_wb        ),
-        .i_alu_result       ( s_alu_result_exec  ),
-        .i_load_instr       ( s_load_instr_exec  ),
-        .i_forward_rs1_exec ( i_forward_rs1      ),
-        .i_forward_rs2_exec ( i_forward_rs2      ),
-        .o_pc_plus4         ( s_pc_plus4_mem     ),
-        .o_pc_target        ( s_pc_target_fetch  ),
-        .o_pc_target_preg   ( s_pc_target_mem    ),
-        .o_alu_result       ( s_alu_result_mem   ),
-        .o_write_data       ( s_write_data_mem   ),
-        .o_rs1_addr         ( o_rs1_addr_exec    ),
-        .o_rs2_addr         ( o_rs2_addr_exec    ),
-        .o_rd_addr          ( o_rd_addr_exec     ),
-        .o_rd_addr_preg     ( s_rd_addr_mem      ),
-        .o_imm_ext          ( s_imm_ext_mem      ),
-        .o_result_src       ( s_result_src_mem   ),
-        .o_mem_we           ( s_mem_we_mem       ),
-        .o_reg_we           ( s_reg_we_mem       ),
-        .o_pc_src           ( s_pc_src_fetch     ),
-        .o_load_instr       ( o_load_instr_exec  )
+        .i_clk              ( i_clk                ),
+        .i_arst             ( i_arst               ),
+        .i_pc               ( s_pc_exec            ),
+        .i_pc_plus4         ( s_pc_plus4_exec      ),
+        .i_rs1_data         ( s_rs1_data_exec      ),
+        .i_rs2_data         ( s_rs2_data_exec      ),
+        .i_rs1_addr         ( s_rs1_addr_exec      ),
+        .i_rs2_addr         ( s_rs2_addr_exec      ),
+        .i_rd_addr          ( s_rd_addr_exec       ),
+        .i_imm_ext          ( s_imm_ext_exec       ),
+        .i_func3            ( s_func3_exec         ),
+        .i_result_src       ( s_result_src_exec    ),
+        .i_alu_control      ( s_alu_control_exec   ),
+        .i_mem_we           ( s_mem_we_exec        ),
+        .i_reg_we           ( s_reg_we_exec        ),
+        .i_alu_src          ( s_alu_src_exec       ),
+        .i_branch           ( s_branch_exec        ),
+        .i_jump             ( s_jump_exec          ),
+        .i_result           ( s_result_wb          ),
+        .i_forward_value    ( s_forward_value_exec ),
+        .i_forward_src      ( s_forward_src_exec   ),
+        .i_load_instr       ( s_load_instr_exec    ),
+        .i_forward_rs1_exec ( i_forward_rs1        ),
+        .i_forward_rs2_exec ( i_forward_rs2        ),
+        .o_pc_plus4         ( s_pc_plus4_mem       ),
+        .o_pc_target        ( s_pc_target_fetch    ),
+        .o_pc_target_preg   ( s_pc_target_mem      ),
+        .o_alu_result       ( s_alu_result_mem     ),
+        .o_write_data       ( s_write_data_mem     ),
+        .o_rs1_addr         ( o_rs1_addr_exec      ),
+        .o_rs2_addr         ( o_rs2_addr_exec      ),
+        .o_rd_addr          ( o_rd_addr_exec       ),
+        .o_rd_addr_preg     ( s_rd_addr_mem        ),
+        .o_imm_ext          ( s_imm_ext_mem        ),
+        .o_result_src       ( s_result_src_mem     ),
+        .o_forward_src      ( s_forward_src_mem    ),
+        .o_mem_we           ( s_mem_we_mem         ),
+        .o_reg_we           ( s_reg_we_mem         ),
+        .o_pc_src           ( s_pc_src_fetch       ),
+        .o_load_instr       ( o_load_instr_exec    )
     );
 
 
@@ -202,27 +207,28 @@ module datapath
     // Memory stage module.
     //-------------------------------------
     memory_stage MEM_STAGE4 (
-        .i_clk             ( i_clk             ),
-        .i_arst            ( i_arst            ),
-        .i_pc_plus4        ( s_pc_plus4_mem    ),
-        .i_pc_target       ( s_pc_target_mem   ),
-        .i_alu_result      ( s_alu_result_mem  ),
-        .i_write_data      ( s_write_data_mem  ),
-        .i_rd_addr         ( s_rd_addr_mem     ),
-        .i_imm_ext         ( s_imm_ext_mem     ),
-        .i_result_src      ( s_result_src_mem  ),
-        .i_mem_we          ( s_mem_we_mem      ),
-        .i_reg_we          ( s_reg_we_mem      ),
-        .o_pc_plus4        ( s_pc_plus4_wb     ),
-        .o_pc_target       ( s_pc_target_wb    ),
-        .o_alu_result      ( s_alu_result_exec ),
-        .o_alu_result_preg ( s_alu_result_wb   ),
-        .o_read_data       ( s_read_data_wb    ),
-        .o_rd_addr         ( o_rd_addr_mem     ),
-        .o_rd_addr_preg    ( s_rd_addr_wb      ),
-        .o_imm_ext         ( s_imm_ext_wb      ),
-        .o_result_src      ( s_result_src_wb   ),
-        .o_reg_we          ( s_reg_we_wb       )
+        .i_clk             ( i_clk                ),
+        .i_arst            ( i_arst               ),
+        .i_pc_plus4        ( s_pc_plus4_mem       ),
+        .i_pc_target       ( s_pc_target_mem      ),
+        .i_alu_result      ( s_alu_result_mem     ),
+        .i_write_data      ( s_write_data_mem     ),
+        .i_rd_addr         ( s_rd_addr_mem        ),
+        .i_imm_ext         ( s_imm_ext_mem        ),
+        .i_result_src      ( s_result_src_mem     ),
+        .i_mem_we          ( s_mem_we_mem         ),
+        .i_forward_src     ( s_forward_src_mem    ),
+        .i_reg_we          ( s_reg_we_mem         ),
+        .o_pc_plus4        ( s_pc_plus4_wb        ),
+        .o_pc_target       ( s_pc_target_wb       ),
+        .o_forward_value   ( s_forward_value_exec ),
+        .o_alu_result      ( s_alu_result_wb      ),
+        .o_read_data       ( s_read_data_wb       ),
+        .o_rd_addr         ( o_rd_addr_mem        ),
+        .o_rd_addr_preg    ( s_rd_addr_wb         ),
+        .o_imm_ext         ( s_imm_ext_wb         ),
+        .o_result_src      ( s_result_src_wb      ),
+        .o_reg_we          ( s_reg_we_wb          )
     );
 
 
