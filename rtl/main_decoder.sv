@@ -126,12 +126,14 @@ module main_decoder
                 o_result_src = 3'b10;
             end
             U_Type_ALU: begin
-                o_reg_we     = 1'b1;
-                o_result_src = 3'b11;
+                o_reg_we      = 1'b1;
+                o_result_src  = 3'b11;
+                o_forward_src = 2'b01;
             end
             U_Type_LOAD: begin
-                o_reg_we     = 1'b1; 
-                o_result_src = 3'b100; 
+                o_reg_we      = 1'b1; 
+                o_result_src  = 3'b100;
+                o_forward_src = 2'b10; 
             end
             default: begin
                 o_result_src  = 3'b0;
