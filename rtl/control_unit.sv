@@ -19,7 +19,8 @@ module control_unit
     output logic         o_reg_we,
     output logic         o_alu_src,
     output logic         o_branch,
-    output logic         o_jump 
+    output logic         o_jump,
+    output logic         o_load_instr
 );
 
     //------------------
@@ -42,7 +43,8 @@ module control_unit
         .o_reg_we     ( o_reg_we     ),
         .o_alu_src    ( o_alu_src    ),
         .o_branch     ( o_branch     ),
-        .o_jump       ( o_jump       )
+        .o_jump       ( o_jump       ),
+        .o_load_instr ( o_load_instr )
     );
 
     // ALU decoder.

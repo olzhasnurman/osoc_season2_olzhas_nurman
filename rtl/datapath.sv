@@ -31,7 +31,9 @@ module datapath
     output logic [ REG_ADDR_W - 1:0 ] o_rd_addr_mem,
     output logic [ REG_ADDR_W - 1:0 ] o_rd_addr_wb,
     output logic                      o_reg_we_mem,
-    output logic                      o_reg_we_wb
+    output logic                      o_reg_we_wb,
+    output logic                      o_pc_src_exec,
+    output logic                      o_load_instr_dec
 );
 
     //-------------------------------------------------------------
@@ -146,7 +148,8 @@ module datapath
         .o_reg_we        ( s_reg_we_exec      ),
         .o_alu_src       ( s_alu_src_exec     ),
         .o_branch        ( s_branch_exec      ),
-        .o_jump          ( s_jump_exec        )
+        .o_jump          ( s_jump_exec        ),
+        .o_load_instr    ( o_load_instr_dec   )
     );
 
     //-------------------------------------
@@ -241,8 +244,9 @@ module datapath
     //-------------------------------------------------------------
     // Continious assignment of outputs.
     //-------------------------------------------------------------
-    assign o_rd_addr_wb = s_rd_addr_dec;
-    assign o_reg_we_mem = s_reg_we_mem;
-    assign o_reg_we_wb  = s_reg_we_wb;
+    assign o_rd_addr_wb  = s_rd_addr_dec;
+    assign o_reg_we_mem  = s_reg_we_mem;
+    assign o_reg_we_wb   = s_reg_we_wb;
+    assign o_pc_src_exec = s_pc_src_fetch;
 
 endmodule

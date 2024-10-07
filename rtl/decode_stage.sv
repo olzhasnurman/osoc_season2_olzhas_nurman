@@ -41,7 +41,8 @@ module decode_stage
     output logic                       o_reg_we,
     output logic                       o_alu_src,
     output logic                       o_branch,
-    output logic                       o_jump
+    output logic                       o_jump,
+    output logic                       o_load_instr
 );
 
     //-------------------------------------
@@ -104,7 +105,8 @@ module decode_stage
         .o_reg_we      ( s_reg_we      ),
         .o_alu_src     ( s_alu_src     ),
         .o_branch      ( s_branch      ),
-        .o_jump        ( s_jump        ) 
+        .o_jump        ( s_jump        ),
+        .o_load_instr  ( o_load_instr  )
     );
 
     // Extend immediate module.

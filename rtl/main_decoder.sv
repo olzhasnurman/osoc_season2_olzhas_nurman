@@ -17,7 +17,8 @@ module main_decoder
     output logic         o_reg_we,
     output logic         o_alu_src,
     output logic         o_branch,
-    output logic         o_jump        
+    output logic         o_jump,
+    output logic         o_load_instr        
 );
 
     // Instruction type.
@@ -76,12 +77,14 @@ module main_decoder
         o_alu_src    = 1'b0; // 0 - Reg, 1 - Immediate.
         o_branch     = 1'b0;
         o_jump       = 1'b0;
+        o_load_instr = 1'b0;
 
         case ( s_instr_type )
             I_Type: begin
                 o_reg_we     = 1'b1;
                 o_alu_src    = 1'b1;
                 o_result_src = 3'b1;
+                o_load_instr = 1'b1;
             end
             I_Type_ALU: begin
                 o_reg_we     = 1'b1;
@@ -136,6 +139,7 @@ module main_decoder
                 o_alu_src    = 1'b0;
                 o_branch     = 1'b0;
                 o_jump       = 1'b0; 
+                o_load_instr = 1'b0;
             end
         endcase
     end
