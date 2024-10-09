@@ -51,12 +51,12 @@ module memory_stage
 
     // Data memory.
     d_mem DATA_MEM (
-        .i_clk        ( i_clk                ),
-        .i_write_en   ( i_mem_we             ),
-        .i_arst       ( i_arst               ),
-        .i_addr       ( i_alu_result [ 9:0 ] ),
-        .i_write_data ( i_write_data         ),
-        .o_read_data  ( s_read_mem           )
+        .i_clk        ( i_clk                 ),
+        .i_write_en   ( i_mem_we              ),
+        .i_arst       ( i_arst                ),
+        .i_addr       ( i_alu_result [ 10:0 ] ),
+        .i_write_data ( i_write_data          ),
+        .o_read_data  ( s_read_mem            )
     );
 
 
