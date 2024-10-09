@@ -86,6 +86,7 @@ module datapath
     logic [              2:0 ] s_result_src_mem;
     logic                      s_mem_we_mem;
     logic                      s_reg_we_mem;
+    logic [              2:0 ] s_func3_mem;
     logic [              1:0 ] s_forward_src_mem;
 
 
@@ -202,6 +203,7 @@ module datapath
         .o_mem_we           ( s_mem_we_mem         ),
         .o_reg_we           ( s_reg_we_mem         ),
         .o_pc_src           ( s_pc_src_fetch       ),
+        .o_func3            ( s_func3_mem          ),
         .o_load_instr       ( o_load_instr_exec    )
     );
 
@@ -221,6 +223,7 @@ module datapath
         .i_result_src      ( s_result_src_mem     ),
         .i_mem_we          ( s_mem_we_mem         ),
         .i_forward_src     ( s_forward_src_mem    ),
+        .i_func3           ( s_func3_mem          ),
         .i_reg_we          ( s_reg_we_mem         ),
         .o_pc_plus4        ( s_pc_plus4_wb        ),
         .o_pc_target       ( s_pc_target_wb       ),

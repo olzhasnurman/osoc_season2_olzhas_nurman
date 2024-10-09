@@ -23,6 +23,7 @@ module memory_stage
     input  logic [              2:0 ] i_result_src,
     input  logic                      i_mem_we,
     input  logic                      i_reg_we,
+    input  logic [              2:0 ] i_func3,
     input  logic [              1:0 ] i_forward_src,
 
     // Output interface.
@@ -41,6 +42,7 @@ module memory_stage
     //-------------------------------------
     // Internal nets.
     //-------------------------------------
+    logic [ DATA_WIDTH - 1:0 ] s_read_mem;
     logic [ DATA_WIDTH - 1:0 ] s_read_data;
 
     //-------------------------------------
@@ -54,9 +56,17 @@ module memory_stage
         .i_arst       ( i_arst               ),
         .i_addr       ( i_alu_result [ 9:0 ] ),
         .i_write_data ( i_write_data         ),
-        .o_read_data  ( s_read_data          )
+        .o_read_data  ( s_read_mem           )
     );
 
+
+    // Load MUX.
+    load_mux LMUX0 (
+        .i_func3       ( i_func3              ),
+        .i_data        ( s_read_mem           ),
+        .i_addr_offset ( i_alu_result [ 2:0 ] ),
+        .o_data        ( s_read_data          )
+    );
 
     // Forwarding value MUX.
     mux3to1 MUX0 (

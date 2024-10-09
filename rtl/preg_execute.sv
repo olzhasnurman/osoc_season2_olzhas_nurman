@@ -25,6 +25,7 @@ module preg_execute
     input  logic [ DATA_WIDTH - 1:0 ] i_alu_result,
     input  logic [ DATA_WIDTH - 1:0 ] i_write_data,
     input  logic [              1:0 ] i_forward_src,
+    input  logic [              2:0 ] i_func3,
     input  logic [ REG_ADDR_W - 1:0 ] i_rd_addr,
     
     // Output interface.
@@ -37,6 +38,7 @@ module preg_execute
     output logic [ DATA_WIDTH - 1:0 ] o_alu_result,
     output logic [ DATA_WIDTH - 1:0 ] o_write_data,
     output logic [              1:0 ] o_forward_src,
+    output logic [              2:0 ] o_func3,
     output logic [ REG_ADDR_W - 1:0 ] o_rd_addr
 );
 
@@ -52,6 +54,7 @@ module preg_execute
             o_alu_result  <= '0;
             o_write_data  <= '0;
             o_forward_src <= '0;
+            o_func3       <= '0;
             o_rd_addr     <= '0;
         end
         else begin
@@ -64,6 +67,7 @@ module preg_execute
             o_alu_result  <= i_alu_result;
             o_write_data  <= i_write_data;
             o_forward_src <= i_forward_src;
+            o_func3       <= i_func3;
             o_rd_addr     <= i_rd_addr;
         end
     end

@@ -54,6 +54,7 @@ module execute_stage
     output logic                      o_mem_we,
     output logic                      o_reg_we,
     output logic                      o_pc_src,
+    output logic [              2:0 ] o_func3,
     output logic                      o_load_instr
 );
 
@@ -162,6 +163,7 @@ module execute_stage
         .i_alu_result  ( s_alu_result     ),
         .i_write_data  ( s_write_data     ),
         .i_forward_src ( i_forward_src    ),
+        .i_func3       ( i_func3          ),
         .i_rd_addr     ( i_rd_addr        ),
         .o_result_src  ( o_result_src     ),
         .o_mem_we      ( o_mem_we         ),
@@ -172,6 +174,7 @@ module execute_stage
         .o_alu_result  ( o_alu_result     ),
         .o_write_data  ( o_write_data     ),
         .o_forward_src ( o_forward_src    ),
+        .o_func3       ( o_func3          ),
         .o_rd_addr     ( o_rd_addr_preg   )
     );
 
