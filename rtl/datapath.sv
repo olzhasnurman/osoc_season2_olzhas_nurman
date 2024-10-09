@@ -71,6 +71,7 @@ module datapath
     logic                      s_alu_src_exec;
     logic                      s_branch_exec;
     logic                      s_jump_exec;
+    logic                      s_pc_target_src_exec;
     logic [              1:0 ] s_forward_src_exec;
     logic [ DATA_WIDTH - 1:0 ] s_forward_value_exec;
 
@@ -125,35 +126,36 @@ module datapath
     // Decode stage module.
     //-------------------------------------
     decode_stage STAGE2_DEC (
-        .i_clk           ( i_clk              ),
-        .i_arst          ( i_arst             ),
-        .i_instruction   ( s_instruction_dec  ),
-        .i_pc_plus4      ( s_pc_plus4_dec     ),
-        .i_pc            ( s_pc_dec           ),
-        .i_rd_write_data ( s_result_wb        ),
-        .i_rd_addr       ( s_rd_addr_dec      ),
-        .i_reg_we        ( s_reg_we_dec       ),
-        .i_flush_exec    ( i_flush_exec       ),
-        .o_func3         ( s_func3_exec       ),
-        .o_pc            ( s_pc_exec          ),
-        .o_pc_plus4      ( s_pc_plus4_exec    ),
-        .o_rs1_data      ( s_rs1_data_exec    ),
-        .o_rs2_data      ( s_rs2_data_exec    ),
-        .o_rs1_addr      ( o_rs1_addr_dec     ),
-        .o_rs2_addr      ( o_rs2_addr_dec     ),
-        .o_rs1_addr_preg ( s_rs1_addr_exec    ),
-        .o_rs2_addr_preg ( s_rs2_addr_exec    ),
-        .o_rd_addr       ( s_rd_addr_exec     ),
-        .o_imm_ext       ( s_imm_ext_exec     ),
-        .o_result_src    ( s_result_src_exec  ),
-        .o_alu_control   ( s_alu_control_exec ),
-        .o_mem_we        ( s_mem_we_exec      ),
-        .o_reg_we        ( s_reg_we_exec      ),
-        .o_alu_src       ( s_alu_src_exec     ),
-        .o_branch        ( s_branch_exec      ),
-        .o_jump          ( s_jump_exec        ),
-        .o_forward_src   ( s_forward_src_exec ),
-        .o_load_instr    ( s_load_instr_exec  )
+        .i_clk           ( i_clk                ),
+        .i_arst          ( i_arst               ),
+        .i_instruction   ( s_instruction_dec    ),
+        .i_pc_plus4      ( s_pc_plus4_dec       ),
+        .i_pc            ( s_pc_dec             ),
+        .i_rd_write_data ( s_result_wb          ),
+        .i_rd_addr       ( s_rd_addr_dec        ),
+        .i_reg_we        ( s_reg_we_dec         ),
+        .i_flush_exec    ( i_flush_exec         ),
+        .o_func3         ( s_func3_exec         ),
+        .o_pc            ( s_pc_exec            ),
+        .o_pc_plus4      ( s_pc_plus4_exec      ),
+        .o_rs1_data      ( s_rs1_data_exec      ),
+        .o_rs2_data      ( s_rs2_data_exec      ),
+        .o_rs1_addr      ( o_rs1_addr_dec       ),
+        .o_rs2_addr      ( o_rs2_addr_dec       ),
+        .o_rs1_addr_preg ( s_rs1_addr_exec      ),
+        .o_rs2_addr_preg ( s_rs2_addr_exec      ),
+        .o_rd_addr       ( s_rd_addr_exec       ),
+        .o_imm_ext       ( s_imm_ext_exec       ),
+        .o_result_src    ( s_result_src_exec    ),
+        .o_alu_control   ( s_alu_control_exec   ),
+        .o_mem_we        ( s_mem_we_exec        ),
+        .o_reg_we        ( s_reg_we_exec        ),
+        .o_alu_src       ( s_alu_src_exec       ),
+        .o_branch        ( s_branch_exec        ),
+        .o_jump          ( s_jump_exec          ),
+        .o_pc_target_src ( s_pc_target_src_exec ),
+        .o_forward_src   ( s_forward_src_exec   ),
+        .o_load_instr    ( s_load_instr_exec    )
     );
 
     //-------------------------------------
@@ -178,6 +180,7 @@ module datapath
         .i_alu_src          ( s_alu_src_exec       ),
         .i_branch           ( s_branch_exec        ),
         .i_jump             ( s_jump_exec          ),
+        .i_pc_target_src    ( s_pc_target_src_exec ),
         .i_result           ( s_result_wb          ),
         .i_forward_value    ( s_forward_value_exec ),
         .i_forward_src      ( s_forward_src_exec   ),

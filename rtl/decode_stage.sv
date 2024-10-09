@@ -42,6 +42,7 @@ module decode_stage
     output logic                       o_alu_src,
     output logic                       o_branch,
     output logic                       o_jump,
+    output logic                       o_pc_target_src,
     output logic [               1:0 ] o_forward_src,
     output logic                       o_load_instr
 );
@@ -63,6 +64,7 @@ module decode_stage
     logic         s_alu_src;
     logic         s_branch;
     logic         s_jump;
+    logic         s_pc_target_src;
     logic [ 1:0 ] s_forward_src;
     logic         s_load_instr;
     
@@ -98,19 +100,20 @@ module decode_stage
 
     // Control unit.
     control_unit CU0 (
-        .i_op          ( s_op          ),
-        .i_func3       ( s_func3       ),
-        .i_func7_5     ( s_func7_5     ),
-        .o_imm_src     ( s_imm_src     ),
-        .o_result_src  ( s_result_src  ),
-        .o_alu_control ( s_alu_control ),
-        .o_mem_we      ( s_mem_we      ),
-        .o_reg_we      ( s_reg_we      ),
-        .o_alu_src     ( s_alu_src     ),
-        .o_branch      ( s_branch      ),
-        .o_jump        ( s_jump        ),
-        .o_forward_src ( s_forward_src ),
-        .o_load_instr  ( s_load_instr  )
+        .i_op            ( s_op            ),
+        .i_func3         ( s_func3         ),
+        .i_func7_5       ( s_func7_5       ),
+        .o_imm_src       ( s_imm_src       ),
+        .o_result_src    ( s_result_src    ),
+        .o_alu_control   ( s_alu_control   ),
+        .o_mem_we        ( s_mem_we        ),
+        .o_reg_we        ( s_reg_we        ),
+        .o_alu_src       ( s_alu_src       ),
+        .o_branch        ( s_branch        ),
+        .o_jump          ( s_jump          ),
+        .o_pc_target_src ( s_pc_target_src ),
+        .o_forward_src   ( s_forward_src   ),
+        .o_load_instr    ( s_load_instr    )
     );
 
     // Extend immediate module.
@@ -140,45 +143,47 @@ module decode_stage
     //-------------------------------------------------------------------------
 
     preg_decode PREG_D (
-        .i_clk         ( i_clk           ),
-        .i_arst        ( i_arst          ),
-        .i_flush_exec  ( i_flush_exec    ),
-        .i_result_src  ( s_result_src    ),
-        .i_alu_control ( s_alu_control   ),
-        .i_mem_we      ( s_mem_we        ),
-        .i_reg_we      ( s_reg_we        ),
-        .i_alu_src     ( s_alu_src       ),
-        .i_branch      ( s_branch        ),
-        .i_jump        ( s_jump          ),
-        .i_pc_plus4    ( i_pc_plus4      ),
-        .i_pc          ( i_pc            ),
-        .i_imm_ext     ( s_imm_ext       ),
-        .i_rs1_data    ( s_rs1_data      ),
-        .i_rs2_data    ( s_rs2_data      ),
-        .i_rs1_addr    ( s_rs1_addr      ),
-        .i_rs2_addr    ( s_rs2_addr      ),
-        .i_rd_addr     ( s_rd_addr       ),
-        .i_func3       ( s_func3         ),
-        .i_forward_src ( s_forward_src   ),
-        .i_load_instr  ( s_load_instr    ),
-        .o_result_src  ( o_result_src    ),
-        .o_alu_control ( o_alu_control   ),
-        .o_mem_we      ( o_mem_we        ),
-        .o_reg_we      ( o_reg_we        ),
-        .o_alu_src     ( o_alu_src       ),
-        .o_branch      ( o_branch        ),
-        .o_jump        ( o_jump          ),
-        .o_pc_plus4    ( o_pc_plus4      ),
-        .o_pc          ( o_pc            ),
-        .o_imm_ext     ( o_imm_ext       ),
-        .o_rs1_data    ( o_rs1_data      ),
-        .o_rs2_data    ( o_rs2_data      ),
-        .o_rs1_addr    ( o_rs1_addr_preg ),
-        .o_rs2_addr    ( o_rs2_addr_preg ),
-        .o_rd_addr     ( o_rd_addr       ),
-        .o_func3       ( o_func3         ),
-        .o_forward_src ( o_forward_src   ), 
-        .o_load_instr  ( o_load_instr    )
+        .i_clk           ( i_clk           ),
+        .i_arst          ( i_arst          ),
+        .i_flush_exec    ( i_flush_exec    ),
+        .i_result_src    ( s_result_src    ),
+        .i_alu_control   ( s_alu_control   ),
+        .i_mem_we        ( s_mem_we        ),
+        .i_reg_we        ( s_reg_we        ),
+        .i_alu_src       ( s_alu_src       ),
+        .i_branch        ( s_branch        ),
+        .i_jump          ( s_jump          ),
+        .i_pc_target_src ( s_pc_target_src ),
+        .i_pc_plus4      ( i_pc_plus4      ),
+        .i_pc            ( i_pc            ),
+        .i_imm_ext       ( s_imm_ext       ),
+        .i_rs1_data      ( s_rs1_data      ),
+        .i_rs2_data      ( s_rs2_data      ),
+        .i_rs1_addr      ( s_rs1_addr      ),
+        .i_rs2_addr      ( s_rs2_addr      ),
+        .i_rd_addr       ( s_rd_addr       ),
+        .i_func3         ( s_func3         ),
+        .i_forward_src   ( s_forward_src   ),
+        .i_load_instr    ( s_load_instr    ),
+        .o_result_src    ( o_result_src    ),
+        .o_alu_control   ( o_alu_control   ),
+        .o_mem_we        ( o_mem_we        ),
+        .o_reg_we        ( o_reg_we        ),
+        .o_alu_src       ( o_alu_src       ),
+        .o_branch        ( o_branch        ),
+        .o_jump          ( o_jump          ),
+        .o_pc_target_src ( o_pc_target_src ),
+        .o_pc_plus4      ( o_pc_plus4      ),
+        .o_pc            ( o_pc            ),
+        .o_imm_ext       ( o_imm_ext       ),
+        .o_rs1_data      ( o_rs1_data      ),
+        .o_rs2_data      ( o_rs2_data      ),
+        .o_rs1_addr      ( o_rs1_addr_preg ),
+        .o_rs2_addr      ( o_rs2_addr_preg ),
+        .o_rd_addr       ( o_rd_addr       ),
+        .o_func3         ( o_func3         ),
+        .o_forward_src   ( o_forward_src   ), 
+        .o_load_instr    ( o_load_instr    )
     );
 
 

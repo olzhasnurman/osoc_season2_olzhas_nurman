@@ -18,6 +18,7 @@ module main_decoder
     output logic         o_alu_src,
     output logic         o_branch,
     output logic         o_jump,
+    output logic         o_pc_target_src,
     output logic [ 1:0 ] o_forward_src,
     output logic         o_load_instr        
 );
@@ -72,15 +73,16 @@ module main_decoder
     //----------------------------------------------
     always_comb begin
         // Default values.
-        o_result_src  = 3'b0; // 000 - ALUResult, 001 - ReadDataMem, 010 - PCPlus4, 011 - PCPlusImm, 100 - ImmExtended.
-        o_alu_op      = 3'b0; // 000 - Add, 001 - Sub, 010 - I & R, I & R W.
-        o_mem_we      = 1'b0;
-        o_reg_we      = 1'b0;
-        o_alu_src     = 1'b0; // 0 - Reg, 1 - Immediate.
-        o_branch      = 1'b0;
-        o_jump        = 1'b0;
-        o_forward_src = 2'b0; // 00 - ALUResult, 01 - PCTarget, 10 - ImmExt. 
-        o_load_instr  = 1'b0;
+        o_result_src    = 3'b0; // 000 - ALUResult, 001 - ReadDataMem, 010 - PCPlus4, 011 - PCPlusImm, 100 - ImmExtended.
+        o_alu_op        = 3'b0; // 000 - Add, 001 - Sub, 010 - I & R, I & R W.
+        o_mem_we        = 1'b0;
+        o_reg_we        = 1'b0;
+        o_alu_src       = 1'b0; // 0 - Reg, 1 - Immediate.
+        o_branch        = 1'b0;
+        o_jump          = 1'b0;
+        o_pc_target_src = 1'b0; // 0 - PC + IMM , 1 - ALUResult.
+        o_forward_src   = 2'b0; // 00 - ALUResult, 01 - PCTarget, 10 - ImmExt. 
+        o_load_instr    = 1'b0;
 
         case ( s_instr_type )
             I_Type: begin
@@ -95,10 +97,11 @@ module main_decoder
                 o_alu_op     = 3'b10;
             end
             I_Type_JALR: begin
-                o_reg_we     = 1'b1;
-                o_alu_src    = 1'b1; 
-                o_jump       = 1'b1;
-                o_result_src = 3'b10;
+                o_reg_we        = 1'b1;
+                o_alu_src       = 1'b1; 
+                o_jump          = 1'b1;
+                o_result_src    = 3'b10;
+                o_pc_target_src = 1'b1;
             end
             I_Type_ALUW: begin
                 o_reg_we     = 1'b1;
@@ -137,15 +140,16 @@ module main_decoder
                 o_forward_src = 2'b10; 
             end
             default: begin
-                o_result_src  = 3'b0;
-                o_alu_op      = 3'b0;
-                o_mem_we      = 1'b0;
-                o_reg_we      = 1'b0;
-                o_alu_src     = 1'b0;
-                o_branch      = 1'b0;
-                o_jump        = 1'b0; 
-                o_forward_src = 2'b0;
-                o_load_instr  = 1'b0;
+                o_result_src    = 3'b0;
+                o_alu_op        = 3'b0;
+                o_mem_we        = 1'b0;
+                o_reg_we        = 1'b0;
+                o_alu_src       = 1'b0;
+                o_branch        = 1'b0;
+                o_jump          = 1'b0; 
+                o_pc_target_src = 1'b0;
+                o_forward_src   = 2'b0;
+                o_load_instr    = 1'b0;
             end
         endcase
     end

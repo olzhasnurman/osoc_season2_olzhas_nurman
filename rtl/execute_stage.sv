@@ -30,6 +30,7 @@ module execute_stage
     input  logic                      i_alu_src,
     input  logic                      i_branch,
     input  logic                      i_jump,
+    input  logic                      i_pc_target_src,
     input  logic [ DATA_WIDTH - 1:0 ] i_result,
     input  logic [ DATA_WIDTH - 1:0 ] i_forward_value,
     input  logic [              1:0 ] i_forward_src,
@@ -64,6 +65,7 @@ module execute_stage
     logic [ DATA_WIDTH - 1:0 ] s_write_data;
 
     logic [ DATA_WIDTH - 1:0 ] s_alu_result;
+    logic [ ADDR_WIDTH - 1:0 ] s_pc_plus_imm;
     logic [ ADDR_WIDTH - 1:0 ] s_pc_target;
 
     logic s_zero_flag;
@@ -90,9 +92,9 @@ module execute_stage
 
     // Adder for target pc value calculation.
     adder ADD_IMM0 (
-        .i_input1 ( i_pc        ),
-        .i_input2 ( i_imm_ext   ),
-        .o_sum    ( s_pc_target )
+        .i_input1 ( i_pc          ),
+        .i_input2 ( i_imm_ext     ),
+        .o_sum    ( s_pc_plus_imm )
     );
 
     // 3-to-1 ALU SrcA MUX.
@@ -119,6 +121,14 @@ module execute_stage
         .i_mux_0          ( s_write_data  ),
         .i_mux_1          ( i_imm_ext     ),
         .o_mux            ( s_alu_srcB    )
+    );
+
+    // 2-to-1 PC target src MUX.
+    mux2to1 MUX3 (
+        .i_control_signal ( i_pc_target_src ),
+        .i_mux_0          ( s_alu_result    ),
+        .i_mux_1          ( s_pc_plus_imm   ),
+        .o_mux            ( s_pc_target     )
     );
 
 

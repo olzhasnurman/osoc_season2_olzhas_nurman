@@ -24,6 +24,7 @@ module preg_decode
     input  logic                       i_alu_src,
     input  logic                       i_branch,
     input  logic                       i_jump,
+    input  logic                       i_pc_target_src,
     input  logic [ ADDR_WIDTH  - 1:0 ] i_pc_plus4,
     input  logic [ ADDR_WIDTH  - 1:0 ] i_pc,
     input  logic [ DATA_WIDTH  - 1:0 ] i_imm_ext,
@@ -44,6 +45,7 @@ module preg_decode
     output logic                       o_alu_src,
     output logic                       o_branch,
     output logic                       o_jump,
+    output logic                       o_pc_target_src,
     output logic [ ADDR_WIDTH  - 1:0 ] o_pc_plus4,
     output logic [ ADDR_WIDTH  - 1:0 ] o_pc,
     output logic [ DATA_WIDTH  - 1:0 ] o_imm_ext,
@@ -60,64 +62,67 @@ module preg_decode
     // Write logic.
     always_ff @( posedge i_clk, posedge i_arst ) begin 
         if ( i_arst ) begin
-            o_result_src  <= '0;
-            o_alu_control <= '0;
-            o_mem_we      <= '0;
-            o_reg_we      <= '0;
-            o_alu_src     <= '0;
-            o_branch      <= '0;
-            o_jump        <= '0;
-            o_pc_plus4    <= '0;
-            o_pc          <= '0;
-            o_imm_ext     <= '0;
-            o_rs1_data    <= '0;
-            o_rs2_data    <= '0;
-            o_rs1_addr    <= '0;
-            o_rs2_addr    <= '0;
-            o_rd_addr     <= '0;
-            o_func3       <= '0;
-            o_forward_src <= '0;
-            o_load_instr  <= '0;
+            o_result_src    <= '0;
+            o_alu_control   <= '0;
+            o_mem_we        <= '0;
+            o_reg_we        <= '0;
+            o_alu_src       <= '0;
+            o_branch        <= '0;
+            o_jump          <= '0;
+            o_pc_target_src <= '0;
+            o_pc_plus4      <= '0;
+            o_pc            <= '0;
+            o_imm_ext       <= '0;
+            o_rs1_data      <= '0;
+            o_rs2_data      <= '0;
+            o_rs1_addr      <= '0;
+            o_rs2_addr      <= '0;
+            o_rd_addr       <= '0;
+            o_func3         <= '0;
+            o_forward_src   <= '0;
+            o_load_instr    <= '0;
         end
         else if ( i_flush_exec ) begin
-            o_result_src  <= '0;
-            o_alu_control <= '0;
-            o_mem_we      <= '0;
-            o_reg_we      <= '0;
-            o_alu_src     <= '0;
-            o_branch      <= '0;
-            o_jump        <= '0;
-            o_pc_plus4    <= '0;
-            o_pc          <= '0;
-            o_imm_ext     <= '0;
-            o_rs1_data    <= '0;
-            o_rs2_data    <= '0;
-            o_rs1_addr    <= '0;
-            o_rs2_addr    <= '0;
-            o_rd_addr     <= '0;
-            o_func3       <= '0;
-            o_forward_src <= '0;
-            o_load_instr  <= '0;
+            o_result_src    <= '0;
+            o_alu_control   <= '0;
+            o_mem_we        <= '0;
+            o_reg_we        <= '0;
+            o_alu_src       <= '0;
+            o_branch        <= '0;
+            o_jump          <= '0;
+            o_pc_target_src <= '0;
+            o_pc_plus4      <= '0;
+            o_pc            <= '0;
+            o_imm_ext       <= '0;
+            o_rs1_data      <= '0;
+            o_rs2_data      <= '0;
+            o_rs1_addr      <= '0;
+            o_rs2_addr      <= '0;
+            o_rd_addr       <= '0;
+            o_func3         <= '0;
+            o_forward_src   <= '0;
+            o_load_instr    <= '0;
         end
         else begin
-            o_result_src  <= i_result_src;
-            o_alu_control <= i_alu_control;
-            o_mem_we      <= i_mem_we;
-            o_reg_we      <= i_reg_we;
-            o_alu_src     <= i_alu_src;  
-            o_branch      <= i_branch;
-            o_jump        <= i_jump;
-            o_pc_plus4    <= i_pc_plus4;
-            o_pc          <= i_pc;
-            o_imm_ext     <= i_imm_ext;
-            o_rs1_data    <= i_rs1_data;
-            o_rs2_data    <= i_rs2_data;
-            o_rs1_addr    <= i_rs1_addr;
-            o_rs2_addr    <= i_rs2_addr;
-            o_rd_addr     <= i_rd_addr;
-            o_func3       <= i_func3;
-            o_forward_src <= i_forward_src;
-            o_load_instr  <= i_load_instr;
+            o_result_src    <= i_result_src;
+            o_alu_control   <= i_alu_control;
+            o_mem_we        <= i_mem_we;
+            o_reg_we        <= i_reg_we;
+            o_alu_src       <= i_alu_src;  
+            o_branch        <= i_branch;
+            o_jump          <= i_jump;
+            o_pc_target_src <= i_pc_target_src;
+            o_pc_plus4      <= i_pc_plus4;
+            o_pc            <= i_pc;
+            o_imm_ext       <= i_imm_ext;
+            o_rs1_data      <= i_rs1_data;
+            o_rs2_data      <= i_rs2_data;
+            o_rs1_addr      <= i_rs1_addr;
+            o_rs2_addr      <= i_rs2_addr;
+            o_rd_addr       <= i_rd_addr;
+            o_func3         <= i_func3;
+            o_forward_src   <= i_forward_src;
+            o_load_instr    <= i_load_instr;
         end
     end
     
