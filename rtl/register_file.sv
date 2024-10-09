@@ -46,8 +46,8 @@ module register_file
     end
 
     // Read logic.
-    assign o_read_data_1 = mem_block [ i_addr_1 ];
-    assign o_read_data_2 = mem_block [ i_addr_2 ];
+    assign o_read_data_1 = ( i_addr_1 == i_addr_3 ) ? i_write_data_3 : mem_block [ i_addr_1 ];
+    assign o_read_data_2 = ( i_addr_2 == i_addr_3 ) ? i_write_data_3 : mem_block [ i_addr_2 ];
 
     
 endmodule
