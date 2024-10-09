@@ -34,7 +34,8 @@ module main_decoder
         B_Type      = 4'b0111,
         J_Type      = 4'b1000,
         U_Type_ALU  = 4'b1001,
-        U_Type_LOAD = 4'b1010
+        U_Type_LOAD = 4'b1010,
+        DEF         = 4'b1111
     } t_instruction;
 
     // Instruction decoder signal. 
@@ -56,7 +57,7 @@ module main_decoder
             7'b1101111: s_instr_type = J_Type;
             7'b0010111: s_instr_type = U_Type_ALU;
             7'b0110111: s_instr_type = U_Type_LOAD;
-            default   : s_instr_type = I_Type; // For now default to I type later for Illegal instruction. 
+            default   : s_instr_type = DEF;
         endcase
     end
 

@@ -27,7 +27,7 @@ module mux3to1
             2'd0   : o_mux = i_mux_0;
             2'd1   : o_mux = i_mux_1;
             2'd2   : o_mux = i_mux_2;
-            default: o_mux = i_mux_0;
+            default: o_mux = '0;
         endcase
     end
     
