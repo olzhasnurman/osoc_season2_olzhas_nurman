@@ -107,7 +107,7 @@ module datapath
     //-------------------------------------
     // Fetch stage module.
     //-------------------------------------
-    fetch_stage F_STAGE1 (
+    fetch_stage STAGE1_FETCH (
         .i_clk         ( i_clk             ),
         .i_arst        ( i_arst            ),
         .i_pc_target   ( s_pc_target_fetch ),
@@ -124,7 +124,7 @@ module datapath
     //-------------------------------------
     // Decode stage module.
     //-------------------------------------
-    decode_stage DEC_STAGE2 (
+    decode_stage STAGE2_DEC (
         .i_clk           ( i_clk              ),
         .i_arst          ( i_arst             ),
         .i_instruction   ( s_instruction_dec  ),
@@ -159,7 +159,7 @@ module datapath
     //-------------------------------------
     // Execute stage module.
     //-------------------------------------
-    execute_stage EXEC_STAGE3 (
+    execute_stage STAGE3_EXEC (
         .i_clk              ( i_clk                ),
         .i_arst             ( i_arst               ),
         .i_pc               ( s_pc_exec            ),
@@ -206,7 +206,7 @@ module datapath
     //-------------------------------------
     // Memory stage module.
     //-------------------------------------
-    memory_stage MEM_STAGE4 (
+    memory_stage STAGE4_MEM (
         .i_clk             ( i_clk                ),
         .i_arst            ( i_arst               ),
         .i_pc_plus4        ( s_pc_plus4_mem       ),
@@ -235,7 +235,7 @@ module datapath
     //-------------------------------------
     // Write-back stage module.
     //-------------------------------------
-    write_back_stage WB_STAGE5 (
+    write_back_stage STAGE5_WB (
         .i_pc_plus4   ( s_pc_plus4_wb   ),
         .i_pc_target  ( s_pc_target_wb  ),
         .i_alu_result ( s_alu_result_wb ),
