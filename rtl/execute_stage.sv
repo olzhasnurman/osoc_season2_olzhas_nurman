@@ -126,8 +126,8 @@ module execute_stage
     // 2-to-1 PC target src MUX.
     mux2to1 MUX3 (
         .i_control_signal ( i_pc_target_src ),
-        .i_mux_0          ( s_alu_result    ),
-        .i_mux_1          ( s_pc_plus_imm   ),
+        .i_mux_0          ( s_pc_plus_imm   ),
+        .i_mux_1          ( s_alu_result    ),
         .o_mux            ( s_pc_target     )
     );
 
