@@ -36,6 +36,7 @@ module main_decoder
         J_Type      = 4'b1000,
         U_Type_ALU  = 4'b1001,
         U_Type_LOAD = 4'b1010,
+        ECALL       = 4'b1110,
         DEF         = 4'b1111
     } t_instruction;
 
@@ -58,6 +59,7 @@ module main_decoder
             7'b1101111: s_instr_type = J_Type;
             7'b0010111: s_instr_type = U_Type_ALU;
             7'b0110111: s_instr_type = U_Type_LOAD;
+            7'b1110011: s_instr_type = ECALL;
             default   : s_instr_type = DEF;
         endcase
     end
@@ -138,6 +140,10 @@ module main_decoder
                 o_reg_we      = 1'b1; 
                 o_result_src  = 3'b100;
                 o_forward_src = 2'b10; 
+            end
+            ECALL: begin
+                $stop; // For simulation only.
+                //$display("time =%0t", $time);
             end
             default: begin
                 o_result_src    = 3'b0;

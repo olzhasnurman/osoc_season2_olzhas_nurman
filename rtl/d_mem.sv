@@ -4,7 +4,7 @@
 // This is a data memory in RISC-V architecture. Later to be replaced with cache.
 // -------------------------------------------------------------------------------
 
-`define PATH_TO_DMEM "/home/maveric/osoc_season2_olzhas_nurman/test/tests/dmem.txt" // Later to be defined properly.
+`define PATH_TO_DMEM "/home/maveric/osoc_season2_olzhas_nurman/test/tests/add-riscv64-nemu.txt" // Later to be defined properly.
 
 module d_mem
 // Parameters.
