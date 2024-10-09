@@ -4,14 +4,14 @@
 // This is a instruction memory simulatrion file. Later to be replaced with cache.
 // --------------------------------------------------------------------------------------
 
-`define PATH_TO_MEM "./test/tests/instr/riscv-tests/rv64ui-p-xori.txt" // Later to be defined properly.
+`define PATH_TO_MEM "/home/maveric/osoc_season2_olzhas_nurman/test/tests/add-riscv64-nemu.txt" // Later to be defined properly.
 
 module i_mem
 // Parameters.
 #(
     parameter DATA_WIDTH = 32,
               ADDR_WIDTH = 10,
-              MEM_DEPTH  = 1024
+              MEM_DEPTH  = 256
 )
 // Port decleration. 
 (   
@@ -35,7 +35,7 @@ module i_mem
     end
 
     // Read logic.
-    assign o_read_data = mem_block [ i_addr ];
+    assign o_read_data = mem_block [ i_addr [ 9:2 ] ];
 
     
 endmodule
