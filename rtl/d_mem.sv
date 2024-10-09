@@ -4,13 +4,13 @@
 // This is a data memory in RISC-V architecture. Later to be replaced with cache.
 // -------------------------------------------------------------------------------
 
-`define PATH_TO_DMEM "/home/maveric/osoc_season2_olzhas_nurman/test/tests/add-riscv64-nemu.txt" // Later to be defined properly.
+`define PATH_TO_DMEM "/home/maveric/osoc_season2_olzhas_nurman/test/tests/dmem.txt" // Later to be defined properly.
 
 module d_mem
 // Parameters.
 #(
     parameter DATA_WIDTH = 64,
-              ADDR_WIDTH = 10,
+              ADDR_WIDTH = 11,
               MEM_DEPTH  = 256
 )
 // Port decleration. 
@@ -34,11 +34,11 @@ module d_mem
     // Write logic.
     always_ff @( posedge i_clk, posedge i_arst ) begin 
         if ( i_arst ) $readmemh ( `PATH_TO_DMEM, mem_block );
-        else if ( i_write_en ) mem_block [ i_addr [ 9:2 ] ] <= i_write_data;
+        else if ( i_write_en ) mem_block [ i_addr [ 10:3 ] ] <= i_write_data;
     end
 
     // Read logic.
-    assign o_read_data = mem_block [ i_addr [ 9:2 ] ];
+    assign o_read_data = mem_block [ i_addr [ 10:3 ] ];
 
     
 endmodule
