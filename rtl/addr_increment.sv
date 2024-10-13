@@ -13,7 +13,7 @@ module addr_increment
 (
     // Input interface.
     input  logic                          i_clk,
-    input  logic                          i_run,
+    input  logic                          i_axi_free,
     input  logic                          i_arst,
     input  logic                          i_enable,
     input  logic [ AXI_ADDR_WIDTH - 1:0 ] i_addr,
@@ -25,9 +25,9 @@ module addr_increment
     logic [ AXI_ADDR_WIDTH - 1:0 ] s_count;
 
     always_ff @( posedge i_clk, posedge i_arst ) begin
-        if      ( i_arst   ) s_count <= '0;
-        else if ( ~i_run   ) s_count <= '0;
-        else if ( i_enable ) s_count <= s_count + INCR_VAL;
+        if      ( i_arst     ) s_count <= '0;
+        else if ( i_axi_free ) s_count <= '0;
+        else if ( i_enable   ) s_count <= s_count + INCR_VAL;
     end
 
     assign o_addr = i_addr + s_count;

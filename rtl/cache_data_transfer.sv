@@ -34,9 +34,9 @@ module cache_data_transfer
     //------------------------
     // INTERNAL NETS.
     //------------------------
-    logic s_start;
+    logic s_axi_free;
 
-    assign s_start = i_start_read | i_start_write;
+    assign s_axi_free = ~ ( i_start_read | i_start_write );
 
     //-----------------------------------
     // Lower-level module instantiations.
@@ -49,8 +49,8 @@ module cache_data_transfer
     ) COUNT0 (
         .i_clk      ( i_clk        ),
         .i_arst     ( i_arst       ),
-        .i_run      ( i_axi_done   ),
-        .i_restartn ( s_start      ),
+        .i_enable   ( i_axi_done   ),
+        .i_axi_free ( s_axi_free   ),
         .o_done     ( o_count_done )
     );
 
@@ -59,12 +59,12 @@ module cache_data_transfer
         .AXI_ADDR_WIDTH ( AXI_ADDR_WIDTH ),
         .INCR_VAL       ( ADDR_INCR_VAL  )
     ) ADDR_INC0 (
-        .i_clk    ( i_clk        ),
-        .i_arst   ( i_arst       ),
-        .i_run    ( s_start      ),
-        .i_enable ( i_axi_done   ),
-        .i_addr   ( i_addr_cache ),
-        .o_addr   ( o_addr_axi   )
+        .i_clk      ( i_clk        ),
+        .i_arst     ( i_arst       ),
+        .i_axi_free ( s_axi_free   ),
+        .i_enable   ( i_axi_done   ),
+        .i_addr     ( i_addr_cache ),
+        .o_addr     ( o_addr_axi   )
     );
 
     // FIFO module instance.
@@ -75,8 +75,7 @@ module cache_data_transfer
         .i_clk         ( i_clk              ),
         .i_arst        ( i_arst             ),
         .i_write_en    ( i_axi_done         ),
-        .i_start_write ( i_start_write      ),
-        .i_start_read  ( i_start_read       ),
+        .i_axi_free    ( s_axi_free         ),
         .i_data        ( i_data_axi         ),
         .i_data_block  ( i_data_block_cache ),
         .o_data        ( o_data_axi         ),

@@ -14,8 +14,7 @@ module fifo
     input  logic                          i_clk,
     input  logic                          i_arst,
     input  logic                          i_write_en,
-    input  logic                          i_start_read,
-    input  logic                          i_start_write,
+    input  logic                          i_axi_free,
     input  logic [ AXI_DATA_WIDTH - 1:0 ] i_data,
     input  logic [ FIFO_WIDTH     - 1:0 ] i_data_block,
 
@@ -25,9 +24,9 @@ module fifo
 );
 
     always_ff @( posedge i_clk, posedge i_arst ) begin
-        if      ( i_arst                                 ) o_data_block <= '0;
-        else if ( ( ~i_start_write ) & ( ~i_start_read ) ) o_data_block <= i_data_block;
-        else if ( i_write_en                             ) o_data_block <= { i_data, o_data_block[ FIFO_WIDTH - 1:AXI_DATA_WIDTH ] }; 
+        if      ( i_arst     ) o_data_block <= '0;
+        else if ( i_axi_free ) o_data_block <= i_data_block;
+        else if ( i_write_en ) o_data_block <= { i_data, o_data_block[ FIFO_WIDTH - 1:AXI_DATA_WIDTH ] }; 
     end
 
     assign o_data = o_data_block [ AXI_DATA_WIDTH - 1:0 ];
