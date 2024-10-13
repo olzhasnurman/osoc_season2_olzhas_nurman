@@ -13,14 +13,14 @@ module icache
               ADDR_WIDTH  = 64
 )
 (
-    // Inputs.
+    // Input interface.
     input  logic                       i_clk,
     input  logic                       i_arst,
     input  logic                       i_write_en,
     input  logic [ ADDR_WIDTH  - 1:0 ] i_addr,
     input  logic [ BLOCK_WIDTH - 1:0 ] i_instr_block,
     
-    // Outputs.
+    // Output interface.
     output logic [ INSTR_WIDTH - 1:0 ] o_instruction,
     output logic                       o_hit 
 );

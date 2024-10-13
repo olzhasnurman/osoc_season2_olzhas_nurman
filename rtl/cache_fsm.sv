@@ -7,12 +7,13 @@
 
 module cache_fsm
 (
-    // Input ports.
+    // Input interface.
     input  logic i_clk,
     input  logic i_arst,
     input  logic i_icache_hit,
     input  logic i_axi_read_done,
 
+    // Output interface.
     output logic o_stall,
     output logic o_instr_we,
     output logic o_axi_read_start
