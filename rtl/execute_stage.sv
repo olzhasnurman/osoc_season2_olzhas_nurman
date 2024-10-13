@@ -67,6 +67,7 @@ module execute_stage
 
     logic [ DATA_WIDTH - 1:0 ] s_alu_result;
     logic [ ADDR_WIDTH - 1:0 ] s_pc_plus_imm;
+    logic [ ADDR_WIDTH - 1:0 ] s_rs1_plus_imm;
     logic [ ADDR_WIDTH - 1:0 ] s_pc_target;
 
     logic s_zero_flag;
@@ -125,10 +126,11 @@ module execute_stage
     );
 
     // 2-to-1 PC target src MUX.
+    assign s_rs1_plus_imm = { s_alu_result [ DATA_WIDTH - 1:1 ], 1'b0 };
     mux2to1 MUX3 (
         .i_control_signal ( i_pc_target_src ),
         .i_mux_0          ( s_pc_plus_imm   ),
-        .i_mux_1          ( s_alu_result    ),
+        .i_mux_1          ( s_rs1_plus_imm  ),
         .o_mux            ( s_pc_target     )
     );
 
