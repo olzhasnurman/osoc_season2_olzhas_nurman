@@ -7,33 +7,37 @@
 module datapath
 #(
     parameter ADDR_WIDTH  = 64,
+              BLOCK_WIDTH = 512,
               DATA_WIDTH  = 64,
               REG_ADDR_W  = 5,
               INSTR_WIDTH = 32
 ) 
 (
     // Input interface.
-    input  logic                      i_clk,
-    input  logic                      i_arst,
-    input  logic                      i_stall_fetch,
-    input  logic                      i_stall_dec,
-    input  logic                      i_flush_dec,
-    input  logic                      i_flush_exec,
-    input  logic [              1:0 ] i_forward_rs1, 
-    input  logic [              1:0 ] i_forward_rs2, 
+    input  logic                       i_clk,
+    input  logic                       i_arst,
+    input  logic                       i_stall_fetch,
+    input  logic                       i_stall_dec,
+    input  logic                       i_flush_dec,
+    input  logic                       i_flush_exec,
+    input  logic [               1:0 ] i_forward_rs1, 
+    input  logic [               1:0 ] i_forward_rs2, 
+    input  logic                       i_instr_we,
+    input  logic [ BLOCK_WIDTH - 1:0 ] i_instr_block,
 
     // Output interface.
-    output logic [ REG_ADDR_W - 1:0 ] o_rs1_addr_dec,
-    output logic [ REG_ADDR_W - 1:0 ] o_rs1_addr_exec,
-    output logic [ REG_ADDR_W - 1:0 ] o_rs2_addr_dec,
-    output logic [ REG_ADDR_W - 1:0 ] o_rs2_addr_exec,
-    output logic [ REG_ADDR_W - 1:0 ] o_rd_addr_exec,
-    output logic [ REG_ADDR_W - 1:0 ] o_rd_addr_mem,
-    output logic [ REG_ADDR_W - 1:0 ] o_rd_addr_wb,
-    output logic                      o_reg_we_mem,
-    output logic                      o_reg_we_wb,
-    output logic                      o_pc_src_exec,
-    output logic                      o_load_instr_exec
+    output logic [ REG_ADDR_W  - 1:0 ] o_rs1_addr_dec,
+    output logic [ REG_ADDR_W  - 1:0 ] o_rs1_addr_exec,
+    output logic [ REG_ADDR_W  - 1:0 ] o_rs2_addr_dec,
+    output logic [ REG_ADDR_W  - 1:0 ] o_rs2_addr_exec,
+    output logic [ REG_ADDR_W  - 1:0 ] o_rd_addr_exec,
+    output logic [ REG_ADDR_W  - 1:0 ] o_rd_addr_mem,
+    output logic [ REG_ADDR_W  - 1:0 ] o_rd_addr_wb,
+    output logic                       o_reg_we_mem,
+    output logic                       o_reg_we_wb,
+    output logic                       o_pc_src_exec,
+    output logic                       o_icache_hit,
+    output logic                       o_load_instr_exec
 );
 
     //-------------------------------------------------------------
@@ -117,9 +121,12 @@ module datapath
         .i_stall_fetch ( i_stall_fetch     ),
         .i_stall_dec   ( i_stall_dec       ),
         .i_flush_dec   ( i_flush_dec       ),
+        .i_instr_we    ( i_instr_we        ),
+        .i_instr_block ( i_instr_block     ),
         .o_instruction ( s_instruction_dec ),
         .o_pc_plus4    ( s_pc_plus4_dec    ),
-        .o_pc          ( s_pc_dec          )
+        .o_pc          ( s_pc_dec          ),
+        .o_icache_hit  ( o_icache_hit      )
     );
 
 

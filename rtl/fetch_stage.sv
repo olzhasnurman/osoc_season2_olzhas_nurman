@@ -7,7 +7,8 @@
 module fetch_stage 
 #(
     parameter ADDR_WIDTH  = 64,
-              INSTR_WIDTH = 32
+              INSTR_WIDTH = 32,
+              BLOCK_WIDTH = 512
 ) 
 (
     // Input interface.
@@ -18,11 +19,14 @@ module fetch_stage
     input  logic                       i_stall_fetch,
     input  logic                       i_stall_dec,
     input  logic                       i_flush_dec,
+    input  logic                       i_instr_we,
+    input  logic [ BLOCK_WIDTH - 1:0 ] i_instr_block,
 
     // Output interface.
     output logic [ INSTR_WIDTH - 1:0 ] o_instruction,
     output logic [ ADDR_WIDTH  - 1:0 ] o_pc_plus4,
-    output logic [ ADDR_WIDTH  - 1:0 ] o_pc
+    output logic [ ADDR_WIDTH  - 1:0 ] o_pc,
+    output logic                       o_icache_hit
 );
 
     //-----------------------------
@@ -63,12 +67,15 @@ module fetch_stage
         .o_sum    ( s_pc_plus4 )
     );
 
-    // Instruction memory. Later to be replaced with cache.
-    i_mem I_MEM (
-        .i_clk       ( i_clk             ),
-        .i_arst      ( i_arst            ),
-        .i_addr      ( s_pc_reg [ 9:0 ]  ),
-        .o_read_data ( s_instruction     )
+    // Instruction cache.
+    icache I_CACHE (
+        .i_clk         ( i_clk         ),
+        .i_arst        ( i_arst        ),
+        .i_write_en    ( i_instr_we    ),
+        .i_addr        ( s_pc_reg      ),
+        .i_instr_block ( i_instr_block ),
+        .o_instruction ( s_instruction ),
+        .o_hit         ( o_icache_hit  ) 
     );
 
 
