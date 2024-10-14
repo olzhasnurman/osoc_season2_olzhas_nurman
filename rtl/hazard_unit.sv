@@ -33,6 +33,7 @@ module hazard_unit
 );
 
     logic s_load_instr_stall;
+    logic s_flush_dec;
 
     always_comb begin
         if      ( ( i_rs1_addr_exec == i_rd_addr_mem ) & i_reg_we_mem ) o_forward_rs1 = 2'b10;
@@ -50,8 +51,9 @@ module hazard_unit
     assign o_stall_fetch = s_load_instr_stall | i_stall_cache;
     assign o_stall_dec   = s_load_instr_stall | i_stall_cache;
 
-    assign o_flush_dec  = i_pc_src_exec;
-    assign o_flush_exec = s_load_instr_stall | i_pc_src_exec;
+    assign s_flush_dec  = i_pc_src_exec & ( ~ i_stall_cache );
+    assign o_flush_dec  = s_flush_dec;
+    assign o_flush_exec = s_load_instr_stall | s_flush_dec;
 
 
 endmodule
