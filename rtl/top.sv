@@ -7,6 +7,7 @@
 module top
 #(
     parameter REG_ADDR_W  = 5,
+              ADDR_WIDTH  = 64,
               BLOCK_WIDTH = 512
 ) 
 (
@@ -17,6 +18,7 @@ module top
     input  logic [ BLOCK_WIDTH - 1:0 ] i_data_block,
 
     // Output interface.
+    output logic [ ADDR_WIDTH  - 1:0 ] o_axi_read_addr,
     output logic                       o_axi_read_start
 );
 
@@ -75,6 +77,7 @@ module top
         .o_reg_we_wb       ( s_reg_we_wb       ),
         .o_pc_src_exec     ( s_pc_src_exec     ),
         .o_icache_hit      ( s_icache_hit      ),
+        .o_axi_read_addr   ( o_axi_read_addr   ),
         .o_load_instr_exec ( s_load_instr_exec )
     );
 

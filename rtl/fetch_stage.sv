@@ -26,6 +26,7 @@ module fetch_stage
     output logic [ INSTR_WIDTH - 1:0 ] o_instruction,
     output logic [ ADDR_WIDTH  - 1:0 ] o_pc_plus4,
     output logic [ ADDR_WIDTH  - 1:0 ] o_pc,
+    output logic [ ADDR_WIDTH  - 1:0 ] o_axi_read_addr,
     output logic                       o_icache_hit
 );
 
@@ -94,5 +95,7 @@ module fetch_stage
         .o_pc        ( o_pc          ),
         .o_pc_plus4  ( o_pc_plus4    )
     );
+
+    assign o_axi_read_addr = { s_pc_reg [ ADDR_WIDTH - 1:6 ], 6'b0 };
 
 endmodule

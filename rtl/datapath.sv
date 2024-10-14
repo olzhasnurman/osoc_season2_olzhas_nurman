@@ -37,6 +37,7 @@ module datapath
     output logic                       o_reg_we_wb,
     output logic                       o_pc_src_exec,
     output logic                       o_icache_hit,
+    output logic [ ADDR_WIDTH  - 1:0 ] o_axi_read_addr,
     output logic                       o_load_instr_exec
 );
 
@@ -114,19 +115,20 @@ module datapath
     // Fetch stage module.
     //-------------------------------------
     fetch_stage STAGE1_FETCH (
-        .i_clk         ( i_clk             ),
-        .i_arst        ( i_arst            ),
-        .i_pc_target   ( s_pc_target_fetch ),
-        .i_pc_src      ( s_pc_src_fetch    ),
-        .i_stall_fetch ( i_stall_fetch     ),
-        .i_stall_dec   ( i_stall_dec       ),
-        .i_flush_dec   ( i_flush_dec       ),
-        .i_instr_we    ( i_instr_we        ),
-        .i_instr_block ( i_instr_block     ),
-        .o_instruction ( s_instruction_dec ),
-        .o_pc_plus4    ( s_pc_plus4_dec    ),
-        .o_pc          ( s_pc_dec          ),
-        .o_icache_hit  ( o_icache_hit      )
+        .i_clk           ( i_clk             ),
+        .i_arst          ( i_arst            ),
+        .i_pc_target     ( s_pc_target_fetch ),
+        .i_pc_src        ( s_pc_src_fetch    ),
+        .i_stall_fetch   ( i_stall_fetch     ),
+        .i_stall_dec     ( i_stall_dec       ),
+        .i_flush_dec     ( i_flush_dec       ),
+        .i_instr_we      ( i_instr_we        ),
+        .i_instr_block   ( i_instr_block     ),
+        .o_instruction   ( s_instruction_dec ),
+        .o_pc_plus4      ( s_pc_plus4_dec    ),
+        .o_pc            ( s_pc_dec          ),
+        .o_axi_read_addr ( o_axi_read_addr   ),
+        .o_icache_hit    ( o_icache_hit      )
     );
 
 
