@@ -23,7 +23,8 @@ module datapath
     input  logic [               1:0 ] i_forward_rs1, 
     input  logic [               1:0 ] i_forward_rs2, 
     input  logic                       i_instr_we,
-    input  logic [ BLOCK_WIDTH - 1:0 ] i_instr_block,
+    input  logic                       i_dcache_we,
+    input  logic [ BLOCK_WIDTH - 1:0 ] i_data_block,
 
     // Output interface.
     output logic [ REG_ADDR_W  - 1:0 ] o_rs1_addr_dec,
@@ -37,7 +38,13 @@ module datapath
     output logic                       o_reg_we_wb,
     output logic                       o_pc_src_exec,
     output logic                       o_icache_hit,
-    output logic [ ADDR_WIDTH  - 1:0 ] o_axi_read_addr,
+    output logic [ ADDR_WIDTH  - 1:0 ] o_axi_read_addr_i,
+    output logic [ ADDR_WIDTH  - 1:0 ] o_axi_read_addr_d,
+    output logic                       o_dcache_hit,
+    output logic                       o_dcache_dirty,
+    output logic [ ADDR_WIDTH  - 1:0 ] o_axi_addr_wb,
+    output logic [ BLOCK_WIDTH - 1:0 ] o_data_block,
+    output logic                       o_mem_access,
     output logic                       o_load_instr_exec
 );
 
@@ -79,6 +86,7 @@ module datapath
     logic                      s_pc_target_src_exec;
     logic [              1:0 ] s_forward_src_exec;
     logic [ DATA_WIDTH - 1:0 ] s_forward_value_exec;
+    logic                      s_mem_access_exec;
 
 
     // Memory stage signals.
@@ -93,6 +101,7 @@ module datapath
     logic                      s_reg_we_mem;
     logic [              2:0 ] s_func3_mem;
     logic [              1:0 ] s_forward_src_mem;
+    logic                      s_mem_access_mem;
 
 
     // Write-back stage signals.
@@ -123,11 +132,11 @@ module datapath
         .i_stall_dec     ( i_stall_dec       ),
         .i_flush_dec     ( i_flush_dec       ),
         .i_instr_we      ( i_instr_we        ),
-        .i_instr_block   ( i_instr_block     ),
+        .i_instr_block   ( i_data_block      ),
         .o_instruction   ( s_instruction_dec ),
         .o_pc_plus4      ( s_pc_plus4_dec    ),
         .o_pc            ( s_pc_dec          ),
-        .o_axi_read_addr ( o_axi_read_addr   ),
+        .o_axi_read_addr ( o_axi_read_addr_i ),
         .o_icache_hit    ( o_icache_hit      )
     );
 
@@ -165,6 +174,7 @@ module datapath
         .o_jump          ( s_jump_exec          ),
         .o_pc_target_src ( s_pc_target_src_exec ),
         .o_forward_src   ( s_forward_src_exec   ),
+        .o_mem_access    ( s_mem_access_exec    ),
         .o_load_instr    ( s_load_instr_exec    )
     );
 
@@ -194,6 +204,7 @@ module datapath
         .i_result           ( s_result_wb          ),
         .i_forward_value    ( s_forward_value_exec ),
         .i_forward_src      ( s_forward_src_exec   ),
+        .i_mem_access       ( s_mem_access_exec    ),
         .i_load_instr       ( s_load_instr_exec    ),
         .i_forward_rs1_exec ( i_forward_rs1        ),
         .i_forward_rs2_exec ( i_forward_rs2        ),
@@ -213,6 +224,7 @@ module datapath
         .o_reg_we           ( s_reg_we_mem         ),
         .o_pc_src           ( s_pc_src_fetch       ),
         .o_func3            ( s_func3_mem          ),
+        .o_mem_access       ( s_mem_access_mem     ),
         .o_load_instr       ( o_load_instr_exec    )
     );
 
@@ -234,6 +246,9 @@ module datapath
         .i_forward_src     ( s_forward_src_mem    ),
         .i_func3           ( s_func3_mem          ),
         .i_reg_we          ( s_reg_we_mem         ),
+        .i_mem_block_we    ( i_dcache_we          ),
+        .i_data_block      ( i_data_block         ),
+        .i_mem_access      ( s_mem_access_mem     ),
         .o_pc_plus4        ( s_pc_plus4_wb        ),
         .o_pc_target       ( s_pc_target_wb       ),
         .o_forward_value   ( s_forward_value_exec ),
@@ -243,8 +258,15 @@ module datapath
         .o_rd_addr_preg    ( s_rd_addr_wb         ),
         .o_imm_ext         ( s_imm_ext_wb         ),
         .o_result_src      ( s_result_src_wb      ),
+        .o_dcache_hit      ( o_dcache_hit         ),
+        .o_dcache_dirty    ( o_dcache_dirty       ),
+        .o_axi_addr_wb     ( o_axi_addr_wb        ),
+        .o_data_block      ( o_data_block         ),
         .o_reg_we          ( s_reg_we_wb          )
     );
+
+    assign o_axi_read_addr_d = s_alu_result_mem;
+    assign o_mem_access      = s_mem_access_mem;
 
 
     //-------------------------------------

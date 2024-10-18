@@ -53,9 +53,6 @@ module test_env
     assign s_start_write_axi = s_start_write & ( ~s_count_done );
 
 
-    assign s_start_write    = 1'b0;
-    assign s_cache_data_out = '0;
-
     //-----------------------------------
     // LOWER LEVEL MODULE INSTANTIATIONS.
     //-----------------------------------
@@ -64,12 +61,14 @@ module test_env
     // Top processing module Instance.
     //--------------------------------
     top TOP_M (
-        .i_clk            ( i_clk           ),
-        .i_arst           ( i_arst          ),
-        .i_axi_read_done  ( s_count_done    ),
-        .i_data_block     ( s_cache_data_in ),
-        .o_axi_read_addr  ( s_cache_addr    ),
-        .o_axi_read_start ( s_start_read    )
+        .i_clk             ( i_clk            ),
+        .i_arst            ( i_arst           ),
+        .i_axi_done        ( s_count_done     ),
+        .i_data_block      ( s_cache_data_in  ),
+        .o_axi_addr        ( s_cache_addr     ),
+        .o_data_block      ( s_cache_data_out ),
+        .o_axi_write_start ( s_start_write    ),
+        .o_axi_read_start  ( s_start_read     )
     );
 
 
