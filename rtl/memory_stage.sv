@@ -8,35 +8,43 @@ module memory_stage
 #(
     parameter ADDR_WIDTH  = 64,
               DATA_WIDTH  = 64,
+              BLOCK_WIDTH = 512,
               REG_ADDR_W  = 5
 ) 
 (
     // Input interface.
-    input  logic                      i_clk,
-    input  logic                      i_arst,
-    input  logic [ ADDR_WIDTH - 1:0 ] i_pc_plus4,
-    input  logic [ ADDR_WIDTH - 1:0 ] i_pc_target,
-    input  logic [ DATA_WIDTH - 1:0 ] i_alu_result,
-    input  logic [ DATA_WIDTH - 1:0 ] i_write_data,
-    input  logic [ REG_ADDR_W - 1:0 ] i_rd_addr,
-    input  logic [ DATA_WIDTH - 1:0 ] i_imm_ext,
-    input  logic [              2:0 ] i_result_src,
-    input  logic                      i_mem_we,
-    input  logic                      i_reg_we,
-    input  logic [              2:0 ] i_func3,
-    input  logic [              1:0 ] i_forward_src,
+    input  logic                       i_clk,
+    input  logic                       i_arst,
+    input  logic [ ADDR_WIDTH  - 1:0 ] i_pc_plus4,
+    input  logic [ ADDR_WIDTH  - 1:0 ] i_pc_target,
+    input  logic [ DATA_WIDTH  - 1:0 ] i_alu_result,
+    input  logic [ DATA_WIDTH  - 1:0 ] i_write_data,
+    input  logic [ REG_ADDR_W  - 1:0 ] i_rd_addr,
+    input  logic [ DATA_WIDTH  - 1:0 ] i_imm_ext,
+    input  logic [               2:0 ] i_result_src,
+    input  logic                       i_mem_we,
+    input  logic                       i_reg_we,
+    input  logic [               2:0 ] i_func3,
+    input  logic [               1:0 ] i_forward_src,
+    input  logic                       i_mem_block_we,
+    input  logic [ BLOCK_WIDTH - 1:0 ] i_data_block,
+    input  logic                       i_mem_access,
 
     // Output interface.
-    output logic [ ADDR_WIDTH - 1:0 ] o_pc_plus4,
-    output logic [ ADDR_WIDTH - 1:0 ] o_pc_target,
-    output logic [ DATA_WIDTH - 1:0 ] o_forward_value,
-    output logic [ DATA_WIDTH - 1:0 ] o_alu_result,
-    output logic [ DATA_WIDTH - 1:0 ] o_read_data,
-    output logic [ REG_ADDR_W - 1:0 ] o_rd_addr,
-    output logic [ REG_ADDR_W - 1:0 ] o_rd_addr_preg,
-    output logic [ DATA_WIDTH - 1:0 ] o_imm_ext,
-    output logic [              2:0 ] o_result_src,
-    output logic                      o_reg_we
+    output logic [ ADDR_WIDTH  - 1:0 ] o_pc_plus4,
+    output logic [ ADDR_WIDTH  - 1:0 ] o_pc_target,
+    output logic [ DATA_WIDTH  - 1:0 ] o_forward_value,
+    output logic [ DATA_WIDTH  - 1:0 ] o_alu_result,
+    output logic [ DATA_WIDTH  - 1:0 ] o_read_data,
+    output logic [ REG_ADDR_W  - 1:0 ] o_rd_addr,
+    output logic [ REG_ADDR_W  - 1:0 ] o_rd_addr_preg,
+    output logic [ DATA_WIDTH  - 1:0 ] o_imm_ext,
+    output logic [               2:0 ] o_result_src,
+    output logic                       o_dcache_hit,
+    output logic                       o_dcache_dirty,
+    output logic [ ADDR_WIDTH  - 1:0 ] o_axi_addr_wb,
+    output logic [ BLOCK_WIDTH - 1:0 ] o_data_block,
+    output logic                       o_reg_we
 );
 
     //-------------------------------------
@@ -50,13 +58,21 @@ module memory_stage
     //-------------------------------------
 
     // Data memory.
-    d_mem DATA_MEM (
-        .i_clk        ( i_clk                 ),
-        .i_write_en   ( i_mem_we              ),
-        .i_arst       ( i_arst                ),
-        .i_addr       ( i_alu_result [ 10:0 ] ),
-        .i_write_data ( i_write_data          ),
-        .o_read_data  ( s_read_mem            )
+    dcache DATA_MEM (
+        .i_clk        ( i_clk           ),
+        .i_arst       ( i_arst          ),
+        .i_write_en   ( i_mem_we        ),
+        .i_block_we   ( i_mem_block_we  ),
+        .i_mem_access ( i_mem_access    ),
+        .i_store_type ( i_func3 [ 1:0 ] ),
+        .i_addr       ( i_alu_result    ), 
+        .i_data_block ( i_data_block    ),
+        .i_write_data ( i_write_data    ),
+        .o_hit        ( o_dcache_hit    ),
+        .o_dirty      ( o_dcache_dirty  ),
+        .o_addr_wb    ( o_axi_addr_wb   ),
+        .o_data_block ( o_data_block    ),
+        .o_read_data  ( s_read_mem      )
     );
 
 
