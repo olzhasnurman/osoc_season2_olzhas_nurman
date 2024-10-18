@@ -22,6 +22,7 @@ module control_unit
     output logic         o_jump,
     output logic         o_pc_target_src,
     output logic [ 1:0 ] o_forward_src,
+    output logic         o_mem_access,
     output logic         o_load_instr
 );
 
@@ -48,6 +49,7 @@ module control_unit
         .o_jump          ( o_jump          ),
         .o_pc_target_src ( o_pc_target_src ),
         .o_forward_src   ( o_forward_src   ),
+        .o_mem_access    ( o_mem_access    ),
         .o_load_instr    ( o_load_instr    )
     );
 

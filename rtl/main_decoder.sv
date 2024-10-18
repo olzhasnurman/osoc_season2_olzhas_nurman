@@ -20,6 +20,7 @@ module main_decoder
     output logic         o_jump,
     output logic         o_pc_target_src,
     output logic [ 1:0 ] o_forward_src,
+    output logic         o_mem_access,
     output logic         o_load_instr        
 );
 
@@ -84,6 +85,7 @@ module main_decoder
         o_jump          = 1'b0;
         o_pc_target_src = 1'b0; // 0 - PC + IMM , 1 - ALUResult.
         o_forward_src   = 2'b0; // 00 - ALUResult, 01 - PCTarget, 10 - ImmExt. 
+        o_mem_access    = 1'b0;
         o_load_instr    = 1'b0;
 
         case ( s_instr_type )
@@ -91,6 +93,7 @@ module main_decoder
                 o_reg_we     = 1'b1;
                 o_alu_src    = 1'b1;
                 o_result_src = 3'b1;
+                o_mem_access = 1'b1;
                 o_load_instr = 1'b1;
             end
             I_Type_ALU: begin
@@ -113,6 +116,7 @@ module main_decoder
             S_Type: begin
                 o_mem_we     = 1'b1;
                 o_alu_src    = 1'b1;
+                o_mem_access = 1'b1;
             end
             R_Type: begin
                 o_reg_we     = 1'b1;
@@ -155,6 +159,7 @@ module main_decoder
                 o_jump          = 1'b0; 
                 o_pc_target_src = 1'b0;
                 o_forward_src   = 2'b0;
+                o_mem_access    = 1'b0;
                 o_load_instr    = 1'b0;
             end
         endcase

@@ -44,6 +44,7 @@ module decode_stage
     output logic                       o_jump,
     output logic                       o_pc_target_src,
     output logic [               1:0 ] o_forward_src,
+    output logic                       o_mem_access,
     output logic                       o_load_instr
 );
 
@@ -66,6 +67,7 @@ module decode_stage
     logic         s_jump;
     logic         s_pc_target_src;
     logic [ 1:0 ] s_forward_src;
+    logic         s_mem_access;
     logic         s_load_instr;
     
     // Extend imm signal.
@@ -113,6 +115,7 @@ module decode_stage
         .o_jump          ( s_jump          ),
         .o_pc_target_src ( s_pc_target_src ),
         .o_forward_src   ( s_forward_src   ),
+        .o_mem_access    ( s_mem_access    ),
         .o_load_instr    ( s_load_instr    )
     );
 
@@ -164,6 +167,7 @@ module decode_stage
         .i_rd_addr       ( s_rd_addr       ),
         .i_func3         ( s_func3         ),
         .i_forward_src   ( s_forward_src   ),
+        .i_mem_access    ( s_mem_access    ),
         .i_load_instr    ( s_load_instr    ),
         .o_result_src    ( o_result_src    ),
         .o_alu_control   ( o_alu_control   ),
@@ -183,6 +187,7 @@ module decode_stage
         .o_rd_addr       ( o_rd_addr       ),
         .o_func3         ( o_func3         ),
         .o_forward_src   ( o_forward_src   ), 
+        .o_mem_access    ( o_mem_access    ), 
         .o_load_instr    ( o_load_instr    )
     );
 

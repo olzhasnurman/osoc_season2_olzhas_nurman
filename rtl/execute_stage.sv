@@ -34,6 +34,7 @@ module execute_stage
     input  logic [ DATA_WIDTH - 1:0 ] i_result,
     input  logic [ DATA_WIDTH - 1:0 ] i_forward_value,
     input  logic [              1:0 ] i_forward_src,
+    input  logic                      i_mem_access,
     input  logic                      i_load_instr,
     input  logic [              1:0 ] i_forward_rs1_exec,
     input  logic [              1:0 ] i_forward_rs2_exec,
@@ -55,6 +56,7 @@ module execute_stage
     output logic                      o_reg_we,
     output logic                      o_pc_src,
     output logic [              2:0 ] o_func3,
+    output logic                      o_mem_access,
     output logic                      o_load_instr
 );
 
@@ -166,6 +168,7 @@ module execute_stage
         .i_write_data  ( s_write_data     ),
         .i_forward_src ( i_forward_src    ),
         .i_func3       ( i_func3          ),
+        .i_mem_access  ( i_mem_access     ),
         .i_rd_addr     ( i_rd_addr        ),
         .o_result_src  ( o_result_src     ),
         .o_mem_we      ( o_mem_we         ),
@@ -177,6 +180,7 @@ module execute_stage
         .o_write_data  ( o_write_data     ),
         .o_forward_src ( o_forward_src    ),
         .o_func3       ( o_func3          ),
+        .o_mem_access  ( o_mem_access     ),
         .o_rd_addr     ( o_rd_addr_preg   )
     );
 
