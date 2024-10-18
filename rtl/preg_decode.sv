@@ -16,6 +16,7 @@ module preg_decode
     //Input interface. 
     input  logic                       i_clk,
     input  logic                       i_arst,
+    input  logic                       i_stall_exec,
     input  logic                       i_flush_exec,
     input  logic [               2:0 ] i_result_src,
     input  logic [               4:0 ] i_alu_control,
@@ -107,7 +108,7 @@ module preg_decode
             o_mem_access    <= '0;
             o_load_instr    <= '0;
         end
-        else begin
+        else if ( ~ i_stall_exec ) begin
             o_result_src    <= i_result_src;
             o_alu_control   <= i_alu_control;
             o_mem_we        <= i_mem_we;

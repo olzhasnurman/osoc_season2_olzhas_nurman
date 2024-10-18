@@ -16,6 +16,7 @@ module preg_execute
     //Input interface. 
     input  logic                      i_clk,
     input  logic                      i_arst,
+    input  logic                      i_stall_mem,
     input  logic [              2:0 ] i_result_src,
     input  logic                      i_mem_we,
     input  logic                      i_reg_we,
@@ -60,7 +61,7 @@ module preg_execute
             o_mem_access  <= '0;
             o_rd_addr     <= '0;
         end
-        else begin
+        else if ( ~ i_stall_mem ) begin
             o_result_src  <= i_result_src;
             o_mem_we      <= i_mem_we;
             o_reg_we      <= i_reg_we;

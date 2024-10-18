@@ -21,6 +21,7 @@ module decode_stage
     input  logic [ DATA_WIDTH  - 1:0 ] i_rd_write_data,
     input  logic [ REG_ADDR_W  - 1:0 ] i_rd_addr,
     input  logic                       i_reg_we,
+    input  logic                       i_stall_exec,
     input  logic                       i_flush_exec,
 
     // Output interface.
@@ -148,6 +149,7 @@ module decode_stage
     preg_decode PREG_D (
         .i_clk           ( i_clk           ),
         .i_arst          ( i_arst          ),
+        .i_stall_exec    ( i_stall_exec    ),
         .i_flush_exec    ( i_flush_exec    ),
         .i_result_src    ( s_result_src    ),
         .i_alu_control   ( s_alu_control   ),

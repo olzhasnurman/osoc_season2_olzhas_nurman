@@ -17,7 +17,8 @@ module cache_fsm
     input  logic i_mem_access,
 
     // Output interface.
-    output logic o_stall,
+    output logic o_stall_i,
+    output logic o_stall_d,
     output logic o_instr_we,
     output logic o_dcache_we,
     output logic o_axi_write_start,
@@ -70,7 +71,8 @@ module cache_fsm
     // FSM: Output logic.
     always_comb begin
         // Default values.
-        o_stall            = 1'b0;
+        o_stall_i          = 1'b0;
+        o_stall_d          = 1'b0;
         o_instr_we         = 1'b0;
         o_dcache_we        = 1'b0;
         o_axi_write_start  = 1'b0;
@@ -79,31 +81,33 @@ module cache_fsm
 
         case ( PS )
             IDLE: begin
-                o_stall            = ( ~ i_icache_hit ) | ( ~ i_dcache_hit & i_mem_access );
+                o_stall_i          = ( ~ i_icache_hit );
+                o_stall_d          = ( ~ i_dcache_hit & i_mem_access );
                 o_axi_write_start  = ~ i_dcache_hit & i_dcache_dirty & i_mem_access;
                 o_axi_read_start_i = ( ~ i_icache_hit ); 
                 o_axi_read_start_d = ( ( ~ i_dcache_hit ) & ( ~ i_dcache_dirty ) & i_mem_access );
             end
 
             ALLOCATE_I: begin
-                o_stall            = 1'b1;
+                o_stall_i          = 1'b1;
                 o_instr_we         = i_axi_done;
                 o_axi_read_start_i = ~ i_axi_done;              
             end 
 
             ALLOCATE_D: begin
-                o_stall            = 1'b1;
+                o_stall_d          = 1'b1;
                 o_dcache_we        = i_axi_done;
                 o_axi_read_start_d = ~ i_axi_done;              
             end 
 
             WRITE_BACK: begin
-                o_stall           = 1'b1;
+                o_stall_d         = 1'b1;
                 o_axi_write_start = ~ i_axi_done;
             end
 
             default: begin
-                o_stall            = 1'b0;
+                o_stall_i          = 1'b0;
+                o_stall_d          = 1'b0;
                 o_instr_we         = 1'b0;
                 o_dcache_we        = 1'b0;
                 o_axi_write_start  = 1'b0;

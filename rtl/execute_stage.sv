@@ -14,6 +14,7 @@ module execute_stage
     // Input interface.
     input  logic                      i_clk,
     input  logic                      i_arst,
+    input  logic                      i_stall_mem,
     input  logic [ ADDR_WIDTH - 1:0 ] i_pc,
     input  logic [ ADDR_WIDTH - 1:0 ] i_pc_plus4,
     input  logic [ DATA_WIDTH - 1:0 ] i_rs1_data,
@@ -158,6 +159,7 @@ module execute_stage
     preg_execute PREG_E (
         .i_clk         ( i_clk            ),
         .i_arst        ( i_arst           ),
+        .i_stall_mem   ( i_stall_mem      ),
         .i_result_src  ( i_result_src     ),
         .i_mem_we      ( i_mem_we         ),
         .i_reg_we      ( i_reg_we         ),

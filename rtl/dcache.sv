@@ -7,7 +7,7 @@
 
 module dcache 
 #(
-    parameter SET_COUNT  = 16,
+    parameter SET_COUNT  = 4,
               WORD_WIDTH = 32,
               SET_WIDTH  = 512,
               N          = 4, // N-way set-associative.
@@ -39,14 +39,14 @@ module dcache
     //----------------------------------------------------
     localparam WORD_COUNT = SET_WIDTH/WORD_WIDTH; // 16 words.
 
-    localparam SET_INDEX_WIDTH   = $clog2 ( SET_COUNT    ); // 4 bit.
+    localparam SET_INDEX_WIDTH   = $clog2 ( SET_COUNT    ); // 2 bit.
     localparam WORD_OFFSET_WIDTH = $clog2 ( WORD_COUNT   ); // 4 bit.
     localparam BYTE_OFFSET_WIDTH = $clog2 ( WORD_WIDTH/8 ); // 2 bit.
 
     localparam TAG_MSB         = ADDR_WIDTH - 1;                                          // 63.
-    localparam TAG_LSB         = SET_INDEX_WIDTH + WORD_OFFSET_WIDTH + BYTE_OFFSET_WIDTH; // 10.
-    localparam TAG_WIDTH       = TAG_MSB - TAG_LSB + 1;                                   // 54.
-    localparam INDEX_MSB       = TAG_LSB - 1;                                             // 9.
+    localparam TAG_LSB         = SET_INDEX_WIDTH + WORD_OFFSET_WIDTH + BYTE_OFFSET_WIDTH; // 8.
+    localparam TAG_WIDTH       = TAG_MSB - TAG_LSB + 1;                                   // 56.
+    localparam INDEX_MSB       = TAG_LSB - 1;                                             // 7.
     localparam INDEX_LSB       = INDEX_MSB - SET_INDEX_WIDTH + 1;                         // 6.
     localparam WORD_OFFSET_MSB = INDEX_LSB - 1;                                           // 5.
     localparam WORD_OFFSET_LSB = BYTE_OFFSET_WIDTH;                                       // 2.
@@ -148,6 +148,11 @@ module dcache
     end
 
     // PLRU memory.
+    //-----------------------------------------------------------------------
+    // PLRU organization:
+    // 0 - left, 1 - right leaf.
+    // plru [ 0 ] - parent, plru [ 1 ] = left leaf, plru [ 2 ] - right leaf.
+    //-----------------------------------------------------------------------
     always_ff @( posedge i_clk, posedge i_arst ) begin
         if ( i_arst ) begin
             for ( int i = 0; i < SET_COUNT; i++ ) begin
@@ -155,8 +160,8 @@ module dcache
             end       
         end
         else if ( s_hit & i_mem_access ) begin
-            plru_mem [ s_index_in ][ 0               ] <= s_way [ 1 ];
-            plru_mem [ s_index_in ][ 1 + s_way [ 1 ] ] <= s_way [ 0 ];
+            plru_mem [ s_index_in ][ 0               ] <= ~ s_way [ 1 ];
+            plru_mem [ s_index_in ][ 1 + s_way [ 1 ] ] <= ~ s_way [ 0 ];
         end
     end
 
