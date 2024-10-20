@@ -148,6 +148,7 @@ module top
         .i_dcache_dirty     ( s_dcache_dirty     ),
         .i_axi_done         ( i_axi_done         ),
         .i_mem_access       ( s_mem_access       ),
+        .i_pc_src_exec      ( s_pc_src_exec      ),
         .o_stall_i          ( s_stall_i          ),
         .o_stall_d          ( s_stall_d          ),
         .o_instr_we         ( s_instr_we         ),
@@ -164,6 +165,6 @@ module top
     assign o_axi_write_start = s_axi_write_start;
     assign o_axi_read_start  = s_axi_read_start_i | s_axi_read_start_d;
 
-    assign o_axi_addr = s_axi_write_start ? s_axi_wb_addr_d : ( s_axi_read_start_i ? s_axi_read_addr_i : s_axi_read_addr_d );
+    assign o_axi_addr = s_axi_write_start ? s_axi_wb_addr_d : ( s_axi_read_start_d ? s_axi_read_addr_d : s_axi_read_addr_i );
 
 endmodule
