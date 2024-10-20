@@ -56,7 +56,7 @@ module hazard_unit
     assign o_stall_exec  = i_stall_d;
     assign o_stall_mem   = i_stall_d;
 
-    assign s_flush_dec  = i_pc_src_exec & ( ~ ( i_stall_i & i_stall_d) );
+    assign s_flush_dec  = i_pc_src_exec & ( ~ ( i_stall_i | i_stall_d) );
     assign o_flush_dec  = s_flush_dec;
     assign o_flush_exec = s_load_instr_stall | s_flush_dec;
 
