@@ -70,6 +70,8 @@ module dcache
     logic [ $clog2 ( N ) - 1:0 ] s_way;
     logic [ $clog2 ( N ) - 1:0 ] s_plru;
 
+    logic s_write_en;
+
 
     //---------------------------------------------------------
     // Memory blocks.
@@ -93,6 +95,8 @@ module dcache
     assign s_tag   = tag_mem   [ s_index_in ][ s_way  ];
     assign s_valid = valid_mem [ s_index_in ][ s_way  ];
     assign s_dirty = dirty_mem [ s_index_in ][ s_plru ];
+
+    assign s_write_en = i_write_en & s_hit;
 
 
     //---------------------------------------------------
@@ -143,8 +147,8 @@ module dcache
                 dirty_mem [ i ] <= '0;
             end 
         end
-        else if ( i_write_en ) dirty_mem [ s_index_in ][ s_way  ] <= 1'b1;
         else if ( i_block_we ) dirty_mem [ s_index_in ][ s_plru ] <= 1'b0;
+        else if ( s_write_en ) dirty_mem [ s_index_in ][ s_way  ] <= 1'b1;
     end
 
     // PLRU memory.
@@ -168,7 +172,12 @@ module dcache
 
     // Data memory.
     always_ff @( posedge i_clk, posedge i_arst ) begin
-        if ( i_write_en ) begin
+        // Here it first checks WE which is 1 and ignores block_we.
+        if ( i_block_we ) begin
+            d_mem   [ s_index_in ][ s_plru ] <= i_data_block;
+            tag_mem [ s_index_in ][ s_plru ] <= s_tag_in; 
+        end
+        else if ( s_write_en ) begin
             case ( i_store_type )
                 // SD Instruction.
                 2'b11: begin
@@ -332,10 +341,6 @@ module dcache
                     endcase
                 end
             endcase   
-        end
-        else if ( i_block_we ) begin
-            d_mem   [ s_index_in ][ s_plru ] <= i_data_block;
-            tag_mem [ s_index_in ][ s_plru ] <= s_tag_in; 
         end
     end
 
