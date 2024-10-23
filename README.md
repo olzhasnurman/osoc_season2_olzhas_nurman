@@ -1,2 +1,2 @@
-# osoc_season2_olzhas_nurman
-This repository contains design and verification files for the pipelined processor designed as part of "One Student One Chip" program at Nazarbayev University
+# Maveric Core 2.0
+This repository contains design and verification files for a 5-stage pipelined RISC-V processor. It was designed as part of "One Student One Chip" program at Maveric Lab, Nazarbayev University
