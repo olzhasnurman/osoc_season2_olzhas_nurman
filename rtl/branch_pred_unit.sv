@@ -40,17 +40,19 @@ module branch_pred_unit
     localparam INDEX_LSB = INDEX_MSB - INDEX_WIDTH + 1; // 2..
 
 
+
     //---------------------------------
     // Internal nets.
     //---------------------------------
-    logic [ BIA_WIDTH   - 1:0 ] s_bia_write; 
-    logic [ INDEX_WIDTH - 1:0 ] s_index_write;
 
     // BTB.
-    logic s_btb_hit;
+    logic [ BIA_WIDTH   - 1:0 ] s_bia_write; 
+    logic [ INDEX_WIDTH - 1:0 ] s_index_write;
+    logic                       s_btb_hit;
 
     // BHT.
     logic s_bht_taken;
+
 
 
     //-----------------------------------
@@ -58,6 +60,7 @@ module branch_pred_unit
     //-----------------------------------
     assign s_bia_write   = i_pc_exec [ BIA_MSB   : BIA_LSB   ];
     assign s_index_write = i_pc_exec [ INDEX_MSB : INDEX_LSB ];
+
 
     //----------------------------------
     // Lower Level Modules: BTB, BHT.
