@@ -17,6 +17,7 @@ module bht
     input  logic                       i_bht_update,
     input  logic                       i_branch_taken,
     input  logic [ INDEX_WIDTH - 1:0 ] i_set_index,
+    input  logic [ INDEX_WIDTH - 1:0 ] i_set_index_exec,
 
     // Output interface.
     output logic                       o_bht_pred_taken
@@ -30,8 +31,8 @@ module bht
     logic [ SATUR_COUNT_W - 1:0 ] s_bht_t; // Taken.
     logic [ SATUR_COUNT_W - 1:0 ] s_bht_n; // Not taken.
 
-    assign { s_carry_t, s_bht_t } = bht_mem [ i_set_index ] + 2'b1;
-    assign { s_carry_n, s_bht_n } = bht_mem [ i_set_index ] - 2'b1;
+    assign { s_carry_t, s_bht_t } = bht_mem [ i_set_index_exec ] + 2'b1;
+    assign { s_carry_n, s_bht_n } = bht_mem [ i_set_index_exec ] - 2'b1;
 
     //-----------------
     // Memory blocks.
@@ -55,8 +56,8 @@ module bht
             end
         end
         else if ( i_bht_update ) begin
-                 if (   i_branch_taken & ( ~ s_carry_t ) ) bht_mem [ i_set_index ] <= s_bht_t;
-            else if ( ~ i_branch_taken & ( ~ s_carry_n ) ) bht_mem [ i_set_index ] <= s_bht_n;
+                 if (   i_branch_taken & ( ~ s_carry_t ) ) bht_mem [ i_set_index_exec ] <= s_bht_t;
+            else if ( ~ i_branch_taken & ( ~ s_carry_n ) ) bht_mem [ i_set_index_exec ] <= s_bht_n;
         end
     end
 
