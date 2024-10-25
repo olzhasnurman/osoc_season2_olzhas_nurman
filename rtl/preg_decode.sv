@@ -140,9 +140,9 @@ module preg_decode
             o_func3             <= i_func3;
             o_forward_src       <= i_forward_src;
             o_mem_access        <= i_mem_access;
-            o_pc_target_pred    <= o_pc_target_pred;
-            o_btb_way           <= o_btb_way;
-            o_branch_pred_taken <= o_branch_pred_taken;
+            o_pc_target_pred    <= i_pc_target_pred;
+            o_btb_way           <= i_btb_way;
+            o_branch_pred_taken <= i_branch_pred_taken;
             o_load_instr        <= i_load_instr;
         end
     end
