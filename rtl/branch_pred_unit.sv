@@ -12,6 +12,7 @@ module branch_pred_unit
     // Input interface.
     input  logic                      i_clk,
     input  logic                      i_arst,
+    input  logic                      i_stall_fetch,
     input  logic                      i_branch_instr,
     input  logic                      i_branch_taken,
     input  logic [              1:0 ] i_way_write,
@@ -76,6 +77,7 @@ module branch_pred_unit
     ) BTB0 (
         .i_clk          ( i_clk            ),
         .i_arst         ( i_arst           ),
+        .i_stall_fetch  ( i_stall_fetch    ),
         .i_branch_taken ( i_branch_taken   ),
         .i_target_addr  ( i_pc_target_exec ),
         .i_pc           ( i_pc             ),
@@ -91,10 +93,11 @@ module branch_pred_unit
     bht BHT0 (
         .i_clk            ( i_clk             ),
         .i_arst           ( i_arst            ),
+        .i_stall_fetch    ( i_stall_fetch     ),
         .i_bht_update     ( i_branch_instr    ),
         .i_branch_taken   ( i_branch_taken    ),
-        .i_set_index      ( i_pc [ 7:2 ]      ),
-        .i_set_index_exec ( i_pc_exec [ 7:2 ] ),
+        .i_set_index      ( i_pc [ 6:2 ]      ),
+        .i_set_index_exec ( i_pc_exec [ 6:2 ] ),
         .o_bht_pred_taken ( s_bht_taken       )
     );
 

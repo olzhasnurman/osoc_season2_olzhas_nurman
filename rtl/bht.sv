@@ -6,14 +6,15 @@
 
 module bht 
 #(
-    parameter SET_COUNT     = 64,
-              INDEX_WIDTH   = 6,
+    parameter SET_COUNT     = 32,
+              INDEX_WIDTH   = 5,
               SATUR_COUNT_W = 2
 )
 (
     // Input interface.
     input  logic                       i_clk,
     input  logic                       i_arst,
+    input  logic                       i_stall_fetch,
     input  logic                       i_bht_update,
     input  logic                       i_branch_taken,
     input  logic [ INDEX_WIDTH - 1:0 ] i_set_index,
@@ -31,8 +32,12 @@ module bht
     logic [ SATUR_COUNT_W - 1:0 ] s_bht_t; // Taken.
     logic [ SATUR_COUNT_W - 1:0 ] s_bht_n; // Not taken.
 
+    logic s_bht_update;
+
     assign { s_carry_t, s_bht_t } = bht_mem [ i_set_index_exec ] + 2'b1;
     assign { s_carry_n, s_bht_n } = bht_mem [ i_set_index_exec ] - 2'b1;
+
+    assign s_bht_update = i_bht_update & ( ~ i_stall_fetch );
 
     //-----------------
     // Memory blocks.
@@ -55,7 +60,7 @@ module bht
                 bht_mem [ i ] <= 2'b10; // Reset to "weakly taken".
             end
         end
-        else if ( i_bht_update ) begin
+        else if ( s_bht_update ) begin
                  if (   i_branch_taken & ( ~ s_carry_t ) ) bht_mem [ i_set_index_exec ] <= s_bht_t;
             else if ( ~ i_branch_taken & ( ~ s_carry_n ) ) bht_mem [ i_set_index_exec ] <= s_bht_n;
         end

@@ -88,6 +88,7 @@ module execute_stage
 
     logic [ ADDR_WIDTH - 1:0 ] s_pc_new;
     logic                      s_branch_taken;
+    logic                      s_branch_exec;
 
 
     //-------------------------------------
@@ -174,8 +175,9 @@ module execute_stage
     end
 
     assign s_branch_taken      = i_jump | s_branch;
-    assign o_branch_exec       = i_jump | i_branch;
+    assign s_branch_exec       = i_jump | i_branch;
     assign o_branch_taken_exec = s_branch_taken;
+    assign o_branch_exec       = s_branch_exec;
 
     // Branch misprediction detection logic.
     assign o_branch_mispred = ( i_branch_pred_taken ^ s_branch_taken ) | ( i_branch_pred_taken & ( i_pc_target_pred != s_pc_target ) );

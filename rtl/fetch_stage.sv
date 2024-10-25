@@ -108,6 +108,7 @@ module fetch_stage
     branch_pred_unit BRANCH_PRED (
         .i_clk               ( i_clk               ),
         .i_arst              ( i_arst              ),
+        .i_stall_fetch       ( i_stall_fetch       ),
         .i_branch_instr      ( i_branch_exec       ),
         .i_branch_taken      ( i_branch_taken_exec ),
         .i_way_write         ( i_btb_way_exec      ),

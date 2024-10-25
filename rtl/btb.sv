@@ -16,6 +16,7 @@ module btb
     // Input interface.
     input  logic                        i_clk,
     input  logic                        i_arst,
+    input  logic                        i_stall_fetch,
     input  logic                        i_branch_taken,
     input  logic [ ADDR_WIDTH   - 1:0 ] i_target_addr,
     input  logic [ ADDR_WIDTH   - 1:0 ] i_pc,
@@ -53,6 +54,8 @@ module btb
     logic [ $clog2 ( N ) - 1:0 ] s_way_read;
     logic [ $clog2 ( N ) - 1:0 ] s_plru;
 
+    logic s_btb_update;
+
 
     //-----------------
     // Memory blocks.
@@ -70,6 +73,8 @@ module btb
 
     assign s_bia   = bia_mem   [ s_index_read ][ s_way_read ];
     assign s_valid = valid_mem [ s_index_read ][ s_way_read ];
+
+    assign s_btb_update = i_branch_taken & ( ~ i_stall_fetch );
 
 
     //-------------------------------------
@@ -109,7 +114,7 @@ module btb
                 valid_mem [ i ] <= '0;
             end
         end
-        else if ( i_branch_taken ) valid_mem [ i_index_write ][ i_way_write ] <= 1'b1;
+        else if ( s_btb_update ) valid_mem [ i_index_write ][ i_way_write ] <= 1'b1;
     end
 
     // PLRU memory.
@@ -124,7 +129,7 @@ module btb
                 plru_mem [ i ] <= '0;
             end       
         end
-        else if ( i_branch_taken ) begin
+        else if ( s_btb_update ) begin
             plru_mem [ i_index_write ][ 0                     ] <= ~ i_way_write [ 1 ];
             plru_mem [ i_index_write ][ 1 + i_way_write [ 1 ] ] <= ~ i_way_write [ 0 ];
         end
@@ -133,7 +138,7 @@ module btb
 
     // BIA & BTA memory.
     always_ff @( posedge i_clk, posedge i_arst ) begin
-        if ( i_branch_taken ) begin
+        if ( s_btb_update ) begin
             bia_mem [ i_index_write ][ i_way_write ] <= i_bia_write;
             bta_mem [ i_index_write ][ i_way_write ] <= i_target_addr;
         end
