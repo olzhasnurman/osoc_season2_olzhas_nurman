@@ -39,6 +39,9 @@ module execute_stage
     input  logic                      i_load_instr,
     input  logic [              1:0 ] i_forward_rs1_exec,
     input  logic [              1:0 ] i_forward_rs2_exec,
+    input  logic [ ADDR_WIDTH - 1:0 ] i_pc_target_pred,
+    input  logic [              1:0 ] i_btb_way,
+    input  logic                      i_branch_pred_taken,
 
     // Output interface.
     output logic [ ADDR_WIDTH - 1:0 ] o_pc_plus4,
@@ -55,9 +58,13 @@ module execute_stage
     output logic [              1:0 ] o_forward_src,
     output logic                      o_mem_we,
     output logic                      o_reg_we,
-    output logic                      o_pc_src,
+    output logic                      o_branch_mispred,
     output logic [              2:0 ] o_func3,
     output logic                      o_mem_access,
+    output logic                      o_branch_exec,
+    output logic                      o_branch_taken_exec,
+    output logic [              1:0 ] o_btb_way_exec,
+    output logic [ ADDR_WIDTH - 1:0 ] o_pc_exec,
     output logic                      o_load_instr
 );
 
@@ -78,6 +85,9 @@ module execute_stage
     logic s_ltu_flag;
 
     logic s_branch;
+
+    logic [ ADDR_WIDTH - 1:0 ] s_pc_new;
+    logic                      s_branch_taken;
 
 
     //-------------------------------------
@@ -128,7 +138,7 @@ module execute_stage
         .o_mux            ( s_alu_srcB    )
     );
 
-    // 2-to-1 PC target src MUX.
+    // 2-to-1 PC target src MUX that chooses between PC_PLUS_IMM & RS1_PLUS_IMM.
     assign s_rs1_plus_imm = { s_alu_result [ DATA_WIDTH - 1:1 ], 1'b0 };
     mux2to1 MUX3 (
         .i_control_signal ( i_pc_target_src ),
@@ -137,6 +147,18 @@ module execute_stage
         .o_mux            ( s_pc_target     )
     );
 
+    // 2-to-1 MUX that chooses between PC target calculated & PC_PLUS4.
+    mux2to1 MUX4 (
+        .i_control_signal ( s_branch_taken ),
+        .i_mux_0          ( i_pc_plus4     ),
+        .i_mux_1          ( s_pc_target    ),
+        .o_mux            ( s_pc_new       )
+    );
+
+
+    //--------------------------------------------------
+    // Branch decision & misprediction detection logic.
+    //--------------------------------------------------
 
     // Branch decision logic.
     always_comb begin
@@ -151,7 +173,12 @@ module execute_stage
         endcase
     end
 
-    assign o_pc_src = i_jump | s_branch;
+    assign s_branch_taken      = i_jump | s_branch;
+    assign o_branch_exec       = i_jump | i_branch;
+    assign o_branch_taken_exec = s_branch_taken;
+
+    // Branch misprediction detection logic.
+    assign o_branch_mispred = ( i_branch_pred_taken ^ s_branch_taken ) | ( i_branch_pred_taken & ( i_pc_target_pred != s_pc_target ) );
 
     //-------------------------------------
     // Pipeline Register.
@@ -190,10 +217,13 @@ module execute_stage
     //--------------------------------------
     // Continious assignment of outputs.
     //--------------------------------------
-    assign o_pc_target  = s_pc_target;
+    assign o_pc_target  = s_pc_new;
     assign o_rs1_addr   = i_rs1_addr;
     assign o_rs2_addr   = i_rs2_addr;
     assign o_rd_addr    = i_rd_addr;
     assign o_load_instr = i_load_instr;
+
+    assign o_btb_way_exec = i_btb_way;
+    assign o_pc_exec      = i_pc;
 
 endmodule

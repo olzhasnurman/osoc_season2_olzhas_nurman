@@ -38,7 +38,7 @@ module datapath
     output logic [ REG_ADDR_W  - 1:0 ] o_rd_addr_wb,
     output logic                       o_reg_we_mem,
     output logic                       o_reg_we_wb,
-    output logic                       o_pc_src_exec,
+    output logic                       o_branch_mispred_exec,
     output logic                       o_icache_hit,
     output logic [ ADDR_WIDTH  - 1:0 ] o_axi_read_addr_i,
     output logic [ ADDR_WIDTH  - 1:0 ] o_axi_read_addr_d,
@@ -56,7 +56,11 @@ module datapath
     
     // Fetch stage signals.
     logic [ ADDR_WIDTH - 1:0 ] s_pc_target_fetch;
-    logic                      s_pc_src_fetch;
+    logic                      s_branch_mispred_fetch;
+    logic                      s_branch_fetch;
+    logic                      s_branch_taken_fetch;
+    logic [              1:0 ] s_btb_way_fetch;
+    logic [ ADDR_WIDTH - 1:0 ] s_pc_fetch;
 
 
     // Decode stage signals.
@@ -66,6 +70,9 @@ module datapath
     logic [ REG_ADDR_W  - 1:0 ] s_rd_addr_dec;
     logic                       s_reg_we_dec;
     logic                       s_load_instr_exec;
+    logic [ ADDR_WIDTH  - 1:0 ] s_pc_target_pred_dec;
+    logic [               1:0 ] s_btb_way_dec;
+    logic                       s_branch_pred_taken_dec;
 
 
     // Execute stage signals.
@@ -89,6 +96,9 @@ module datapath
     logic [              1:0 ] s_forward_src_exec;
     logic [ DATA_WIDTH - 1:0 ] s_forward_value_exec;
     logic                      s_mem_access_exec;
+    logic [ ADDR_WIDTH  - 1:0 ] s_pc_target_pred_exec;
+    logic [               1:0 ] s_btb_way_exec;
+    logic                       s_branch_pred_taken_exec;
 
 
     // Memory stage signals.
@@ -126,20 +136,27 @@ module datapath
     // Fetch stage module.
     //-------------------------------------
     fetch_stage STAGE1_FETCH (
-        .i_clk           ( i_clk             ),
-        .i_arst          ( i_arst            ),
-        .i_pc_target     ( s_pc_target_fetch ),
-        .i_pc_src        ( s_pc_src_fetch    ),
-        .i_stall_fetch   ( i_stall_fetch     ),
-        .i_stall_dec     ( i_stall_dec       ),
-        .i_flush_dec     ( i_flush_dec       ),
-        .i_instr_we      ( i_instr_we        ),
-        .i_instr_block   ( i_data_block      ),
-        .o_instruction   ( s_instruction_dec ),
-        .o_pc_plus4      ( s_pc_plus4_dec    ),
-        .o_pc            ( s_pc_dec          ),
-        .o_axi_read_addr ( o_axi_read_addr_i ),
-        .o_icache_hit    ( o_icache_hit      )
+        .i_clk               ( i_clk                   ),
+        .i_arst              ( i_arst                  ),
+        .i_pc_target         ( s_pc_target_fetch       ),
+        .i_branch_mispred    ( s_branch_mispred_fetch  ),
+        .i_stall_fetch       ( i_stall_fetch           ),
+        .i_stall_dec         ( i_stall_dec             ),
+        .i_flush_dec         ( i_flush_dec             ),
+        .i_instr_we          ( i_instr_we              ),
+        .i_instr_block       ( i_data_block            ),
+        .i_branch_exec       ( s_branch_fetch          ),
+        .i_branch_taken_exec ( s_branch_taken_fetch    ),
+        .i_btb_way_exec      ( s_btb_way_fetch         ),
+        .i_pc_exec           ( s_pc_fetch              ),
+        .o_instruction       ( s_instruction_dec       ),
+        .o_pc_plus4          ( s_pc_plus4_dec          ),
+        .o_pc                ( s_pc_dec                ),
+        .o_axi_read_addr     ( o_axi_read_addr_i       ),
+        .o_pc_target_pred    ( s_pc_target_pred_dec    ),
+        .o_btb_way           ( s_btb_way_dec           ),
+        .o_branch_pred_taken ( s_branch_pred_taken_dec ),
+        .o_icache_hit        ( o_icache_hit            )
     );
 
 
@@ -147,89 +164,102 @@ module datapath
     // Decode stage module.
     //-------------------------------------
     decode_stage STAGE2_DEC (
-        .i_clk           ( i_clk                ),
-        .i_arst          ( i_arst               ),
-        .i_instruction   ( s_instruction_dec    ),
-        .i_pc_plus4      ( s_pc_plus4_dec       ),
-        .i_pc            ( s_pc_dec             ),
-        .i_rd_write_data ( s_result_wb          ),
-        .i_rd_addr       ( s_rd_addr_dec        ),
-        .i_reg_we        ( s_reg_we_dec         ),
-        .i_stall_exec    ( i_stall_exec         ),
-        .i_flush_exec    ( i_flush_exec         ),
-        .o_func3         ( s_func3_exec         ),
-        .o_pc            ( s_pc_exec            ),
-        .o_pc_plus4      ( s_pc_plus4_exec      ),
-        .o_rs1_data      ( s_rs1_data_exec      ),
-        .o_rs2_data      ( s_rs2_data_exec      ),
-        .o_rs1_addr      ( o_rs1_addr_dec       ),
-        .o_rs2_addr      ( o_rs2_addr_dec       ),
-        .o_rs1_addr_preg ( s_rs1_addr_exec      ),
-        .o_rs2_addr_preg ( s_rs2_addr_exec      ),
-        .o_rd_addr       ( s_rd_addr_exec       ),
-        .o_imm_ext       ( s_imm_ext_exec       ),
-        .o_result_src    ( s_result_src_exec    ),
-        .o_alu_control   ( s_alu_control_exec   ),
-        .o_mem_we        ( s_mem_we_exec        ),
-        .o_reg_we        ( s_reg_we_exec        ),
-        .o_alu_src       ( s_alu_src_exec       ),
-        .o_branch        ( s_branch_exec        ),
-        .o_jump          ( s_jump_exec          ),
-        .o_pc_target_src ( s_pc_target_src_exec ),
-        .o_forward_src   ( s_forward_src_exec   ),
-        .o_mem_access    ( s_mem_access_exec    ),
-        .o_load_instr    ( s_load_instr_exec    )
+        .i_clk               ( i_clk                    ),
+        .i_arst              ( i_arst                   ),
+        .i_instruction       ( s_instruction_dec        ),
+        .i_pc_plus4          ( s_pc_plus4_dec           ),
+        .i_pc                ( s_pc_dec                 ),
+        .i_rd_write_data     ( s_result_wb              ),
+        .i_rd_addr           ( s_rd_addr_dec            ),
+        .i_reg_we            ( s_reg_we_dec             ),
+        .i_stall_exec        ( i_stall_exec             ),
+        .i_flush_exec        ( i_flush_exec             ),
+        .i_pc_target_pred    ( s_pc_target_pred_dec     ),
+        .i_btb_way           ( s_btb_way_dec            ),
+        .i_branch_pred_taken ( s_branch_pred_taken_dec  ),
+        .o_func3             ( s_func3_exec             ),
+        .o_pc                ( s_pc_exec                ),
+        .o_pc_plus4          ( s_pc_plus4_exec          ),
+        .o_rs1_data          ( s_rs1_data_exec          ),
+        .o_rs2_data          ( s_rs2_data_exec          ),
+        .o_rs1_addr          ( o_rs1_addr_dec           ),
+        .o_rs2_addr          ( o_rs2_addr_dec           ),
+        .o_rs1_addr_preg     ( s_rs1_addr_exec          ),
+        .o_rs2_addr_preg     ( s_rs2_addr_exec          ),
+        .o_rd_addr           ( s_rd_addr_exec           ),
+        .o_imm_ext           ( s_imm_ext_exec           ),
+        .o_result_src        ( s_result_src_exec        ),
+        .o_alu_control       ( s_alu_control_exec       ),
+        .o_mem_we            ( s_mem_we_exec            ),
+        .o_reg_we            ( s_reg_we_exec            ),
+        .o_alu_src           ( s_alu_src_exec           ),
+        .o_branch            ( s_branch_exec            ),
+        .o_jump              ( s_jump_exec              ),
+        .o_pc_target_src     ( s_pc_target_src_exec     ),
+        .o_forward_src       ( s_forward_src_exec       ),
+        .o_mem_access        ( s_mem_access_exec        ),
+        .o_pc_target_pred    ( s_pc_target_pred_exec    ),
+        .o_btb_way           ( s_btb_way_exec           ),
+        .o_branch_pred_taken ( s_branch_pred_taken_exec ),
+        .o_load_instr        ( s_load_instr_exec        )
     );
 
     //-------------------------------------
     // Execute stage module.
     //-------------------------------------
     execute_stage STAGE3_EXEC (
-        .i_clk              ( i_clk                ),
-        .i_arst             ( i_arst               ),
-        .i_stall_mem        ( i_stall_mem          ),
-        .i_pc               ( s_pc_exec            ),
-        .i_pc_plus4         ( s_pc_plus4_exec      ),
-        .i_rs1_data         ( s_rs1_data_exec      ),
-        .i_rs2_data         ( s_rs2_data_exec      ),
-        .i_rs1_addr         ( s_rs1_addr_exec      ),
-        .i_rs2_addr         ( s_rs2_addr_exec      ),
-        .i_rd_addr          ( s_rd_addr_exec       ),
-        .i_imm_ext          ( s_imm_ext_exec       ),
-        .i_func3            ( s_func3_exec         ),
-        .i_result_src       ( s_result_src_exec    ),
-        .i_alu_control      ( s_alu_control_exec   ),
-        .i_mem_we           ( s_mem_we_exec        ),
-        .i_reg_we           ( s_reg_we_exec        ),
-        .i_alu_src          ( s_alu_src_exec       ),
-        .i_branch           ( s_branch_exec        ),
-        .i_jump             ( s_jump_exec          ),
-        .i_pc_target_src    ( s_pc_target_src_exec ),
-        .i_result           ( s_result_wb          ),
-        .i_forward_value    ( s_forward_value_exec ),
-        .i_forward_src      ( s_forward_src_exec   ),
-        .i_mem_access       ( s_mem_access_exec    ),
-        .i_load_instr       ( s_load_instr_exec    ),
-        .i_forward_rs1_exec ( i_forward_rs1        ),
-        .i_forward_rs2_exec ( i_forward_rs2        ),
-        .o_pc_plus4         ( s_pc_plus4_mem       ),
-        .o_pc_target        ( s_pc_target_fetch    ),
-        .o_pc_target_preg   ( s_pc_target_mem      ),
-        .o_alu_result       ( s_alu_result_mem     ),
-        .o_write_data       ( s_write_data_mem     ),
-        .o_rs1_addr         ( o_rs1_addr_exec      ),
-        .o_rs2_addr         ( o_rs2_addr_exec      ),
-        .o_rd_addr          ( o_rd_addr_exec       ),
-        .o_rd_addr_preg     ( s_rd_addr_mem        ),
-        .o_imm_ext          ( s_imm_ext_mem        ),
-        .o_result_src       ( s_result_src_mem     ),
-        .o_forward_src      ( s_forward_src_mem    ),
-        .o_mem_we           ( s_mem_we_mem         ),
-        .o_reg_we           ( s_reg_we_mem         ),
-        .o_pc_src           ( s_pc_src_fetch       ),
-        .o_func3            ( s_func3_mem          ),
-        .o_mem_access       ( s_mem_access_mem     ),
-        .o_load_instr       ( o_load_instr_exec    )
+        .i_clk               ( i_clk                    ),
+        .i_arst              ( i_arst                   ),
+        .i_stall_mem         ( i_stall_mem              ),
+        .i_pc                ( s_pc_exec                ),
+        .i_pc_plus4          ( s_pc_plus4_exec          ),
+        .i_rs1_data          ( s_rs1_data_exec          ),
+        .i_rs2_data          ( s_rs2_data_exec          ),
+        .i_rs1_addr          ( s_rs1_addr_exec          ),
+        .i_rs2_addr          ( s_rs2_addr_exec          ),
+        .i_rd_addr           ( s_rd_addr_exec           ),
+        .i_imm_ext           ( s_imm_ext_exec           ),
+        .i_func3             ( s_func3_exec             ),
+        .i_result_src        ( s_result_src_exec        ),
+        .i_alu_control       ( s_alu_control_exec       ),
+        .i_mem_we            ( s_mem_we_exec            ),
+        .i_reg_we            ( s_reg_we_exec            ),
+        .i_alu_src           ( s_alu_src_exec           ),
+        .i_branch            ( s_branch_exec            ),
+        .i_jump              ( s_jump_exec              ),
+        .i_pc_target_src     ( s_pc_target_src_exec     ),
+        .i_result            ( s_result_wb              ),
+        .i_forward_value     ( s_forward_value_exec     ),
+        .i_forward_src       ( s_forward_src_exec       ),
+        .i_mem_access        ( s_mem_access_exec        ),
+        .i_load_instr        ( s_load_instr_exec        ),
+        .i_forward_rs1_exec  ( i_forward_rs1            ),
+        .i_forward_rs2_exec  ( i_forward_rs2            ),
+        .i_pc_target_pred    ( s_pc_target_pred_exec    ),
+        .i_btb_way           ( s_btb_way_exec           ),
+        .i_branch_pred_taken ( s_branch_pred_taken_exec ),
+        .o_pc_plus4          ( s_pc_plus4_mem           ),
+        .o_pc_target         ( s_pc_target_fetch        ),
+        .o_pc_target_preg    ( s_pc_target_mem          ),
+        .o_alu_result        ( s_alu_result_mem         ),
+        .o_write_data        ( s_write_data_mem         ),
+        .o_rs1_addr          ( o_rs1_addr_exec          ),
+        .o_rs2_addr          ( o_rs2_addr_exec          ),
+        .o_rd_addr           ( o_rd_addr_exec           ),
+        .o_rd_addr_preg      ( s_rd_addr_mem            ),
+        .o_imm_ext           ( s_imm_ext_mem            ),
+        .o_result_src        ( s_result_src_mem         ),
+        .o_forward_src       ( s_forward_src_mem        ),
+        .o_mem_we            ( s_mem_we_mem             ),
+        .o_reg_we            ( s_reg_we_mem             ),
+        .o_branch_mispred    ( s_branch_mispred_fetch   ),
+        .o_func3             ( s_func3_mem              ),
+        .o_mem_access        ( s_mem_access_mem         ),
+        .o_branch_exec       ( s_branch_fetch           ),
+        .o_branch_taken_exec ( s_branch_taken_fetch     ),
+        .o_btb_way_exec      ( s_btb_way_fetch          ),
+        .o_pc_exec           ( s_pc_fetch               ),
+        .o_load_instr        ( o_load_instr_exec        )
     );
 
 
@@ -294,9 +324,9 @@ module datapath
     //-------------------------------------------------------------
     // Continious assignment of outputs.
     //-------------------------------------------------------------
-    assign o_rd_addr_wb  = s_rd_addr_dec;
-    assign o_reg_we_mem  = s_reg_we_mem;
-    assign o_reg_we_wb   = s_reg_we_wb;
-    assign o_pc_src_exec = s_pc_src_fetch;
+    assign o_rd_addr_wb          = s_rd_addr_dec;
+    assign o_reg_we_mem          = s_reg_we_mem;
+    assign o_reg_we_wb           = s_reg_we_wb;
+    assign o_branch_mispred_exec = s_branch_mispred_fetch;
 
 endmodule

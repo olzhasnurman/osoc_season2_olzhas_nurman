@@ -15,7 +15,7 @@ module cache_fsm
     input  logic i_dcache_dirty,
     input  logic i_axi_done,
     input  logic i_mem_access,
-    input  logic i_pc_src_exec,
+    input  logic i_branch_mispred_exec,
 
     // Output interface.
     output logic o_stall_i,
@@ -61,9 +61,9 @@ module cache_fsm
                     if ( i_dcache_dirty )  NS = WRITE_BACK;
                     else                   NS = ALLOCATE_D;
                 end
-                else if ( i_pc_src_exec  ) NS = PS;
-                else if ( ~ i_icache_hit ) NS = ALLOCATE_I;
-                else                       NS = PS;
+                else if ( i_branch_mispred_exec ) NS = PS;
+                else if ( ~ i_icache_hit        ) NS = ALLOCATE_I;
+                else                              NS = PS;
             end
             ALLOCATE_I: if ( i_axi_done  ) NS = IDLE;
             ALLOCATE_D: if ( i_axi_done  ) NS = IDLE;
@@ -86,10 +86,10 @@ module cache_fsm
 
         case ( PS )
             IDLE: begin
-                o_stall_i          = ( ~ i_icache_hit ) & ( ~ i_pc_src_exec );
+                o_stall_i          = ( ~ i_icache_hit ) & ( ~ i_branch_mispred_exec );
                 o_stall_d          = ( ~ i_dcache_hit & i_mem_access );
                 o_axi_write_start  = ~ i_dcache_hit & i_mem_access & i_dcache_dirty;
-                o_axi_read_start_i = ( ~ i_icache_hit ) & ( ~ i_pc_src_exec ); 
+                o_axi_read_start_i = ( ~ i_icache_hit ) & ( ~ i_branch_mispred_exec ); 
                 o_axi_read_start_d = ( ~ i_dcache_hit & i_mem_access & ( ~ i_dcache_dirty ) );
             end
 

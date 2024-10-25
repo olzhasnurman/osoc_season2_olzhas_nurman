@@ -19,7 +19,7 @@ module hazard_unit
     input  logic [ REG_ADDR_W - 1:0 ] i_rd_addr_wb,
     input  logic                      i_reg_we_mem,
     input  logic                      i_reg_we_wb,
-    input  logic                      i_pc_src_exec,
+    input  logic                      i_branch_mispred_exec,
     input  logic                      i_load_instr_exec,
     input  logic                      i_stall_i,
     input  logic                      i_stall_d,
@@ -56,7 +56,7 @@ module hazard_unit
     assign o_stall_exec  = i_stall_d;
     assign o_stall_mem   = i_stall_d;
 
-    assign s_flush_dec  = i_pc_src_exec & ( ~ ( i_stall_i | i_stall_d) );
+    assign s_flush_dec  = i_branch_mispred_exec & ( ~ ( i_stall_i | i_stall_d) );
     assign o_flush_dec  = s_flush_dec;
     assign o_flush_exec = s_load_instr_stall | s_flush_dec;
 
