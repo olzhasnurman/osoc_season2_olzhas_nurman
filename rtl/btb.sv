@@ -4,7 +4,7 @@
 // This module implements a branch target buffer (BTB) based on N-way set-associative cache.
 // ------------------------------------------------------------------------------------------
 
-module bht 
+module btb 
 #(
     parameter SET_COUNT  = 4,
               N          = 4, 
