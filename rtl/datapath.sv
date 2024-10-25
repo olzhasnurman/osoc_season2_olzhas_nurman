@@ -263,6 +263,21 @@ module datapath
     );
 
 
+    //--------------------------------------------
+    // For checking branch prediction accuracy.
+    //--------------------------------------------
+    // logic [ 9:0 ] s_branch_count;
+    // logic [ 9:0 ] s_branch_mispred_count;
+
+    // always_ff @( posedge i_clk, posedge i_arst ) begin : BRANCH_ACCURACY_CHECK
+    //     if ( i_arst                                ) s_branch_count <= '0;
+    //     else if ( ~ i_stall_fetch & s_branch_fetch ) s_branch_count <= s_branch_count + 10'b1; 
+
+    //     if ( i_arst                                        ) s_branch_mispred_count <= '0;
+    //     else if ( ~ i_stall_fetch & s_branch_mispred_fetch ) s_branch_mispred_count <= s_branch_mispred_count + 10'b1;
+    // end
+
+
     //-------------------------------------
     // Memory stage module.
     //-------------------------------------
