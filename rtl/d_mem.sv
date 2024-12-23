@@ -6,6 +6,7 @@
 
 `define PATH_TO_DMEM "/home/maveric/osoc_season2_olzhas_nurman/test/tests/dmem.txt" // Later to be defined properly.
 
+
 module d_mem
 // Parameters.
 #(
