@@ -44,7 +44,8 @@ with open(TEST_DIR, 'r') as file_in:
 
 
 COMPILE_C_COMMAND = "gcc -c -o ./check.o ./test/tb/check.c"
-VERILATE_COMMAND = "verilator --assert -I./rtl --Wall --cc ./rtl/test_env.sv --exe ./test/tb/tb_test_env.cpp ./test/tb/check.c"
+#VERILATE_COMMAND = "verilator --assert -I./rtl --Wall --cc ./rtl/test_env.sv --exe ./test/tb/tb_test_env.cpp ./test/tb/check.c"
+VERILATE_COMMAND = "verilator --assert -I./rtl --Wall --trace --cc ./rtl/test_env.sv --exe ./test/tb/tb_test_env.cpp ./test/tb/check.c"
 MAKE_COMMAND = "make -C obj_dir -f Vtest_env.mk"
 SAVE_COMMAND = "./obj_dir/Vtest_env | tee -a res.txt"
 CLEAN_COMMAND = "rm -r ./obj_dir check.o"
@@ -98,7 +99,8 @@ def save_result(test):
             i = 0
             lines = file_in.readlines()
             for line in lines:
-                file_out.write(line)
+                if i == 0:
+                    file_out.write(line)
                 i += 1
             if i == 0:
                  file_out.write("\n")
