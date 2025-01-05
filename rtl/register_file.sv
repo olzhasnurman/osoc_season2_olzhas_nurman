@@ -33,6 +33,13 @@ module register_file
     // Register block.
     logic [ DATA_WIDTH - 1:0 ] mem_block [ REG_DEPTH - 1:0 ];
 
+    // Write enable logic.
+    logic s_write_en_3;
+    logic s_addr_3;
+    
+    assign s_addr_3    = | i_addr_3;
+    assign s_write_en_3 = i_write_en_3 & ( s_addr_3 );
+
     // Write logic.
     always_ff @( posedge i_clk, posedge i_arst ) begin 
         if ( i_arst ) begin
@@ -40,15 +47,14 @@ module register_file
                 mem_block [ i ] <= '0;
             end 
         end
-        else if ( i_write_en_3 ) begin
+        else if ( s_write_en_3 ) begin
             mem_block [ i_addr_3 ] <= i_write_data_3;
-            mem_block [ 0        ] <= '0;
         end
     end
 
     // Read logic.
-    assign o_read_data_1 = ( ( i_addr_1 == i_addr_3 ) & i_write_en_3 ) ? i_write_data_3 : mem_block [ i_addr_1 ];
-    assign o_read_data_2 = ( ( i_addr_2 == i_addr_3 ) & i_write_en_3 ) ? i_write_data_3 : mem_block [ i_addr_2 ];
+    assign o_read_data_1 = ( ( i_addr_1 == i_addr_3 ) & s_write_en_3 ) ? i_write_data_3 : mem_block [ i_addr_1 ];
+    assign o_read_data_2 = ( ( i_addr_2 == i_addr_3 ) & s_write_en_3 ) ? i_write_data_3 : mem_block [ i_addr_2 ];
 
     assign o_a0_reg_lsb = mem_block [ 10 ][ 0 ];
 
