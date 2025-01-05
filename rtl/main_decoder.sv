@@ -155,6 +155,13 @@ module main_decoder
                 $stop; // For simulation only.
                 //$display("time =%0t", $time);
             end
+
+            DEF: begin
+                if ( i_op != 7'b0000000 ) begin
+                    check(i_a0_reg_lsb, 2);
+                    $stop; // For simulation only. 
+                end 
+            end
             default: begin
                 o_result_src    = 3'b0;
                 o_alu_op        = 3'b0;
