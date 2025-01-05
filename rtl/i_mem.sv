@@ -4,7 +4,7 @@
 // This is a instruction memory simulation file.
 // --------------------------------------------------------------------------------------
 
-`define PATH_TO_MEM "/home/maveric/osoc_season2_olzhas_nurman/test/tests/add-riscv64-nemu.txt" // Later to be defined properly.
+`define PATH_TO_MEM "./test/tests/instr/am-kernels/bit-riscv64-nemu.txt"
 
 module i_mem
 // Parameters.

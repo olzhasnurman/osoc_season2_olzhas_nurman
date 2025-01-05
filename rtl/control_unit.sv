@@ -10,6 +10,7 @@ module control_unit
     input  logic [ 6:0 ] i_op,
     input  logic [ 2:0 ] i_func3,
     input  logic         i_func7_5,
+    input  logic         i_a0_reg_lsb,
 
     // Output interface.
     output logic [ 2:0 ] o_imm_src,
@@ -39,6 +40,7 @@ module control_unit
     // Main decoder.
     main_decoder M_DEC (
         .i_op            ( i_op            ),
+        .i_a0_reg_lsb    ( i_a0_reg_lsb    ),
         .o_imm_src       ( o_imm_src       ),
         .o_result_src    ( o_result_src    ),
         .o_alu_op        ( s_alu_op        ),

@@ -8,6 +8,7 @@ module main_decoder
 (
     // Input interface.
     input  logic [ 6:0 ] i_op,
+    input  logic         i_a0_reg_lsb,
 
     // Output interface.
     output logic [ 2:0 ] o_imm_src,
@@ -23,6 +24,9 @@ module main_decoder
     output logic         o_mem_access,
     output logic         o_load_instr        
 );
+
+
+    import "DPI-C" function void check(byte a0, byte mcause);
 
     // Instruction type.
     typedef enum logic [3:0] {
@@ -74,6 +78,7 @@ module main_decoder
     //----------------------------------------------
     // Decoder for output control signals.
     //----------------------------------------------
+    /* verilator lint_off WIDTH */
     always_comb begin
         // Default values.
         o_result_src    = 3'b0; // 000 - ALUResult, 001 - ReadDataMem, 010 - PCPlus4, 011 - PCPlusImm, 100 - ImmExtended.
@@ -146,6 +151,7 @@ module main_decoder
                 o_forward_src = 2'b10; 
             end
             ECALL: begin
+                check(i_a0_reg_lsb, 3); // For now the cause will be registered as ecall.
                 $stop; // For simulation only.
                 //$display("time =%0t", $time);
             end
@@ -162,10 +168,11 @@ module main_decoder
                 o_mem_access    = 1'b0;
                 o_load_instr    = 1'b0;
             end
+        /* verilator lint_off WIDTH */
         endcase
     end
 
-
+   
 
 
 endmodule

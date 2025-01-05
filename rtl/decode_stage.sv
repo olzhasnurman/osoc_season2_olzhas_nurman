@@ -89,6 +89,8 @@ module decode_stage
     logic [ REG_ADDR_W - 1:0 ] s_rs2_addr;
     logic [ REG_ADDR_W - 1:0 ] s_rd_addr;
 
+    logic s_a0_reg_lsb;
+
 
     //-------------------------------------------
     // Continious assignments for internal nets.
@@ -112,6 +114,7 @@ module decode_stage
         .i_op            ( s_op            ),
         .i_func3         ( s_func3         ),
         .i_func7_5       ( s_func7_5       ),
+        .i_a0_reg_lsb    ( s_a0_reg_lsb    ),
         .o_imm_src       ( s_imm_src       ),
         .o_result_src    ( s_result_src    ),
         .o_alu_control   ( s_alu_control   ),
@@ -142,6 +145,7 @@ module decode_stage
         .i_addr_2       ( s_rs2_addr      ),
         .i_addr_3       ( i_rd_addr       ),
         .i_write_data_3 ( i_rd_write_data ),
+        .o_a0_reg_lsb   ( s_a0_reg_lsb    ),
         .o_read_data_1  ( s_rs1_data      ),
         .o_read_data_2  ( s_rs2_data      )
     );
