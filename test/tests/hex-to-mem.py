@@ -157,9 +157,9 @@ if __name__ == '__main__':
     for directory in input_directory:
         main(directory)
 
-# os.remove(file_path_1)
-# os.remove(file_path_2)
-# os.remove(file_path_3)
+os.remove(file_path_1)
+os.remove(file_path_2)
+os.remove(file_path_3)
 os.remove(mtvec_initialize_asm.replace(".s", ".o"))
 os.remove(mtvec_initialize_asm.replace(".s", ".txt"))
 os.remove(mtvec_initialize_asm.removesuffix(".s"))
