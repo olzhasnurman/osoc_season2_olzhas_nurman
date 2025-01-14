@@ -1125,7 +1125,7 @@ Disassembly of section .data:
     8000044c:	0065151b          	slliw	x10,x10,0x6
     80000450:	00a0b023          	sd	x10,0(x1)
     80000454:	ff000237          	lui	x4,0xff000
-    80000458:	fc02021b          	addiw	x4,x4,-64
+    80000458:	fc02021b          	addiw	x4,x4,-64 # 0xfffffffffeffffc0
     8000045c:	00a20463          	beq	x4,x10,0x80000464
     80000460:	bc5ff06f          	jal	x0,0x80000024
     80000464:	00600e13          	addi	x28,x0,6
@@ -1218,7 +1218,7 @@ Disassembly of section .data:
     800005c0:	007a149b          	slliw	x9,x20,0x7
     800005c4:	0690b823          	sd	x9,112(x1)
     800005c8:	00001237          	lui	x4,0x1
-    800005cc:	8002021b          	addiw	x4,x4,-2048
+    800005cc:	8002021b          	addiw	x4,x4,-2048 # 0x800
     800005d0:	00920463          	beq	x4,x9,0x800005d8
     800005d4:	a51ff06f          	jal	x0,0x80000024
     800005d8:	02000e93          	addi	x29,x0,32
@@ -1661,28 +1661,28 @@ Disassembly of section .data:
     80000cac:	0075159b          	slliw	x11,x10,0x7
     80000cb0:	1cb13023          	sd	x11,448(x2)
     80000cb4:	ffffe3b7          	lui	x7,0xffffe
-    80000cb8:	f803839b          	addiw	x7,x7,-128
+    80000cb8:	f803839b          	addiw	x7,x7,-128 # 0xffffffffffffdf80
     80000cbc:	00b38463          	beq	x7,x11,0x80000cc4
     80000cc0:	b64ff06f          	jal	x0,0x80000024
     80000cc4:	f7f00513          	addi	x10,x0,-129
     80000cc8:	0045159b          	slliw	x11,x10,0x4
     80000ccc:	1cb13423          	sd	x11,456(x2)
     80000cd0:	fffff3b7          	lui	x7,0xfffff
-    80000cd4:	7f03839b          	addiw	x7,x7,2032
+    80000cd4:	7f03839b          	addiw	x7,x7,2032 # 0xfffffffffffff7f0
     80000cd8:	00b38463          	beq	x7,x11,0x80000ce0
     80000cdc:	b48ff06f          	jal	x0,0x80000024
     80000ce0:	eff00513          	addi	x10,x0,-257
     80000ce4:	0065159b          	slliw	x11,x10,0x6
     80000ce8:	1cb13823          	sd	x11,464(x2)
     80000cec:	ffffc3b7          	lui	x7,0xffffc
-    80000cf0:	fc03839b          	addiw	x7,x7,-64
+    80000cf0:	fc03839b          	addiw	x7,x7,-64 # 0xffffffffffffbfc0
     80000cf4:	00b38463          	beq	x7,x11,0x80000cfc
     80000cf8:	b2cff06f          	jal	x0,0x80000024
     80000cfc:	dff00513          	addi	x10,x0,-513
     80000d00:	0085159b          	slliw	x11,x10,0x8
     80000d04:	1cb13c23          	sd	x11,472(x2)
     80000d08:	fffe03b7          	lui	x7,0xfffe0
-    80000d0c:	f003839b          	addiw	x7,x7,-256
+    80000d0c:	f003839b          	addiw	x7,x7,-256 # 0xfffffffffffdff00
     80000d10:	00b38463          	beq	x7,x11,0x80000d18
     80000d14:	b10ff06f          	jal	x0,0x80000024
     80000d18:	bff00513          	addi	x10,x0,-1025
@@ -1697,7 +1697,7 @@ Disassembly of section .data:
     80000d3c:	0025159b          	slliw	x11,x10,0x2
     80000d40:	1eb13423          	sd	x11,488(x2)
     80000d44:	ffffe3b7          	lui	x7,0xffffe
-    80000d48:	ffc3839b          	addiw	x7,x7,-4
+    80000d48:	ffc3839b          	addiw	x7,x7,-4 # 0xffffffffffffdffc
     80000d4c:	00b38463          	beq	x7,x11,0x80000d54
     80000d50:	ad4ff06f          	jal	x0,0x80000024
     80000d54:	00100513          	addi	x10,x0,1
@@ -1722,7 +1722,7 @@ Disassembly of section .data:
     80000da0:	00a5159b          	slliw	x11,x10,0xa
     80000da4:	20b13023          	sd	x11,512(x2)
     80000da8:	ff0003b7          	lui	x7,0xff000
-    80000dac:	c003839b          	addiw	x7,x7,-1024
+    80000dac:	c003839b          	addiw	x7,x7,-1024 # 0xfffffffffefffc00
     80000db0:	00b38463          	beq	x7,x11,0x80000db8
     80000db4:	a70ff06f          	jal	x0,0x80000024
     80000db8:	00100513          	addi	x10,x0,1
@@ -1824,7 +1824,7 @@ Disassembly of section .data:
     80000f38:	0045159b          	slliw	x11,x10,0x4
     80000f3c:	26b13023          	sd	x11,608(x2)
     80000f40:	555553b7          	lui	x7,0x55555
-    80000f44:	5503839b          	addiw	x7,x7,1360
+    80000f44:	5503839b          	addiw	x7,x7,1360 # 0x55555550
     80000f48:	00b38463          	beq	x7,x11,0x80000f50
     80000f4c:	8d8ff06f          	jal	x0,0x80000024
     80000f50:	aaaab537          	lui	x10,0xaaaab
@@ -1857,7 +1857,7 @@ Disassembly of section .data:
     80000fbc:	0005159b          	slliw	x11,x10,0x0
     80000fc0:	26b13c23          	sd	x11,632(x2)
     80000fc4:	333333b7          	lui	x7,0x33333
-    80000fc8:	3333839b          	addiw	x7,x7,819
+    80000fc8:	3333839b          	addiw	x7,x7,819 # 0x33333333
     80000fcc:	00b38463          	beq	x7,x11,0x80000fd4
     80000fd0:	854ff06f          	jal	x0,0x80000024
     80000fd4:	66666537          	lui	x10,0x66666
@@ -1874,7 +1874,7 @@ Disassembly of section .data:
     80001000:	00b38463          	beq	x7,x11,0x80001008
     80001004:	820ff06f          	jal	x0,0x80000024
     80001008:	00000537          	lui	x10,0x0
-    8000100c:	fff50513          	addi	x10,x10,-1
+    8000100c:	fff50513          	addi	x10,x10,-1 # 0xffffffffffffffff
     80001010:	00b51513          	slli	x10,x10,0xb
     80001014:	25750513          	addi	x10,x10,599
     80001018:	00b51513          	slli	x10,x10,0xb
@@ -1884,7 +1884,7 @@ Disassembly of section .data:
     80001028:	0035159b          	slliw	x11,x10,0x3
     8000102c:	28b13423          	sd	x11,648(x2)
     80001030:	57d863b7          	lui	x7,0x57d86
-    80001034:	6683839b          	addiw	x7,x7,1640
+    80001034:	6683839b          	addiw	x7,x7,1640 # 0x57d86668
     80001038:	00b38463          	beq	x7,x11,0x80001040
     8000103c:	fe9fe06f          	jal	x0,0x80000024
     80001040:	00000537          	lui	x10,0x0
@@ -1898,7 +1898,7 @@ Disassembly of section .data:
     80001060:	0015159b          	slliw	x11,x10,0x1
     80001064:	28b13823          	sd	x11,656(x2)
     80001068:	6a09e3b7          	lui	x7,0x6a09e
-    8000106c:	6663839b          	addiw	x7,x7,1638
+    8000106c:	6663839b          	addiw	x7,x7,1638 # 0x6a09e666
     80001070:	00b38463          	beq	x7,x11,0x80001078
     80001074:	fb1fe06f          	jal	x0,0x80000024
     80001078:	55555537          	lui	x10,0x55555
@@ -1912,7 +1912,7 @@ Disassembly of section .data:
     80001098:	0055159b          	slliw	x11,x10,0x5
     8000109c:	28b13c23          	sd	x11,664(x2)
     800010a0:	aaaab3b7          	lui	x7,0xaaaab
-    800010a4:	a803839b          	addiw	x7,x7,-1408
+    800010a4:	a803839b          	addiw	x7,x7,-1408 # 0xffffffffaaaaaa80
     800010a8:	00b38463          	beq	x7,x11,0x800010b0
     800010ac:	f79fe06f          	jal	x0,0x80000024
     800010b0:	33333537          	lui	x10,0x33333
@@ -1952,7 +1952,7 @@ Disassembly of section .data:
     80001138:	0035159b          	slliw	x11,x10,0x3
     8000113c:	2ab13823          	sd	x11,688(x2)
     80001140:	a827a3b7          	lui	x7,0xa827a
-    80001144:	9903839b          	addiw	x7,x7,-1648
+    80001144:	9903839b          	addiw	x7,x7,-1648 # 0xffffffffa8279990
     80001148:	00b38463          	beq	x7,x11,0x80001150
     8000114c:	ed9fe06f          	jal	x0,0x80000024
     80001150:	55555537          	lui	x10,0x55555
@@ -2005,11 +2005,11 @@ Disassembly of section .data:
     8000120c:	0005159b          	slliw	x11,x10,0x0
     80001210:	2cb13823          	sd	x11,720(x2)
     80001214:	666663b7          	lui	x7,0x66666
-    80001218:	6673839b          	addiw	x7,x7,1639
+    80001218:	6673839b          	addiw	x7,x7,1639 # 0x66666667
     8000121c:	00b38463          	beq	x7,x11,0x80001224
     80001220:	e05fe06f          	jal	x0,0x80000024
     80001224:	00000537          	lui	x10,0x0
-    80001228:	fff50513          	addi	x10,x10,-1
+    80001228:	fff50513          	addi	x10,x10,-1 # 0xffffffffffffffff
     8000122c:	00b51513          	slli	x10,x10,0xb
     80001230:	25750513          	addi	x10,x10,599
     80001234:	00b51513          	slli	x10,x10,0xb
@@ -2019,7 +2019,7 @@ Disassembly of section .data:
     80001244:	0015159b          	slliw	x11,x10,0x1
     80001248:	2cb13c23          	sd	x11,728(x2)
     8000124c:	95f623b7          	lui	x7,0x95f62
-    80001250:	99c3839b          	addiw	x7,x7,-1636
+    80001250:	99c3839b          	addiw	x7,x7,-1636 # 0xffffffff95f6199c
     80001254:	00b38463          	beq	x7,x11,0x8000125c
     80001258:	dcdfe06f          	jal	x0,0x80000024
     8000125c:	00000537          	lui	x10,0x0
@@ -2057,7 +2057,7 @@ Disassembly of section .data:
     800012dc:	0065159b          	slliw	x11,x10,0x6
     800012e0:	2eb13c23          	sd	x11,760(x2)
     800012e4:	fe0003b7          	lui	x7,0xfe000
-    800012e8:	fc03839b          	addiw	x7,x7,-64
+    800012e8:	fc03839b          	addiw	x7,x7,-64 # 0xfffffffffdffffc0
     800012ec:	00b38463          	beq	x7,x11,0x800012f4
     800012f0:	d35fe06f          	jal	x0,0x80000024
     800012f4:	00100513          	addi	x10,x0,1
@@ -2090,7 +2090,7 @@ Disassembly of section .data:
     80001360:	0045159b          	slliw	x11,x10,0x4
     80001364:	30b13c23          	sd	x11,792(x2)
     80001368:	f80003b7          	lui	x7,0xf8000
-    8000136c:	ff03839b          	addiw	x7,x7,-16
+    8000136c:	ff03839b          	addiw	x7,x7,-16 # 0xfffffffff7fffff0
     80001370:	00b38463          	beq	x7,x11,0x80001378
     80001374:	cb1fe06f          	jal	x0,0x80000024
     80001378:	00100513          	addi	x10,x0,1
@@ -2139,7 +2139,7 @@ Disassembly of section .data:
     80001424:	0015159b          	slliw	x11,x10,0x1
     80001428:	34b13423          	sd	x11,840(x2)
     8000142c:	c00003b7          	lui	x7,0xc0000
-    80001430:	ffe3839b          	addiw	x7,x7,-2
+    80001430:	ffe3839b          	addiw	x7,x7,-2 # 0xffffffffbffffffe
     80001434:	00b38463          	beq	x7,x11,0x8000143c
     80001438:	bedfe06f          	jal	x0,0x80000024
     8000143c:	00100513          	addi	x10,x0,1

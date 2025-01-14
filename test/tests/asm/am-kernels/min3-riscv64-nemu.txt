@@ -141,128 +141,128 @@ Disassembly of section .data:
     8000016c:	0000006f          	jal	x0,0x8000016c
 	...
     80000180:	0000                	c.unimp
-    80000182:	8000                	0x8000
-    80000184:	ffff                	0xffff
-    80000186:	ffff                	0xffff
+    80000182:	8000                	.insn	2, 0x8000
+    80000184:	ffff                	.insn	2, 0xffff
+    80000186:	ffff                	.insn	2, 0xffff
 	...
     80000190:	0000                	c.unimp
-    80000192:	8000                	0x8000
-    80000194:	ffff                	0xffff
-    80000196:	ffff                	0xffff
+    80000192:	8000                	.insn	2, 0x8000
+    80000194:	ffff                	.insn	2, 0xffff
+    80000196:	ffff                	.insn	2, 0xffff
     80000198:	0000                	c.unimp
-    8000019a:	8000                	0x8000
+    8000019a:	8000                	.insn	2, 0x8000
     8000019c:	0000                	c.unimp
-    8000019e:	8000                	0x8000
+    8000019e:	8000                	.insn	2, 0x8000
     800001a0:	0000                	c.unimp
-    800001a2:	8000                	0x8000
+    800001a2:	8000                	.insn	2, 0x8000
     800001a4:	0000                	c.unimp
-    800001a6:	8000                	0x8000
-    800001a8:	ffff                	0xffff
-    800001aa:	ffff                	0xffff
-    800001ac:	ffff                	0xffff
-    800001ae:	ffff                	0xffff
+    800001a6:	8000                	.insn	2, 0x8000
+    800001a8:	ffff                	.insn	2, 0xffff
+    800001aa:	ffff                	.insn	2, 0xffff
+    800001ac:	ffff                	.insn	2, 0xffff
+    800001ae:	ffff                	.insn	2, 0xffff
     800001b0:	0000                	c.unimp
-    800001b2:	8000                	0x8000
-    800001b4:	ffff                	0xffff
-    800001b6:	ffff                	0xffff
+    800001b2:	8000                	.insn	2, 0x8000
+    800001b4:	ffff                	.insn	2, 0xffff
+    800001b6:	ffff                	.insn	2, 0xffff
 	...
     800001c0:	0000                	c.unimp
-    800001c2:	8000                	0x8000
-    800001c4:	ffff                	0xffff
-    800001c6:	ffff                	0xffff
+    800001c2:	8000                	.insn	2, 0x8000
+    800001c4:	ffff                	.insn	2, 0xffff
+    800001c6:	ffff                	.insn	2, 0xffff
     800001c8:	0000                	c.unimp
     800001ca:	0000                	c.unimp
-    800001cc:	ffff                	0xffff
-    800001ce:	7fff                	0x7fff
+    800001cc:	ffff                	.insn	2, 0xffff
+    800001ce:	7fff                	.insn	2, 0x7fff
     800001d0:	0000                	c.unimp
-    800001d2:	8000                	0x8000
-    800001d4:	ffff                	0xffff
-    800001d6:	ffff                	0xffff
+    800001d2:	8000                	.insn	2, 0x8000
+    800001d4:	ffff                	.insn	2, 0xffff
+    800001d6:	ffff                	.insn	2, 0xffff
     800001d8:	0000                	c.unimp
-    800001da:	8000                	0x8000
+    800001da:	8000                	.insn	2, 0x8000
     800001dc:	0000                	c.unimp
-    800001de:	8000                	0x8000
+    800001de:	8000                	.insn	2, 0x8000
     800001e0:	0000                	c.unimp
-    800001e2:	8000                	0x8000
+    800001e2:	8000                	.insn	2, 0x8000
     800001e4:	0000                	c.unimp
-    800001e6:	8000                	0x8000
-    800001e8:	ffff                	0xffff
-    800001ea:	ffff                	0xffff
-    800001ec:	ffff                	0xffff
-    800001ee:	ffff                	0xffff
+    800001e6:	8000                	.insn	2, 0x8000
+    800001e8:	ffff                	.insn	2, 0xffff
+    800001ea:	ffff                	.insn	2, 0xffff
+    800001ec:	ffff                	.insn	2, 0xffff
+    800001ee:	ffff                	.insn	2, 0xffff
     800001f0:	0000                	c.unimp
-    800001f2:	8000                	0x8000
-    800001f4:	ffff                	0xffff
-    800001f6:	ffff                	0xffff
+    800001f2:	8000                	.insn	2, 0x8000
+    800001f4:	ffff                	.insn	2, 0xffff
+    800001f6:	ffff                	.insn	2, 0xffff
     800001f8:	0000                	c.unimp
-    800001fa:	8000                	0x8000
+    800001fa:	8000                	.insn	2, 0x8000
     800001fc:	0000                	c.unimp
-    800001fe:	8000                	0x8000
+    800001fe:	8000                	.insn	2, 0x8000
     80000200:	0000                	c.unimp
-    80000202:	8000                	0x8000
+    80000202:	8000                	.insn	2, 0x8000
     80000204:	0000                	c.unimp
-    80000206:	8000                	0x8000
+    80000206:	8000                	.insn	2, 0x8000
     80000208:	0000                	c.unimp
-    8000020a:	8000                	0x8000
+    8000020a:	8000                	.insn	2, 0x8000
     8000020c:	0000                	c.unimp
-    8000020e:	8000                	0x8000
+    8000020e:	8000                	.insn	2, 0x8000
     80000210:	0000                	c.unimp
-    80000212:	8000                	0x8000
+    80000212:	8000                	.insn	2, 0x8000
     80000214:	0000                	c.unimp
-    80000216:	8000                	0x8000
+    80000216:	8000                	.insn	2, 0x8000
     80000218:	0000                	c.unimp
-    8000021a:	8000                	0x8000
+    8000021a:	8000                	.insn	2, 0x8000
     8000021c:	0000                	c.unimp
-    8000021e:	8000                	0x8000
+    8000021e:	8000                	.insn	2, 0x8000
     80000220:	0000                	c.unimp
-    80000222:	8000                	0x8000
+    80000222:	8000                	.insn	2, 0x8000
     80000224:	0000                	c.unimp
-    80000226:	8000                	0x8000
+    80000226:	8000                	.insn	2, 0x8000
     80000228:	0000                	c.unimp
-    8000022a:	8000                	0x8000
+    8000022a:	8000                	.insn	2, 0x8000
     8000022c:	0000                	c.unimp
-    8000022e:	8000                	0x8000
+    8000022e:	8000                	.insn	2, 0x8000
     80000230:	0000                	c.unimp
-    80000232:	8000                	0x8000
+    80000232:	8000                	.insn	2, 0x8000
     80000234:	0000                	c.unimp
-    80000236:	8000                	0x8000
-    80000238:	ffff                	0xffff
-    8000023a:	ffff                	0xffff
-    8000023c:	ffff                	0xffff
-    8000023e:	ffff                	0xffff
+    80000236:	8000                	.insn	2, 0x8000
+    80000238:	ffff                	.insn	2, 0xffff
+    8000023a:	ffff                	.insn	2, 0xffff
+    8000023c:	ffff                	.insn	2, 0xffff
+    8000023e:	ffff                	.insn	2, 0xffff
     80000240:	0000                	c.unimp
-    80000242:	8000                	0x8000
-    80000244:	ffff                	0xffff
-    80000246:	ffff                	0xffff
-    80000248:	ffff                	0xffff
-    8000024a:	ffff                	0xffff
-    8000024c:	ffff                	0xffff
-    8000024e:	ffff                	0xffff
+    80000242:	8000                	.insn	2, 0x8000
+    80000244:	ffff                	.insn	2, 0xffff
+    80000246:	ffff                	.insn	2, 0xffff
+    80000248:	ffff                	.insn	2, 0xffff
+    8000024a:	ffff                	.insn	2, 0xffff
+    8000024c:	ffff                	.insn	2, 0xffff
+    8000024e:	ffff                	.insn	2, 0xffff
     80000250:	0000                	c.unimp
-    80000252:	8000                	0x8000
-    80000254:	ffff                	0xffff
-    80000256:	ffff                	0xffff
+    80000252:	8000                	.insn	2, 0x8000
+    80000254:	ffff                	.insn	2, 0xffff
+    80000256:	ffff                	.insn	2, 0xffff
     80000258:	0000                	c.unimp
-    8000025a:	8000                	0x8000
+    8000025a:	8000                	.insn	2, 0x8000
     8000025c:	0000                	c.unimp
-    8000025e:	8000                	0x8000
+    8000025e:	8000                	.insn	2, 0x8000
     80000260:	0000                	c.unimp
-    80000262:	8000                	0x8000
+    80000262:	8000                	.insn	2, 0x8000
     80000264:	0000                	c.unimp
-    80000266:	8000                	0x8000
-    80000268:	ffff                	0xffff
-    8000026a:	ffff                	0xffff
-    8000026c:	ffff                	0xffff
-    8000026e:	ffff                	0xffff
+    80000266:	8000                	.insn	2, 0x8000
+    80000268:	ffff                	.insn	2, 0xffff
+    8000026a:	ffff                	.insn	2, 0xffff
+    8000026c:	ffff                	.insn	2, 0xffff
+    8000026e:	ffff                	.insn	2, 0xffff
     80000270:	0000                	c.unimp
-    80000272:	8000                	0x8000
-    80000274:	ffff                	0xffff
-    80000276:	ffff                	0xffff
+    80000272:	8000                	.insn	2, 0x8000
+    80000274:	ffff                	.insn	2, 0xffff
+    80000276:	ffff                	.insn	2, 0xffff
     80000278:	0000                	c.unimp
     8000027a:	0000                	c.unimp
-    8000027c:	ffff                	0xffff
-    8000027e:	7fff                	0x7fff
+    8000027c:	ffff                	.insn	2, 0xffff
+    8000027e:	7fff                	.insn	2, 0x7fff
     80000280:	0000                	c.unimp
-    80000282:	8000                	0x8000
-    80000284:	ffff                	0xffff
-    80000286:	ffff                	0xffff
+    80000282:	8000                	.insn	2, 0x8000
+    80000284:	ffff                	.insn	2, 0xffff
+    80000286:	ffff                	.insn	2, 0xffff

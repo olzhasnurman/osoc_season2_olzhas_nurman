@@ -1858,7 +1858,7 @@ Disassembly of section .data:
     800010b4:	00000013          	addi	x0,x0,0
     800010b8:	00000013          	addi	x0,x0,0
     800010bc:	00000013          	addi	x0,x0,0
-    800010c0:	bff20067          	jalr	x0,-1025(x4) # 0x0
+    800010c0:	bff20067          	jalr	x0,-1025(x4) # 0xfffffffffffffbff
     800010c4:	00000013          	addi	x0,x0,0
     800010c8:	00000013          	addi	x0,x0,0
     800010cc:	00204013          	xori	x0,x0,2

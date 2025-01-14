@@ -119,8 +119,8 @@ Disassembly of section .data:
     80000152:	0000                	c.unimp
     80000154:	0096                	c.slli	x1,0x5
     80000156:	0000                	c.unimp
-    80000158:	ffff                	0xffff
-    8000015a:	ffff                	0xffff
+    80000158:	ffff                	.insn	2, 0xffff
+    8000015a:	ffff                	.insn	2, 0xffff
     8000015c:	0000                	c.unimp
     8000015e:	0000                	c.unimp
     80000160:	0031                	c.addi	x0,12
@@ -133,12 +133,12 @@ Disassembly of section .data:
     80000172:	0000                	c.unimp
     80000174:	0065                	c.addi	x0,25
     80000176:	0000                	c.unimp
-    80000178:	0000012b          	0x12b
+    80000178:	0000012b          	.insn	4, 0x012b
     8000017c:	012c                	c.addi4spn	x11,x2,136
     8000017e:	0000                	c.unimp
     80000180:	012d                	c.addi	x2,11
     80000182:	0000                	c.unimp
-    80000184:	000001f3          	0x1f3
+    80000184:	000001f3          	.insn	4, 0x01f3
     80000188:	01f4                	c.addi4spn	x13,x2,204
     8000018a:	0000                	c.unimp
     8000018c:	01f5                	c.addi	x3,29

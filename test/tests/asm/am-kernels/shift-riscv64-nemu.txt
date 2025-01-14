@@ -120,18 +120,18 @@ Disassembly of section .data:
     80000144:	00100073          	ebreak
     80000148:	0000006f          	jal	x0,0x80000148
 	...
-    80000158:	01234567          	0x1234567
+    80000158:	01234567          	.insn	4, 0x01234567
     8000015c:	b2a1                	c.j	0x7ffffaa4
     8000015e:	0000fcc3          	fmadd.s	f25,f1,f0,f0
     80000162:	0000                	c.unimp
     80000164:	f420                	c.sd	x8,104(x8)
-    80000166:	ffdf ffff 007f      	0x7fffffffdf
+    80000166:	ffdf ffff 007f      	.insn	6, 0x007fffffffdf
     8000016c:	0000                	c.unimp
     8000016e:	ffc0                	c.sd	x8,184(x15)
     80000170:	0000                	c.unimp
     80000172:	0000                	c.unimp
-    80000174:	ffff                	0xffff
-    80000176:	ffff                	0xffff
+    80000174:	ffff                	.insn	2, 0xffff
+    80000176:	ffff                	.insn	2, 0xffff
     80000178:	68ac                	c.ld	x11,80(x9)
     8000017a:	0024                	c.addi4spn	x9,x2,8
     8000017c:	eca8                	c.sd	x10,88(x9)
@@ -139,35 +139,34 @@ Disassembly of section .data:
     80000180:	0000                	c.unimp
     80000182:	0000                	c.unimp
     80000184:	f420                	c.sd	x8,104(x8)
-    80000186:	01df ffff 00ff      	0xffffff01df
+    80000186:	01df ffff 00ff      	.insn	6, 0x00ffffff01df
     8000018c:	0000                	c.unimp
     8000018e:	0100                	c.addi4spn	x8,x2,128
     80000190:	0000                	c.unimp
     80000192:	0000                	c.unimp
-    80000194:	ffff                	0xffff
-    80000196:	01ff                	0x1ff
-    80000198:	01234567          	0x1234567
-    8000019c:	b2a1                	c.j	0x7ffffae4
-    8000019e:	000004c3          	fmadd.s	f9,f0,f0,f0,rne
+    80000194:	ffff                	.insn	2, 0xffff
+    80000196:	01ff 4567 0123 b2a1 	.insn	10, 0x04c3b2a10123456701ff
+    8000019e:	04c3 
+    800001a0:	0000                	c.unimp
     800001a2:	0000                	c.unimp
     800001a4:	f420                	c.sd	x8,104(x8)
-    800001a6:	01df ffff 007f      	0x7fffff01df
+    800001a6:	01df ffff 007f      	.insn	6, 0x007fffff01df
     800001ac:	0000                	c.unimp
     800001ae:	0040                	c.addi4spn	x8,x2,4
     800001b0:	0000                	c.unimp
     800001b2:	0000                	c.unimp
-    800001b4:	ffff                	0xffff
-    800001b6:	001f 5678 1234      	0x12345678001f
+    800001b4:	ffff                	.insn	2, 0xffff
+    800001b6:	001f 5678 1234      	.insn	6, 0x12345678001f
     800001bc:	5432                	c.lwsp	x8,44(x2)
     800001be:	9876                	c.add	x16,x29
     800001c0:	0000                	c.unimp
     800001c2:	0000                	c.unimp
     800001c4:	1000                	c.addi4spn	x8,x2,32
     800001c6:	effa                	c.sdsp	x30,472(x2)
-    800001c8:	ffff                	0xffff
-    800001ca:	7fff                	0x7fff
+    800001c8:	ffff                	.insn	2, 0xffff
+    800001ca:	7fff                	.insn	2, 0x7fff
     800001cc:	0000                	c.unimp
-    800001ce:	8000                	0x8000
+    800001ce:	8000                	.insn	2, 0x8000
     800001d0:	00000033          	add	x0,x0,x0
-    800001d4:	ffff                	0xffff
-    800001d6:	ffff                	0xffff
+    800001d4:	ffff                	.insn	2, 0xffff
+    800001d6:	ffff                	.insn	2, 0xffff

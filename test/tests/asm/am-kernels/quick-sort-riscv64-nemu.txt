@@ -321,7 +321,7 @@ Disassembly of section .data:
 	...
     800003e0:	0002                	c.slli64	x0
     800003e2:	0000                	c.unimp
-    800003e4:	000c                	0xc
+    800003e4:	000c                	.insn	2, 0x000c
     800003e6:	0000                	c.unimp
     800003e8:	000e                	c.slli	x0,0x3
     800003ea:	0000                	c.unimp
@@ -330,7 +330,7 @@ Disassembly of section .data:
     800003f0:	000d                	c.addi	x0,3
     800003f2:	0000                	c.unimp
     800003f4:	0000000f          	fence	unknown,unknown
-    800003f8:	0010                	0x10
+    800003f8:	0010                	.insn	2, 0x0010
     800003fa:	0000                	c.unimp
     800003fc:	000a                	c.slli	x0,0x2
     800003fe:	0000                	c.unimp
@@ -338,19 +338,19 @@ Disassembly of section .data:
     80000402:	0000                	c.unimp
     80000404:	0012                	c.slli	x0,0x4
     80000406:	0000                	c.unimp
-    80000408:	0000000b          	0xb
+    80000408:	0000000b          	.insn	4, 0x000b
     8000040c:	00000013          	addi	x0,x0,0
     80000410:	0009                	c.addi	x0,2
     80000412:	0000                	c.unimp
     80000414:	0001                	c.addi	x0,0
     80000416:	0000                	c.unimp
-    80000418:	00000007          	0x7
+    80000418:	00000007          	.insn	4, 0x0007
     8000041c:	0005                	c.addi	x0,1
     8000041e:	0000                	c.unimp
-    80000420:	0004                	0x4
+    80000420:	0004                	.insn	2, 0x0004
     80000422:	0000                	c.unimp
     80000424:	00000003          	lb	x0,0(x0) # 0x0
-    80000428:	0008                	0x8
+    80000428:	0008                	.insn	2, 0x0008
     8000042a:	0000                	c.unimp
     8000042c:	0011                	c.addi	x0,4
 	...

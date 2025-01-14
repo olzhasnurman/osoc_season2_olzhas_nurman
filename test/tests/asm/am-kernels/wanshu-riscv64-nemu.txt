@@ -94,5 +94,5 @@ Disassembly of section .data:
 	...
     80000118:	0006                	c.slli	x0,0x1
     8000011a:	0000                	c.unimp
-    8000011c:	001c                	0x1c
+    8000011c:	001c                	.insn	2, 0x001c
 	...

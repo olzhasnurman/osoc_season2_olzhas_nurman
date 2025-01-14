@@ -107,5 +107,5 @@ Disassembly of section .data:
     8000013a:	0000                	c.unimp
     8000013c:	0172                	c.slli	x2,0x1c
     8000013e:	0000                	c.unimp
-    80000140:	00000173          	0x173
+    80000140:	00000173          	.insn	4, 0x0173
     80000144:	00000197          	auipc	x3,0x0

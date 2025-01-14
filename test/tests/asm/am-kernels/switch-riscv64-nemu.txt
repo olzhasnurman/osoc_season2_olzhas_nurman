@@ -97,13 +97,13 @@ Disassembly of section .data:
     800000fa:	0000                	c.unimp
     800000fc:	0005                	c.addi	x0,1
     800000fe:	0000                	c.unimp
-    80000100:	0008                	0x8
+    80000100:	0008                	.insn	2, 0x0008
     80000102:	0000                	c.unimp
-    80000104:	0008                	0x8
+    80000104:	0008                	.insn	2, 0x0008
     80000106:	0000                	c.unimp
-    80000108:	0008                	0x8
+    80000108:	0008                	.insn	2, 0x0008
     8000010a:	0000                	c.unimp
-    8000010c:	0008                	0x8
+    8000010c:	0008                	.insn	2, 0x0008
     8000010e:	0000                	c.unimp
     80000110:	000a                	c.slli	x0,0x2
     80000112:	0000                	c.unimp
@@ -115,8 +115,8 @@ Disassembly of section .data:
     8000011e:	0000                	c.unimp
     80000120:	0000000f          	fence	unknown,unknown
 	...
-    80000130:	ffff                	0xffff
-    80000132:	ffff                	0xffff
+    80000130:	ffff                	.insn	2, 0xffff
+    80000132:	ffff                	.insn	2, 0xffff
     80000134:	0000                	c.unimp
     80000136:	0000                	c.unimp
     80000138:	0002                	c.slli64	x0
@@ -125,13 +125,13 @@ Disassembly of section .data:
     8000013e:	0000                	c.unimp
     80000140:	0005                	c.addi	x0,1
     80000142:	0000                	c.unimp
-    80000144:	0008                	0x8
+    80000144:	0008                	.insn	2, 0x0008
     80000146:	0000                	c.unimp
-    80000148:	0008                	0x8
+    80000148:	0008                	.insn	2, 0x0008
     8000014a:	0000                	c.unimp
-    8000014c:	0008                	0x8
+    8000014c:	0008                	.insn	2, 0x0008
     8000014e:	0000                	c.unimp
-    80000150:	0008                	0x8
+    80000150:	0008                	.insn	2, 0x0008
     80000152:	0000                	c.unimp
     80000154:	000a                	c.slli	x0,0x2
     80000156:	0000                	c.unimp
@@ -142,5 +142,5 @@ Disassembly of section .data:
     80000160:	000a                	c.slli	x0,0x2
     80000162:	0000                	c.unimp
     80000164:	0000000f          	fence	unknown,unknown
-    80000168:	ffff                	0xffff
-    8000016a:	ffff                	0xffff
+    80000168:	ffff                	.insn	2, 0xffff
+    8000016a:	ffff                	.insn	2, 0xffff

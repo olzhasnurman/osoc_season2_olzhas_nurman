@@ -102,7 +102,7 @@ Disassembly of section .data:
     800000e4:	00000003          	lb	x0,0(x0) # 0x0
     800000e8:	0005                	c.addi	x0,1
     800000ea:	0000                	c.unimp
-    800000ec:	0008                	0x8
+    800000ec:	0008                	.insn	2, 0x0008
     800000ee:	0000                	c.unimp
     800000f0:	000d                	c.addi	x0,3
     800000f2:	0000                	c.unimp
@@ -121,7 +121,7 @@ Disassembly of section .data:
     8000010e:	0000                	c.unimp
     80000110:	0262                	c.slli	x4,0x18
     80000112:	0000                	c.unimp
-    80000114:	000003db          	0x3db
+    80000114:	000003db          	.insn	4, 0x03db
     80000118:	063d                	c.addi	x12,15
     8000011a:	0000                	c.unimp
     8000011c:	0a18                	c.addi4spn	x14,x2,272
@@ -132,7 +132,7 @@ Disassembly of section .data:
     80000126:	0000                	c.unimp
     80000128:	2ac2                	c.fldsp	f21,16(x2)
     8000012a:	0000                	c.unimp
-    8000012c:	0000452f          	0x452f
+    8000012c:	0000452f          	.insn	4, 0x452f
     80000130:	6ff1                	c.lui	x31,0x1c
     80000132:	0000                	c.unimp
     80000134:	b520                	c.fsd	f8,104(x10)
@@ -143,12 +143,12 @@ Disassembly of section .data:
     8000013e:	0001                	c.addi	x0,0
     80000140:	ff42                	c.sdsp	x16,440(x2)
     80000142:	0002                	c.slli64	x0
-    80000144:	0004d973          	csrrwi	x18,ustatus,9
+    80000144:	0004d973          	csrrwi	x18,0x0,9
     80000148:	d8b5                	c.beqz	x9,0x800000bc
-    8000014a:	b2280007          	0xb2280007
-    8000014e:	000c                	0xc
+    8000014a:	b2280007          	.insn	4, 0xb2280007
+    8000014e:	000c                	.insn	2, 0x000c
     80000150:	8add                	c.andi	x13,23
-    80000152:	0014                	0x14
+    80000152:	0014                	.insn	2, 0x0014
     80000154:	3d05                	c.addiw	x26,-31
     80000156:	0021                	c.addi	x0,8
     80000158:	c7e2                	c.swsp	x24,204(x2)
@@ -163,7 +163,7 @@ Disassembly of section .data:
     8000016e:	0254                	c.addi4spn	x13,x2,260
     80000170:	0ea2                	c.slli	x29,0x8
     80000172:	03c5                	c.addi	x7,17
-    80000174:	06197ecb          	fnmsub.q	f29,f18,f1,f0
+    80000174:	06197ecb          	.insn	4, 0x06197ecb
     80000178:	0001                	c.addi	x0,0
     8000017a:	0000                	c.unimp
     8000017c:	0001                	c.addi	x0,0

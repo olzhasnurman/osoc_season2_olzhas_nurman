@@ -182,57 +182,53 @@ Disassembly of section .data:
     80000216:	0000                	c.unimp
     80000218:	4abc                	c.lw	x15,80(x13)
     8000021a:	0000                	c.unimp
-    8000021c:	7fff                	0x7fff
+    8000021c:	7fff                	.insn	2, 0x7fff
     8000021e:	0000                	c.unimp
-    80000220:	8000                	0x8000
-    80000222:	ffff                	0xffff
-    80000224:	8100                	0x8100
-    80000226:	ffff                	0xffff
+    80000220:	8000                	.insn	2, 0x8000
+    80000222:	ffff                	.insn	2, 0xffff
+    80000224:	8100                	.insn	2, 0x8100
+    80000226:	ffff                	.insn	2, 0xffff
     80000228:	abcd                	c.j	0x8000081a
-    8000022a:	ffff                	0xffff
-    8000022c:	ffff                	0xffff
-    8000022e:	ffff                	0xffff
+    8000022a:	ffff                	.insn	2, 0xffff
+    8000022c:	ffff                	.insn	2, 0xffff
+    8000022e:	ffff                	.insn	2, 0xffff
     80000230:	0000                	c.unimp
     80000232:	0000                	c.unimp
     80000234:	0258                	c.addi4spn	x14,x2,260
     80000236:	0000                	c.unimp
     80000238:	4abc                	c.lw	x15,80(x13)
     8000023a:	0000                	c.unimp
-    8000023c:	7fff                	0x7fff
+    8000023c:	7fff                	.insn	2, 0x7fff
     8000023e:	0000                	c.unimp
-    80000240:	8000                	0x8000
+    80000240:	8000                	.insn	2, 0x8000
     80000242:	0000                	c.unimp
-    80000244:	8100                	0x8100
+    80000244:	8100                	.insn	2, 0x8100
     80000246:	0000                	c.unimp
     80000248:	abcd                	c.j	0x8000083a
     8000024a:	0000                	c.unimp
-    8000024c:	ffff                	0xffff
+    8000024c:	ffff                	.insn	2, 0xffff
     8000024e:	0000                	c.unimp
     80000250:	5800                	c.lw	x8,48(x8)
     80000252:	bc02                	c.fsdsp	f0,56(x2)
     80000254:	ff4a                	c.sdsp	x18,440(x2)
-    80000256:	007f                	0x7f
-    80000258:	0080                	c.addi4spn	x8,x2,64
-    8000025a:	cd81                	c.beqz	x11,0x80000272
-    8000025c:	00ffffab          	0xffffab
+    80000256:	007f 0080 cd81 ffab 	.insn	10, 0x00ffffabcd810080007f
+    8000025e:	00ff 
     80000260:	0000                	c.unimp
     80000262:	0258                	c.addi4spn	x14,x2,260
     80000264:	4abc                	c.lw	x15,80(x13)
-    80000266:	7fff                	0x7fff
-    80000268:	8000                	0x8000
-    8000026a:	8100                	0x8100
+    80000266:	7fff                	.insn	2, 0x7fff
+    80000268:	8000                	.insn	2, 0x8000
+    8000026a:	8100                	.insn	2, 0x8100
     8000026c:	abcd                	c.j	0x8000085e
-    8000026e:	ffff                	0xffff
+    8000026e:	ffff                	.insn	2, 0xffff
     80000270:	fffd                	c.bnez	x15,0x8000026e
     80000272:	0000                	c.unimp
-    80000274:	0000fff7          	0xfff7
-    80000278:	ffdf 0000 ff7f      	0xff7f0000ffdf
+    80000274:	0000fff7          	.insn	4, 0xfff7
+    80000278:	ffdf 0000 ff7f      	.insn	6, 0xff7f0000ffdf
     8000027e:	0000                	c.unimp
-    80000280:	fdff                	0xfdff
+    80000280:	fdff                	.insn	2, 0xfdff
     80000282:	0000                	c.unimp
-    80000284:	f7ff                	0xf7ff
+    80000284:	f7ff                	.insn	2, 0xf7ff
     80000286:	0000                	c.unimp
-    80000288:	dfff                	0xdfff
-    8000028a:	0000                	c.unimp
-    8000028c:	7fff                	0x7fff
-	...
+    80000288:	Address 0x80000288 is out of bounds.
+

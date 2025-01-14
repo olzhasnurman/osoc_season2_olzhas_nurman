@@ -133,14 +133,14 @@ Disassembly of section .data:
     80000156:	0002                	c.slli64	x0
     80000158:	00090f6f          	jal	x30,0x80090158
     8000015c:	1058                	c.addi4spn	x14,x2,36
-    8000015e:	001f 4efd 0059      	0x594efd001f
+    8000015e:	001f 4efd 0059      	.insn	6, 0x00594efd001f
     80000164:	4f4e                	c.lwsp	x30,208(x2)
     80000166:	00da                	c.slli	x1,0x16
-    80000168:	01ca7357          	0x1ca7357
-    8000016c:	8be4                	0x8be4
+    80000168:	01ca7357          	.insn	4, 0x01ca7357
+    8000016c:	8be4                	.insn	2, 0x8be4
     8000016e:	0341                	c.addi	x6,16
     80000170:	c829                	c.beqz	x8,0x800001c2
-    80000172:	63ea0527          	0x63ea0527
+    80000172:	63ea0527          	.insn	4, 0x63ea0527
     80000176:	f9530723          	sb	x21,-114(x6)
     8000017a:	08aa                	c.slli	x17,0xa
     8000017c:	e7d0                	c.sd	x12,136(x15)
@@ -148,15 +148,15 @@ Disassembly of section .data:
     80000180:	08aaf953          	fsub.s	f18,f21,f10
     80000184:	63ea                	c.ldsp	x7,152(x2)
     80000186:	c8290723          	sb	x2,-882(x18)
-    8000018a:	8be40527          	0x8be40527
+    8000018a:	8be40527          	.insn	4, 0x8be40527
     8000018e:	0341                	c.addi	x6,16
-    80000190:	01ca7357          	0x1ca7357
+    80000190:	01ca7357          	.insn	4, 0x01ca7357
     80000194:	4f4e                	c.lwsp	x30,208(x2)
     80000196:	00da                	c.slli	x1,0x16
     80000198:	4efd                	c.li	x29,31
     8000019a:	0059                	c.addi	x0,22
     8000019c:	1058                	c.addi4spn	x14,x2,36
-    8000019e:	001f 0f6f 0009      	0x90f6f001f
+    8000019e:	001f 0f6f 0009      	.insn	6, 0x00090f6f001f
     800001a4:	2caa                	c.fldsp	f25,136(x2)
     800001a6:	0002                	c.slli64	x0
     800001a8:	6b0d                	c.lui	x22,0x3

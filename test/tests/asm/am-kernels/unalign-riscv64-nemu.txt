@@ -115,6 +115,6 @@ Disassembly of section .data:
     8000014c:	0000006f          	jal	x0,0x8000014c
     80000150:	0000                	c.unimp
     80000152:	0000                	c.unimp
-    80000154:	ffff                	0xffff
-    80000156:	ffff                	0xffff
+    80000154:	ffff                	.insn	2, 0xffff
+    80000156:	ffff                	.insn	2, 0xffff
 	...

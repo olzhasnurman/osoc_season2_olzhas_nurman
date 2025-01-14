@@ -131,26 +131,26 @@ Disassembly of section .data:
     80000110:	00100073          	ebreak
     80000114:	0000006f          	jal	x0,0x80000114
 	...
-    80000128:	ffff                	0xffff
-    8000012a:	ffff                	0xffff
-    8000012c:	ffff                	0xffff
-    8000012e:	ffff                	0xffff
+    80000128:	ffff                	.insn	2, 0xffff
+    8000012a:	ffff                	.insn	2, 0xffff
+    8000012c:	ffff                	.insn	2, 0xffff
+    8000012e:	ffff                	.insn	2, 0xffff
     80000130:	fffe                	c.sdsp	x31,504(x2)
-    80000132:	ffff                	0xffff
-    80000134:	ffff                	0xffff
-    80000136:	ffff                	0xffff
+    80000132:	ffff                	.insn	2, 0xffff
+    80000134:	ffff                	.insn	2, 0xffff
+    80000136:	ffff                	.insn	2, 0xffff
     80000138:	0001                	c.addi	x0,0
     8000013a:	0000                	c.unimp
     8000013c:	0000                	c.unimp
-    8000013e:	8000                	0x8000
+    8000013e:	8000                	.insn	2, 0x8000
     80000140:	0000                	c.unimp
     80000142:	0000                	c.unimp
     80000144:	0000                	c.unimp
-    80000146:	8000                	0x8000
-    80000148:	ffff                	0xffff
-    8000014a:	ffff                	0xffff
-    8000014c:	ffff                	0xffff
-    8000014e:	7fff                	0x7fff
+    80000146:	8000                	.insn	2, 0x8000
+    80000148:	ffff                	.insn	2, 0xffff
+    8000014a:	ffff                	.insn	2, 0xffff
+    8000014c:	ffff                	.insn	2, 0xffff
+    8000014e:	7fff                	.insn	2, 0x7fff
     80000150:	0002                	c.slli64	x0
     80000152:	0000                	c.unimp
     80000154:	0000                	c.unimp
@@ -162,22 +162,22 @@ Disassembly of section .data:
     80000160:	0001                	c.addi	x0,0
 	...
     8000016e:	0000                	c.unimp
-    80000170:	ffff                	0xffff
-    80000172:	ffff                	0xffff
-    80000174:	ffff                	0xffff
-    80000176:	ffff                	0xffff
+    80000170:	ffff                	.insn	2, 0xffff
+    80000172:	ffff                	.insn	2, 0xffff
+    80000174:	ffff                	.insn	2, 0xffff
+    80000176:	ffff                	.insn	2, 0xffff
     80000178:	0002                	c.slli64	x0
     8000017a:	0000                	c.unimp
     8000017c:	0000                	c.unimp
-    8000017e:	8000                	0x8000
+    8000017e:	8000                	.insn	2, 0x8000
     80000180:	0001                	c.addi	x0,0
     80000182:	0000                	c.unimp
     80000184:	0000                	c.unimp
-    80000186:	8000                	0x8000
+    80000186:	8000                	.insn	2, 0x8000
     80000188:	0000                	c.unimp
     8000018a:	0000                	c.unimp
     8000018c:	0000                	c.unimp
-    8000018e:	8000                	0x8000
+    8000018e:	8000                	.insn	2, 0x8000
     80000190:	00000003          	lb	x0,0(x0) # 0x0
     80000194:	0000                	c.unimp
     80000196:	0000                	c.unimp
@@ -194,90 +194,90 @@ Disassembly of section .data:
     800001b6:	0000                	c.unimp
     800001b8:	00000003          	lb	x0,0(x0) # 0x0
     800001bc:	0000                	c.unimp
-    800001be:	8000                	0x8000
+    800001be:	8000                	.insn	2, 0x8000
     800001c0:	0002                	c.slli64	x0
     800001c2:	0000                	c.unimp
     800001c4:	0000                	c.unimp
-    800001c6:	8000                	0x8000
+    800001c6:	8000                	.insn	2, 0x8000
     800001c8:	0001                	c.addi	x0,0
     800001ca:	0000                	c.unimp
     800001cc:	0000                	c.unimp
-    800001ce:	8000                	0x8000
-    800001d0:	0004                	0x4
+    800001ce:	8000                	.insn	2, 0x8000
+    800001d0:	0004                	.insn	2, 0x0004
     800001d2:	0000                	c.unimp
     800001d4:	0000                	c.unimp
     800001d6:	0000                	c.unimp
     800001d8:	00000003          	lb	x0,0(x0) # 0x0
     800001dc:	0000                	c.unimp
     800001de:	0000                	c.unimp
-    800001e0:	ffff                	0xffff
-    800001e2:	ffff                	0xffff
-    800001e4:	ffff                	0xffff
-    800001e6:	7fff                	0x7fff
+    800001e0:	ffff                	.insn	2, 0xffff
+    800001e2:	ffff                	.insn	2, 0xffff
+    800001e4:	ffff                	.insn	2, 0xffff
+    800001e6:	7fff                	.insn	2, 0x7fff
     800001e8:	fffe                	c.sdsp	x31,504(x2)
-    800001ea:	ffff                	0xffff
-    800001ec:	ffff                	0xffff
-    800001ee:	7fff                	0x7fff
+    800001ea:	ffff                	.insn	2, 0xffff
+    800001ec:	ffff                	.insn	2, 0xffff
+    800001ee:	7fff                	.insn	2, 0x7fff
     800001f0:	fffd                	c.bnez	x15,0x800001ee
-    800001f2:	ffff                	0xffff
-    800001f4:	ffff                	0xffff
-    800001f6:	7fff                	0x7fff
+    800001f2:	ffff                	.insn	2, 0xffff
+    800001f4:	ffff                	.insn	2, 0xffff
+    800001f6:	7fff                	.insn	2, 0x7fff
 	...
-    80000200:	ffff                	0xffff
-    80000202:	ffff                	0xffff
-    80000204:	ffff                	0xffff
-    80000206:	ffff                	0xffff
+    80000200:	ffff                	.insn	2, 0xffff
+    80000202:	ffff                	.insn	2, 0xffff
+    80000204:	ffff                	.insn	2, 0xffff
+    80000206:	ffff                	.insn	2, 0xffff
     80000208:	fffe                	c.sdsp	x31,504(x2)
-    8000020a:	ffff                	0xffff
-    8000020c:	ffff                	0xffff
-    8000020e:	ffff                	0xffff
+    8000020a:	ffff                	.insn	2, 0xffff
+    8000020c:	ffff                	.insn	2, 0xffff
+    8000020e:	ffff                	.insn	2, 0xffff
     80000210:	0001                	c.addi	x0,0
     80000212:	0000                	c.unimp
     80000214:	0000                	c.unimp
-    80000216:	8000                	0x8000
+    80000216:	8000                	.insn	2, 0x8000
     80000218:	0000                	c.unimp
     8000021a:	0000                	c.unimp
     8000021c:	0000                	c.unimp
-    8000021e:	8000                	0x8000
+    8000021e:	8000                	.insn	2, 0x8000
     80000220:	0000                	c.unimp
     80000222:	0000                	c.unimp
     80000224:	0000                	c.unimp
-    80000226:	8000                	0x8000
-    80000228:	ffff                	0xffff
-    8000022a:	ffff                	0xffff
-    8000022c:	ffff                	0xffff
-    8000022e:	7fff                	0x7fff
+    80000226:	8000                	.insn	2, 0x8000
+    80000228:	ffff                	.insn	2, 0xffff
+    8000022a:	ffff                	.insn	2, 0xffff
+    8000022c:	ffff                	.insn	2, 0xffff
+    8000022e:	7fff                	.insn	2, 0x7fff
     80000230:	fffe                	c.sdsp	x31,504(x2)
-    80000232:	ffff                	0xffff
-    80000234:	ffff                	0xffff
-    80000236:	7fff                	0x7fff
+    80000232:	ffff                	.insn	2, 0xffff
+    80000234:	ffff                	.insn	2, 0xffff
+    80000236:	7fff                	.insn	2, 0x7fff
     80000238:	0001                	c.addi	x0,0
 	...
     80000246:	0000                	c.unimp
-    80000248:	ffff                	0xffff
-    8000024a:	ffff                	0xffff
-    8000024c:	ffff                	0xffff
-    8000024e:	ffff                	0xffff
+    80000248:	ffff                	.insn	2, 0xffff
+    8000024a:	ffff                	.insn	2, 0xffff
+    8000024c:	ffff                	.insn	2, 0xffff
+    8000024e:	ffff                	.insn	2, 0xffff
     80000250:	0002                	c.slli64	x0
     80000252:	0000                	c.unimp
     80000254:	0000                	c.unimp
-    80000256:	8000                	0x8000
+    80000256:	8000                	.insn	2, 0x8000
     80000258:	0001                	c.addi	x0,0
     8000025a:	0000                	c.unimp
     8000025c:	0000                	c.unimp
-    8000025e:	8000                	0x8000
+    8000025e:	8000                	.insn	2, 0x8000
     80000260:	0001                	c.addi	x0,0
     80000262:	0000                	c.unimp
     80000264:	0000                	c.unimp
-    80000266:	8000                	0x8000
+    80000266:	8000                	.insn	2, 0x8000
     80000268:	0000                	c.unimp
     8000026a:	0000                	c.unimp
     8000026c:	0000                	c.unimp
-    8000026e:	8000                	0x8000
-    80000270:	ffff                	0xffff
-    80000272:	ffff                	0xffff
-    80000274:	ffff                	0xffff
-    80000276:	7fff                	0x7fff
+    8000026e:	8000                	.insn	2, 0x8000
+    80000270:	ffff                	.insn	2, 0xffff
+    80000272:	ffff                	.insn	2, 0xffff
+    80000274:	ffff                	.insn	2, 0xffff
+    80000276:	7fff                	.insn	2, 0x7fff
     80000278:	0002                	c.slli64	x0
     8000027a:	0000                	c.unimp
     8000027c:	0000                	c.unimp
@@ -287,64 +287,64 @@ Disassembly of section .data:
     8000028e:	0000                	c.unimp
     80000290:	00000003          	lb	x0,0(x0) # 0x0
     80000294:	0000                	c.unimp
-    80000296:	8000                	0x8000
+    80000296:	8000                	.insn	2, 0x8000
     80000298:	0002                	c.slli64	x0
     8000029a:	0000                	c.unimp
     8000029c:	0000                	c.unimp
-    8000029e:	8000                	0x8000
+    8000029e:	8000                	.insn	2, 0x8000
     800002a0:	fffe                	c.sdsp	x31,504(x2)
-    800002a2:	ffff                	0xffff
-    800002a4:	ffff                	0xffff
-    800002a6:	ffff                	0xffff
+    800002a2:	ffff                	.insn	2, 0xffff
+    800002a4:	ffff                	.insn	2, 0xffff
+    800002a6:	ffff                	.insn	2, 0xffff
     800002a8:	fffd                	c.bnez	x15,0x800002a6
-    800002aa:	ffff                	0xffff
-    800002ac:	ffff                	0xffff
-    800002ae:	ffff                	0xffff
+    800002aa:	ffff                	.insn	2, 0xffff
+    800002ac:	ffff                	.insn	2, 0xffff
+    800002ae:	ffff                	.insn	2, 0xffff
     800002b0:	fffc                	c.sd	x15,248(x15)
-    800002b2:	ffff                	0xffff
-    800002b4:	ffff                	0xffff
-    800002b6:	ffff                	0xffff
-    800002b8:	ffff                	0xffff
-    800002ba:	ffff                	0xffff
-    800002bc:	ffff                	0xffff
-    800002be:	7fff                	0x7fff
+    800002b2:	ffff                	.insn	2, 0xffff
+    800002b4:	ffff                	.insn	2, 0xffff
+    800002b6:	ffff                	.insn	2, 0xffff
+    800002b8:	ffff                	.insn	2, 0xffff
+    800002ba:	ffff                	.insn	2, 0xffff
+    800002bc:	ffff                	.insn	2, 0xffff
+    800002be:	7fff                	.insn	2, 0x7fff
     800002c0:	fffe                	c.sdsp	x31,504(x2)
-    800002c2:	ffff                	0xffff
-    800002c4:	ffff                	0xffff
-    800002c6:	7fff                	0x7fff
+    800002c2:	ffff                	.insn	2, 0xffff
+    800002c4:	ffff                	.insn	2, 0xffff
+    800002c6:	7fff                	.insn	2, 0x7fff
     800002c8:	fffd                	c.bnez	x15,0x800002c6
-    800002ca:	ffff                	0xffff
-    800002cc:	ffff                	0xffff
-    800002ce:	7fff                	0x7fff
+    800002ca:	ffff                	.insn	2, 0xffff
+    800002cc:	ffff                	.insn	2, 0xffff
+    800002ce:	7fff                	.insn	2, 0x7fff
 	...
-    800002d8:	ffff                	0xffff
-    800002da:	ffff                	0xffff
-    800002dc:	ffff                	0xffff
-    800002de:	ffff                	0xffff
-    800002e0:	ffff                	0xffff
-    800002e2:	ffff                	0xffff
-    800002e4:	ffff                	0xffff
-    800002e6:	ffff                	0xffff
+    800002d8:	ffff                	.insn	2, 0xffff
+    800002da:	ffff                	.insn	2, 0xffff
+    800002dc:	ffff                	.insn	2, 0xffff
+    800002de:	ffff                	.insn	2, 0xffff
+    800002e0:	ffff                	.insn	2, 0xffff
+    800002e2:	ffff                	.insn	2, 0xffff
+    800002e4:	ffff                	.insn	2, 0xffff
+    800002e6:	ffff                	.insn	2, 0xffff
     800002e8:	fffe                	c.sdsp	x31,504(x2)
-    800002ea:	ffff                	0xffff
-    800002ec:	ffff                	0xffff
-    800002ee:	ffff                	0xffff
+    800002ea:	ffff                	.insn	2, 0xffff
+    800002ec:	ffff                	.insn	2, 0xffff
+    800002ee:	ffff                	.insn	2, 0xffff
     800002f0:	fffd                	c.bnez	x15,0x800002ee
-    800002f2:	ffff                	0xffff
-    800002f4:	ffff                	0xffff
-    800002f6:	ffff                	0xffff
+    800002f2:	ffff                	.insn	2, 0xffff
+    800002f4:	ffff                	.insn	2, 0xffff
+    800002f6:	ffff                	.insn	2, 0xffff
     800002f8:	0000                	c.unimp
     800002fa:	0000                	c.unimp
     800002fc:	0000                	c.unimp
-    800002fe:	8000                	0x8000
-    80000300:	ffff                	0xffff
-    80000302:	ffff                	0xffff
-    80000304:	ffff                	0xffff
-    80000306:	7fff                	0x7fff
+    800002fe:	8000                	.insn	2, 0x8000
+    80000300:	ffff                	.insn	2, 0xffff
+    80000302:	ffff                	.insn	2, 0xffff
+    80000304:	ffff                	.insn	2, 0xffff
+    80000306:	7fff                	.insn	2, 0x7fff
     80000308:	fffe                	c.sdsp	x31,504(x2)
-    8000030a:	ffff                	0xffff
-    8000030c:	ffff                	0xffff
-    8000030e:	7fff                	0x7fff
+    8000030a:	ffff                	.insn	2, 0xffff
+    8000030c:	ffff                	.insn	2, 0xffff
+    8000030e:	7fff                	.insn	2, 0x7fff
     80000310:	0001                	c.addi	x0,0
 	...
     80000326:	0000                	c.unimp
@@ -356,23 +356,23 @@ Disassembly of section .data:
     80000332:	0000                	c.unimp
     80000334:	0000                	c.unimp
     80000336:	0000                	c.unimp
-    80000338:	ffff                	0xffff
-    8000033a:	ffff                	0xffff
-    8000033c:	ffff                	0xffff
-    8000033e:	7fff                	0x7fff
+    80000338:	ffff                	.insn	2, 0xffff
+    8000033a:	ffff                	.insn	2, 0xffff
+    8000033c:	ffff                	.insn	2, 0xffff
+    8000033e:	7fff                	.insn	2, 0x7fff
     80000340:	0000                	c.unimp
     80000342:	0000                	c.unimp
     80000344:	0000                	c.unimp
-    80000346:	8000                	0x8000
+    80000346:	8000                	.insn	2, 0x8000
     80000348:	0001                	c.addi	x0,0
     8000034a:	0000                	c.unimp
     8000034c:	0000                	c.unimp
-    8000034e:	8000                	0x8000
+    8000034e:	8000                	.insn	2, 0x8000
     80000350:	fffe                	c.sdsp	x31,504(x2)
-    80000352:	ffff                	0xffff
-    80000354:	ffff                	0xffff
-    80000356:	ffff                	0xffff
-    80000358:	ffff                	0xffff
-    8000035a:	ffff                	0xffff
-    8000035c:	ffff                	0xffff
-    8000035e:	ffff                	0xffff
+    80000352:	ffff                	.insn	2, 0xffff
+    80000354:	ffff                	.insn	2, 0xffff
+    80000356:	ffff                	.insn	2, 0xffff
+    80000358:	ffff                	.insn	2, 0xffff
+    8000035a:	ffff                	.insn	2, 0xffff
+    8000035c:	ffff                	.insn	2, 0xffff
+    8000035e:	ffff                	.insn	2, 0xffff
