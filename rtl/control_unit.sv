@@ -24,6 +24,7 @@ module control_unit
     output logic         o_pc_target_src,
     output logic [ 1:0 ] o_forward_src,
     output logic         o_mem_access,
+    output logic         o_ecall_instr,
     output logic         o_load_instr
 );
 
@@ -52,6 +53,7 @@ module control_unit
         .o_pc_target_src ( o_pc_target_src ),
         .o_forward_src   ( o_forward_src   ),
         .o_mem_access    ( o_mem_access    ),
+        .o_ecall_instr   ( o_ecall_instr   ),
         .o_load_instr    ( o_load_instr    )
     );
 

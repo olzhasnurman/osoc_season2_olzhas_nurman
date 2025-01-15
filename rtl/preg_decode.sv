@@ -40,6 +40,8 @@ module preg_decode
     input  logic [ ADDR_WIDTH  - 1:0 ] i_pc_target_pred,
     input  logic [               1:0 ] i_btb_way,
     input  logic                       i_branch_pred_taken,
+    input  logic                       i_ecall_instr,
+    input  logic                       i_a0_reg_lsb,
     input  logic                       i_load_instr,
     
     // Output interface.
@@ -65,6 +67,8 @@ module preg_decode
     output logic [ ADDR_WIDTH  - 1:0 ] o_pc_target_pred,
     output logic [               1:0 ] o_btb_way,
     output logic                       o_branch_pred_taken,
+    output logic                       o_ecall_instr,
+    output logic                       o_a0_reg_lsb,
     output logic                       o_load_instr
 );
 
@@ -93,6 +97,8 @@ module preg_decode
             o_pc_target_pred    <= '0;
             o_btb_way           <= '0;
             o_branch_pred_taken <= '0;
+            o_ecall_instr       <= '0;
+            o_a0_reg_lsb        <= '0;
             o_load_instr        <= '0;
         end
         else if ( i_flush_exec ) begin
@@ -118,6 +124,8 @@ module preg_decode
             o_pc_target_pred    <= '0;
             o_btb_way           <= '0;
             o_branch_pred_taken <= '0;
+            o_ecall_instr       <= '0;
+            o_a0_reg_lsb        <= '0;
             o_load_instr        <= '0;
         end
         else if ( ~ i_stall_exec ) begin
@@ -143,6 +151,8 @@ module preg_decode
             o_pc_target_pred    <= i_pc_target_pred;
             o_btb_way           <= i_btb_way;
             o_branch_pred_taken <= i_branch_pred_taken;
+            o_ecall_instr       <= i_ecall_instr;
+            o_a0_reg_lsb        <= i_a0_reg_lsb;
             o_load_instr        <= i_load_instr;
         end
     end

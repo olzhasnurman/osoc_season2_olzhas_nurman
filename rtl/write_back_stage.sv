@@ -19,6 +19,8 @@ module write_back_stage
     input  logic [ REG_ADDR_W - 1:0 ] i_rd_addr,
     input  logic [ DATA_WIDTH - 1:0 ] i_imm_ext,
     input  logic [              2:0 ] i_result_src,
+    input  logic                      i_ecall_instr,
+    input  logic                      i_a0_reg_lsb,
     input  logic                      i_reg_we,
 
     // Output interface.
@@ -39,6 +41,20 @@ module write_back_stage
         .i_mux_4          ( i_imm_ext    ),
         .o_mux            ( o_result     )
     );
+
+
+    //----------------------------------------
+    // Logic for Ecall instruction detection.
+    //----------------------------------------
+    /* verilator lint_off WIDTH */
+    import "DPI-C" function void check(byte a0, byte mcause);
+    always_comb begin
+        if ( i_ecall_instr ) begin
+            check(i_a0_reg_lsb, 3); // For now the cause will be registered as ecall.
+            $stop;                  // For simulation only.
+        end
+    end
+    /* verilator lint_off WIDTH */
 
 
     //--------------------------------------

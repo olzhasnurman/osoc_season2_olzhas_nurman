@@ -22,11 +22,12 @@ module main_decoder
     output logic         o_pc_target_src,
     output logic [ 1:0 ] o_forward_src,
     output logic         o_mem_access,
+    output logic         o_ecall_instr,
     output logic         o_load_instr        
 );
 
 
-    import "DPI-C" function void check(byte a0, byte mcause);
+    // import "DPI-C" function void check(byte a0, byte mcause);
 
     // Instruction type.
     typedef enum logic [3:0] {
@@ -91,6 +92,7 @@ module main_decoder
         o_pc_target_src = 1'b0; // 0 - PC + IMM , 1 - ALUResult.
         o_forward_src   = 2'b0; // 00 - ALUResult, 01 - PCTarget, 10 - ImmExt. 
         o_mem_access    = 1'b0;
+        o_ecall_instr   = 1'b0;
         o_load_instr    = 1'b0;
 
         case ( s_instr_type )
@@ -151,15 +153,17 @@ module main_decoder
                 o_forward_src = 2'b10; 
             end
             ECALL: begin
-                check(i_a0_reg_lsb, 3); // For now the cause will be registered as ecall.
-                $stop; // For simulation only.
+                o_ecall_instr = 1'b1;
+                //check(i_a0_reg_lsb, 3); // For now the cause will be registered as ecall.
+                //$stop; // For simulation only.
                 //$display("time =%0t", $time);
             end
 
             DEF: begin
                 if ( i_op != 7'b0000000 ) begin
-                    check(i_a0_reg_lsb, 2);
-                    $stop; // For simulation only. 
+                    o_ecall_instr = 1'b1;
+                    //check(i_a0_reg_lsb, 2);
+                    //$stop; // For simulation only. 
                 end 
             end
             default: begin
@@ -173,6 +177,7 @@ module main_decoder
                 o_pc_target_src = 1'b0;
                 o_forward_src   = 2'b0;
                 o_mem_access    = 1'b0;
+                o_ecall_instr   = 1'b0;
                 o_load_instr    = 1'b0;
             end
         /* verilator lint_off WIDTH */
