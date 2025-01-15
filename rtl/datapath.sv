@@ -99,6 +99,8 @@ module datapath
     logic [ ADDR_WIDTH  - 1:0 ] s_pc_target_pred_exec;
     logic [               1:0 ] s_btb_way_exec;
     logic                       s_branch_pred_taken_exec;
+    logic                       s_ecall_instr_exec;
+    logic                       s_a0_reg_lsb_exec;
 
 
     // Memory stage signals.
@@ -114,6 +116,8 @@ module datapath
     logic [              2:0 ] s_func3_mem;
     logic [              1:0 ] s_forward_src_mem;
     logic                      s_mem_access_mem;
+    logic                      s_ecall_instr_mem;
+    logic                      s_a0_reg_lsb_mem;
 
 
     // Write-back stage signals.
@@ -126,6 +130,8 @@ module datapath
     logic [ DATA_WIDTH - 1:0 ] s_imm_ext_wb;
     logic [              2:0 ] s_result_src_wb;
     logic                      s_reg_we_wb;
+    logic                      s_ecall_instr_wb;
+    logic                      s_a0_reg_lsb_wb;
 
 
     //-------------------------------------------------------------
@@ -201,6 +207,8 @@ module datapath
         .o_pc_target_pred    ( s_pc_target_pred_exec    ),
         .o_btb_way           ( s_btb_way_exec           ),
         .o_branch_pred_taken ( s_branch_pred_taken_exec ),
+        .o_ecall_instr       ( s_ecall_instr_exec       ),
+        .o_a0_reg_lsb        ( s_a0_reg_lsb_exec        ),
         .o_load_instr        ( s_load_instr_exec        )
     );
 
@@ -237,6 +245,8 @@ module datapath
         .i_forward_rs2_exec  ( i_forward_rs2            ),
         .i_pc_target_pred    ( s_pc_target_pred_exec    ),
         .i_btb_way           ( s_btb_way_exec           ),
+        .i_ecall_instr       ( s_ecall_instr_exec       ),
+        .i_a0_reg_lsb        ( s_a0_reg_lsb_exec        ),
         .i_branch_pred_taken ( s_branch_pred_taken_exec ),
         .o_pc_plus4          ( s_pc_plus4_mem           ),
         .o_pc_target         ( s_pc_target_fetch        ),
@@ -259,6 +269,8 @@ module datapath
         .o_branch_taken_exec ( s_branch_taken_fetch     ),
         .o_btb_way_exec      ( s_btb_way_fetch          ),
         .o_pc_exec           ( s_pc_fetch               ),
+        .o_ecall_instr       ( s_ecall_instr_mem        ),
+        .o_a0_reg_lsb        ( s_a0_reg_lsb_mem         ),
         .o_load_instr        ( o_load_instr_exec        )
     );
 
@@ -284,6 +296,7 @@ module datapath
     memory_stage STAGE4_MEM (
         .i_clk             ( i_clk                ),
         .i_arst            ( i_arst               ),
+        .i_stall_wb        ( i_stall_mem          ),
         .i_pc_plus4        ( s_pc_plus4_mem       ),
         .i_pc_target       ( s_pc_target_mem      ),
         .i_alu_result      ( s_alu_result_mem     ),
@@ -297,6 +310,8 @@ module datapath
         .i_reg_we          ( s_reg_we_mem         ),
         .i_mem_block_we    ( i_dcache_we          ),
         .i_data_block      ( i_data_block         ),
+        .i_ecall_instr     ( s_ecall_instr_mem    ),
+        .i_a0_reg_lsb      ( s_a0_reg_lsb_mem     ),
         .i_mem_access      ( s_mem_access_mem     ),
         .o_pc_plus4        ( s_pc_plus4_wb        ),
         .o_pc_target       ( s_pc_target_wb       ),
@@ -311,6 +326,8 @@ module datapath
         .o_dcache_dirty    ( o_dcache_dirty       ),
         .o_axi_addr_wb     ( o_axi_addr_wb        ),
         .o_data_block      ( o_data_block         ),
+        .o_ecall_instr     ( s_ecall_instr_wb     ),
+        .o_a0_reg_lsb      ( s_a0_reg_lsb_wb      ),
         .o_reg_we          ( s_reg_we_wb          )
     );
 
@@ -329,6 +346,8 @@ module datapath
         .i_rd_addr    ( s_rd_addr_wb    ),
         .i_imm_ext    ( s_imm_ext_wb    ),
         .i_result_src ( s_result_src_wb ),
+        .i_ecall_instr ( s_ecall_instr_wb ),
+        .i_a0_reg_lsb  ( s_a0_reg_lsb_wb  ),
         .i_reg_we     ( s_reg_we_wb     ),
         .o_result     ( s_result_wb     ),
         .o_rd_addr    ( s_rd_addr_dec   ),
