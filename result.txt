@@ -8,15 +8,15 @@ am-dummy: PASS
 am-fact: FAIL
 am-fib: PASS
 am-goldbach: PASS
-am-hello-str: 
-am-if-else: FAIL
+am-hello-str: FAIL
+am-if-else: PASS
 am-leap-year: FAIL
 am-load-store: FAIL
 am-matrix-mul: FAIL
 am-max: FAIL
 am-mersenne: 
 am-min3: PASS
-am-mov-c: FAIL
+am-mov-c: PASS
 am-movsx: FAIL
 am-mul-longlong: FAIL
 am-pascal: PASS
@@ -26,111 +26,10 @@ am-recursion:
 am-select-sort: PASS
 am-shift: FAIL
 am-shuixianhua: FAIL
-am-string: FAIL
+am-string: PASS
 am-sub-longlong: PASS
 am-sum: PASS
 am-switch: FAIL
 am-to-lower-case: PASS
 am-unalign: FAIL
 am-wanshu: FAIL
-rv-arch-test-add: FAIL
-rv-arch-test-addi: FAIL
-rv-arch-test-addiw: FAIL
-rv-arch-test-addw: FAIL
-rv-arch-test-and: FAIL
-rv-arch-test-andi: FAIL
-rv-arch-test-auipc: FAIL
-rv-arch-test-beq: 
-rv-arch-test-bge: 
-rv-arch-test-bgeu: 
-rv-arch-test-blt: 
-rv-arch-test-bltu: 
-rv-arch-test-bne: 
-rv-arch-test-fence: FAIL
-rv-arch-test-jalr: PASS
-rv-arch-test-lb-align: 
-rv-arch-test-lbu-align: PASS
-rv-arch-test-ld-align: 
-rv-arch-test-lh-align: 
-rv-arch-test-lhu-align: 
-rv-arch-test-lui: PASS
-rv-arch-test-lw-align: 
-rv-arch-test-lwu-align: 
-rv-arch-test-misalign1-jalr: PASS
-rv-arch-test-or: FAIL
-rv-arch-test-ori: FAIL
-rv-arch-test-sb-align: 
-rv-arch-test-sd-align: 
-rv-arch-test-sh-align: 
-rv-arch-test-sll: FAIL
-rv-arch-test-slli: FAIL
-rv-arch-test-slliw: FAIL
-rv-arch-test-sllw: FAIL
-rv-arch-test-slt: FAIL
-rv-arch-test-slti: FAIL
-rv-arch-test-sltiu: FAIL
-rv-arch-test-sltu: FAIL
-rv-arch-test-sra: FAIL
-rv-arch-test-srai: FAIL
-rv-arch-test-sraiw: FAIL
-rv-arch-test-sraw: FAIL
-rv-arch-test-srl: FAIL
-rv-arch-test-srli: FAIL
-rv-arch-test-srliw: FAIL
-rv-arch-test-srlw: FAIL
-rv-arch-test-sub: FAIL
-rv-arch-test-subw: FAIL
-rv-arch-test-sw-align: 
-rv-arch-test-xor: FAIL
-rv-arch-test-xori: FAIL
-rv-tests-add: PASS
-rv-tests-addi: 
-rv-tests-addiw: PASS
-rv-tests-addw: PASS
-rv-tests-and: FAIL
-rv-tests-andi: PASS
-rv-tests-auipc: PASS
-rv-tests-beq: PASS
-rv-tests-bge: PASS
-rv-tests-bgeu: PASS
-rv-tests-blt: PASS
-rv-tests-bltu: PASS
-rv-tests-bne: 
-rv-tests-jal: PASS
-rv-tests-jalr: PASS
-rv-tests-lb: PASS
-rv-tests-lbu: PASS
-rv-tests-ld: PASS
-rv-tests-lh: PASS
-rv-tests-lhu: PASS
-rv-tests-lui: PASS
-rv-tests-lw: PASS
-rv-tests-lwu: PASS
-rv-tests-ma_data: PASS
-rv-tests-or: PASS
-rv-tests-ori: PASS
-rv-tests-sb: FAIL
-rv-tests-sd: PASS
-rv-tests-sh: PASS
-rv-tests-simple: 
-rv-tests-sll: PASS
-rv-tests-slli: PASS
-rv-tests-slliw: PASS
-rv-tests-sllw: PASS
-rv-tests-slt: PASS
-rv-tests-slti: PASS
-rv-tests-sltiw: PASS
-rv-tests-sltw: 
-rv-tests-sra: PASS
-rv-tests-srai: 
-rv-tests-sraiw: PASS
-rv-tests-sraw: PASS
-rv-tests-srl: PASS
-rv-tests-srli: PASS
-rv-tests-srliw: PASS
-rv-tests-srlw: PASS
-rv-tests-sub: 
-rv-tests-subw: PASS
-rv-tests-sw: PASS
-rv-tests-xor: PASS
-rv-tests-xori: 
