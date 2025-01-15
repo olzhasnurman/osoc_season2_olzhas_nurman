@@ -9,6 +9,7 @@ module main_decoder
     // Input interface.
     input  logic [ 6:0 ] i_op,
     input  logic         i_a0_reg_lsb,
+    input  logic         i_instr_25,
 
     // Output interface.
     output logic [ 2:0 ] o_imm_src,
@@ -23,6 +24,7 @@ module main_decoder
     output logic [ 1:0 ] o_forward_src,
     output logic         o_mem_access,
     output logic         o_ecall_instr,
+    output logic [ 3:0 ] o_cause,
     output logic         o_load_instr        
 );
 
@@ -59,8 +61,8 @@ module main_decoder
             7'b1100111: s_instr_type = I_Type_JALR;
             7'b0011011: s_instr_type = I_Type_ALUW;
             7'b0100011: s_instr_type = S_Type;
-            7'b0110011: s_instr_type = R_Type;
-            7'b0111011: s_instr_type = R_Type_W;
+            7'b0110011: s_instr_type = i_instr_25 ? DEF : R_Type;
+            7'b0111011: s_instr_type = i_instr_25 ? DEF : R_Type_W;
             7'b1100011: s_instr_type = B_Type;
             7'b1101111: s_instr_type = J_Type;
             7'b0010111: s_instr_type = U_Type_ALU;
@@ -93,6 +95,7 @@ module main_decoder
         o_forward_src   = 2'b0; // 00 - ALUResult, 01 - PCTarget, 10 - ImmExt. 
         o_mem_access    = 1'b0;
         o_ecall_instr   = 1'b0;
+        o_cause         = 4'b0;
         o_load_instr    = 1'b0;
 
         case ( s_instr_type )
@@ -154,6 +157,7 @@ module main_decoder
             end
             ECALL: begin
                 o_ecall_instr = 1'b1;
+                o_cause       = 4'b0011;
                 //check(i_a0_reg_lsb, 3); // For now the cause will be registered as ecall.
                 //$stop; // For simulation only.
                 //$display("time =%0t", $time);
@@ -162,6 +166,7 @@ module main_decoder
             DEF: begin
                 if ( i_op != 7'b0000000 ) begin
                     o_ecall_instr = 1'b1;
+                    o_cause       = 4'b0010;
                     //check(i_a0_reg_lsb, 2);
                     //$stop; // For simulation only. 
                 end 

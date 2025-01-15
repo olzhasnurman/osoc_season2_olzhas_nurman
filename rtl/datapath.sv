@@ -100,6 +100,7 @@ module datapath
     logic [               1:0 ] s_btb_way_exec;
     logic                       s_branch_pred_taken_exec;
     logic                       s_ecall_instr_exec;
+    logic [               3:0 ] s_cause_exec;
     logic                       s_a0_reg_lsb_exec;
 
 
@@ -117,6 +118,7 @@ module datapath
     logic [              1:0 ] s_forward_src_mem;
     logic                      s_mem_access_mem;
     logic                      s_ecall_instr_mem;
+    logic [              3:0 ] s_cause_mem;
     logic                      s_a0_reg_lsb_mem;
 
 
@@ -131,6 +133,7 @@ module datapath
     logic [              2:0 ] s_result_src_wb;
     logic                      s_reg_we_wb;
     logic                      s_ecall_instr_wb;
+    logic [              3:0 ] s_cause_wb;
     logic                      s_a0_reg_lsb_wb;
 
 
@@ -208,6 +211,7 @@ module datapath
         .o_btb_way           ( s_btb_way_exec           ),
         .o_branch_pred_taken ( s_branch_pred_taken_exec ),
         .o_ecall_instr       ( s_ecall_instr_exec       ),
+        .o_cause             ( s_cause_exec             ),
         .o_a0_reg_lsb        ( s_a0_reg_lsb_exec        ),
         .o_load_instr        ( s_load_instr_exec        )
     );
@@ -246,6 +250,7 @@ module datapath
         .i_pc_target_pred    ( s_pc_target_pred_exec    ),
         .i_btb_way           ( s_btb_way_exec           ),
         .i_ecall_instr       ( s_ecall_instr_exec       ),
+        .i_cause             ( s_cause_exec             ),
         .i_a0_reg_lsb        ( s_a0_reg_lsb_exec        ),
         .i_branch_pred_taken ( s_branch_pred_taken_exec ),
         .o_pc_plus4          ( s_pc_plus4_mem           ),
@@ -270,6 +275,7 @@ module datapath
         .o_btb_way_exec      ( s_btb_way_fetch          ),
         .o_pc_exec           ( s_pc_fetch               ),
         .o_ecall_instr       ( s_ecall_instr_mem        ),
+        .o_cause             ( s_cause_mem              ),
         .o_a0_reg_lsb        ( s_a0_reg_lsb_mem         ),
         .o_load_instr        ( o_load_instr_exec        )
     );
@@ -311,6 +317,7 @@ module datapath
         .i_mem_block_we    ( i_dcache_we          ),
         .i_data_block      ( i_data_block         ),
         .i_ecall_instr     ( s_ecall_instr_mem    ),
+        .i_cause           ( s_cause_mem          ),
         .i_a0_reg_lsb      ( s_a0_reg_lsb_mem     ),
         .i_mem_access      ( s_mem_access_mem     ),
         .o_pc_plus4        ( s_pc_plus4_wb        ),
@@ -327,6 +334,7 @@ module datapath
         .o_axi_addr_wb     ( o_axi_addr_wb        ),
         .o_data_block      ( o_data_block         ),
         .o_ecall_instr     ( s_ecall_instr_wb     ),
+        .o_cause           ( s_cause_wb           ),
         .o_a0_reg_lsb      ( s_a0_reg_lsb_wb      ),
         .o_reg_we          ( s_reg_we_wb          )
     );
@@ -347,6 +355,7 @@ module datapath
         .i_imm_ext    ( s_imm_ext_wb    ),
         .i_result_src ( s_result_src_wb ),
         .i_ecall_instr ( s_ecall_instr_wb ),
+        .i_cause       ( s_cause_wb       ),
         .i_a0_reg_lsb  ( s_a0_reg_lsb_wb  ),
         .i_reg_we     ( s_reg_we_wb     ),
         .o_result     ( s_result_wb     ),

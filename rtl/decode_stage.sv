@@ -53,6 +53,7 @@ module decode_stage
     output logic [               1:0 ] o_btb_way,
     output logic                       o_branch_pred_taken,
     output logic                       o_ecall_instr,
+    output logic[                3:0 ] o_cause,
     output logic                       o_a0_reg_lsb,
     output logic                       o_load_instr
 );
@@ -65,6 +66,7 @@ module decode_stage
     logic [ 6 :0 ] s_op;
     logic [ 2 :0 ] s_func3;
     logic          s_func7_5;
+    logic          s_instr_25;
 
     // 
     logic [ 2:0 ] s_result_src;
@@ -93,8 +95,10 @@ module decode_stage
     logic [ REG_ADDR_W - 1:0 ] s_rs2_addr;
     logic [ REG_ADDR_W - 1:0 ] s_rd_addr;
 
-    logic s_a0_reg_lsb;
-    logic s_ecall_instr;
+    // Simulation stop signals.
+    logic         s_a0_reg_lsb;
+    logic         s_ecall_instr;
+    logic [ 3:0 ] s_cause;
 
 
     //-------------------------------------------
@@ -103,6 +107,7 @@ module decode_stage
     assign s_op       = i_instruction [ 6 :0  ];
     assign s_func3    = i_instruction [ 14:12 ];
     assign s_func7_5  = i_instruction [ 30    ];
+    assign s_instr_25 = i_instruction [ 25    ];
     assign s_imm_data = i_instruction [ 31:7  ];
 
     assign s_rs1_addr = i_instruction [ 19:15 ];
@@ -122,6 +127,7 @@ module decode_stage
         .i_func3         ( s_func3         ),
         .i_func7_5       ( s_func7_5       ),
         .i_a0_reg_lsb    ( s_a0_reg_lsb    ),
+        .i_instr_25      ( s_instr_25      ),
         .o_imm_src       ( s_imm_src       ),
         .o_result_src    ( s_result_src    ),
         .o_alu_control   ( s_alu_control   ),
@@ -134,6 +140,7 @@ module decode_stage
         .o_forward_src   ( s_forward_src   ),
         .o_mem_access    ( s_mem_access    ),
         .o_ecall_instr   ( s_ecall_instr   ),
+        .o_cause         ( s_cause         ),
         .o_load_instr    ( s_load_instr    )
     );
 
@@ -192,6 +199,7 @@ module decode_stage
         .i_btb_way           ( i_btb_way           ),
         .i_branch_pred_taken ( i_branch_pred_taken ),
         .i_ecall_instr       ( s_ecall_instr       ),
+        .i_cause             ( s_cause             ),
         .i_a0_reg_lsb        ( s_a0_reg_lsb        ),
         .i_load_instr        ( s_load_instr        ),
         .o_result_src        ( o_result_src        ),
@@ -217,6 +225,7 @@ module decode_stage
         .o_btb_way           ( o_btb_way           ),
         .o_branch_pred_taken ( o_branch_pred_taken ),
         .o_ecall_instr       ( o_ecall_instr       ),
+        .o_cause             ( o_cause             ),
         .o_a0_reg_lsb        ( o_a0_reg_lsb        ),
         .o_load_instr        ( o_load_instr        )
     );

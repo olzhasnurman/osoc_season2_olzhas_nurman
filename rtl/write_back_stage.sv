@@ -20,6 +20,7 @@ module write_back_stage
     input  logic [ DATA_WIDTH - 1:0 ] i_imm_ext,
     input  logic [              2:0 ] i_result_src,
     input  logic                      i_ecall_instr,
+    input  logic [              3:0 ] i_cause,
     input  logic                      i_a0_reg_lsb,
     input  logic                      i_reg_we,
 
@@ -50,8 +51,8 @@ module write_back_stage
     import "DPI-C" function void check(byte a0, byte mcause);
     always_comb begin
         if ( i_ecall_instr ) begin
-            check(i_a0_reg_lsb, 3); // For now the cause will be registered as ecall.
-            $stop;                  // For simulation only.
+            check(i_a0_reg_lsb, i_cause); 
+            $stop; // For simulation only.
         end
     end
     /* verilator lint_off WIDTH */

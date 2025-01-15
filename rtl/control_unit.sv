@@ -11,6 +11,7 @@ module control_unit
     input  logic [ 2:0 ] i_func3,
     input  logic         i_func7_5,
     input  logic         i_a0_reg_lsb,
+    input  logic         i_instr_25,
 
     // Output interface.
     output logic [ 2:0 ] o_imm_src,
@@ -25,6 +26,7 @@ module control_unit
     output logic [ 1:0 ] o_forward_src,
     output logic         o_mem_access,
     output logic         o_ecall_instr,
+    output logic [ 3:0 ] o_cause,
     output logic         o_load_instr
 );
 
@@ -42,6 +44,7 @@ module control_unit
     main_decoder M_DEC (
         .i_op            ( i_op            ),
         .i_a0_reg_lsb    ( i_a0_reg_lsb    ),
+        .i_instr_25      ( i_instr_25      ),
         .o_imm_src       ( o_imm_src       ),
         .o_result_src    ( o_result_src    ),
         .o_alu_op        ( s_alu_op        ),
@@ -54,6 +57,7 @@ module control_unit
         .o_forward_src   ( o_forward_src   ),
         .o_mem_access    ( o_mem_access    ),
         .o_ecall_instr   ( o_ecall_instr   ),
+        .o_cause         ( o_cause         ),
         .o_load_instr    ( o_load_instr    )
     );
 
