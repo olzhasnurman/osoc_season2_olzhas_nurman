@@ -8,28 +8,28 @@ am-dummy: PASS
 am-fact: FAIL
 am-fib: PASS
 am-goldbach: PASS
-am-hello-str: FAIL
+am-hello-str: PASS
 am-if-else: PASS
 am-leap-year: FAIL
-am-load-store: FAIL
+am-load-store: PASS
 am-matrix-mul: FAIL
-am-max: FAIL
+am-max: PASS
 am-mersenne: 
 am-min3: PASS
 am-mov-c: PASS
-am-movsx: FAIL
+am-movsx: PASS
 am-mul-longlong: FAIL
 am-pascal: PASS
 am-prime: FAIL
 am-quick-sort: PASS
 am-recursion: 
 am-select-sort: PASS
-am-shift: FAIL
+am-shift: PASS
 am-shuixianhua: FAIL
 am-string: PASS
 am-sub-longlong: PASS
 am-sum: PASS
 am-switch: FAIL
 am-to-lower-case: PASS
-am-unalign: FAIL
+am-unalign: PASS
 am-wanshu: FAIL
