@@ -1,38 +1,41 @@
+NOTE: ILLEGAL INSTRUCTION REFERS TO INSTRUCTIONS THAT WERE NOT (YET) IMPLEMENTED IN MAVERIC CORE 2.0 PROCESSOR. THE SYSTEM REGOGNIZES THOSE INSTRUCTIONS AS ILLEGAL.
+THE LIST INCLUDES, BUT NOT LIMITED TO, MUL, DIV, FENCE INSTRUCTIONS.
+
 am-add-longlong: PASS
 am-add: PASS
 am-bit: PASS
 am-bubble-sort: PASS
 am-crc32: FAIL
-am-div: FAIL
+am-div: ILLEGAL INSTRUCTION
 am-dummy: PASS
-am-fact: FAIL
+am-fact: ILLEGAL INSTRUCTION
 am-fib: PASS
-am-goldbach: PASS
+am-goldbach: ILLEGAL INSTRUCTION
 am-hello-str: PASS
 am-if-else: PASS
-am-leap-year: FAIL
+am-leap-year: ILLEGAL INSTRUCTION
 am-load-store: PASS
-am-matrix-mul: FAIL
+am-matrix-mul: ILLEGAL INSTRUCTION
 am-max: PASS
-am-mersenne: 
+am-mersenne: ILLEGAL INSTRUCTION
 am-min3: PASS
 am-mov-c: PASS
 am-movsx: PASS
-am-mul-longlong: FAIL
+am-mul-longlong: ILLEGAL INSTRUCTION
 am-pascal: PASS
-am-prime: FAIL
+am-prime: ILLEGAL INSTRUCTION
 am-quick-sort: PASS
-am-recursion: 
+am-recursion: ILLEGAL INSTRUCTION
 am-select-sort: PASS
 am-shift: PASS
-am-shuixianhua: FAIL
+am-shuixianhua: ILLEGAL INSTRUCTION
 am-string: PASS
 am-sub-longlong: PASS
 am-sum: PASS
 am-switch: PASS
 am-to-lower-case: PASS
 am-unalign: PASS
-am-wanshu: FAIL
+am-wanshu: ILLEGAL INSTRUCTION
 rv-arch-test-add: PASS
 rv-arch-test-addi: PASS
 rv-arch-test-addiw: PASS
@@ -46,7 +49,7 @@ rv-arch-test-bgeu: PASS
 rv-arch-test-blt: PASS
 rv-arch-test-bltu: PASS
 rv-arch-test-bne: PASS
-rv-arch-test-fence: FAIL
+rv-arch-test-fence: ILLEGAL INSTRUCTION
 rv-arch-test-jalr: PASS
 rv-arch-test-lb-align: PASS
 rv-arch-test-lbu-align: PASS
