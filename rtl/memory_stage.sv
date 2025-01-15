@@ -15,6 +15,7 @@ module memory_stage
     // Input interface.
     input  logic                       i_clk,
     input  logic                       i_arst,
+    input  logic                       i_stall_wb,
     input  logic [ ADDR_WIDTH  - 1:0 ] i_pc_plus4,
     input  logic [ ADDR_WIDTH  - 1:0 ] i_pc_target,
     input  logic [ DATA_WIDTH  - 1:0 ] i_alu_result,
@@ -28,6 +29,8 @@ module memory_stage
     input  logic [               1:0 ] i_forward_src,
     input  logic                       i_mem_block_we,
     input  logic [ BLOCK_WIDTH - 1:0 ] i_data_block,
+    input  logic                       i_ecall_instr,
+    input  logic                       i_a0_reg_lsb,
     input  logic                       i_mem_access,
 
     // Output interface.
@@ -44,6 +47,8 @@ module memory_stage
     output logic                       o_dcache_dirty,
     output logic [ ADDR_WIDTH  - 1:0 ] o_axi_addr_wb,
     output logic [ BLOCK_WIDTH - 1:0 ] o_data_block,
+    output logic                       o_ecall_instr,
+    output logic                       o_a0_reg_lsb,
     output logic                       o_reg_we
 );
 
@@ -53,12 +58,17 @@ module memory_stage
     logic [ DATA_WIDTH - 1:0 ] s_read_mem;
     logic [ DATA_WIDTH - 1:0 ] s_read_data;
 
+    logic s_dcache_hit;
+    logic s_reg_we;
+
+    assign s_reg_we = ( i_reg_we & s_dcache_hit & i_mem_access ) | ( i_reg_we & ( ~ i_mem_access ) );
+
     //-------------------------------------
     // Lower level modules.
     //-------------------------------------
 
     // Data memory.
-    dcache DATA_MEM (
+    dcache DATA_CACHE (
         .i_clk        ( i_clk           ),
         .i_arst       ( i_arst          ),
         .i_write_en   ( i_mem_we        ),
@@ -68,7 +78,7 @@ module memory_stage
         .i_addr       ( i_alu_result    ), 
         .i_data_block ( i_data_block    ),
         .i_write_data ( i_write_data    ),
-        .o_hit        ( o_dcache_hit    ),
+        .o_hit        ( s_dcache_hit    ),
         .o_dirty      ( o_dcache_dirty  ),
         .o_addr_wb    ( o_axi_addr_wb   ),
         .o_data_block ( o_data_block    ),
@@ -100,13 +110,16 @@ module memory_stage
     preg_memory PREG_M0 (
         .i_clk        ( i_clk          ),
         .i_arst       ( i_arst         ),
+        .i_stall_wb   ( i_stall_wb     ),
         .i_result_src ( i_result_src   ),
-        .i_reg_we     ( i_reg_we       ),
+        .i_reg_we     ( s_reg_we       ),
         .i_pc_plus4   ( i_pc_plus4     ),
         .i_pc_target  ( i_pc_target    ),
         .i_imm_ext    ( i_imm_ext      ),
         .i_alu_result ( i_alu_result   ),
         .i_read_data  ( s_read_data    ),
+        .i_ecall_instr ( i_ecall_instr  ),
+        .i_a0_reg_lsb  ( i_a0_reg_lsb   ),
         .i_rd_addr    ( i_rd_addr      ),
         .o_result_src ( o_result_src   ),
         .o_reg_we     ( o_reg_we       ),
@@ -115,6 +128,8 @@ module memory_stage
         .o_imm_ext    ( o_imm_ext      ),
         .o_alu_result ( o_alu_result   ),
         .o_read_data  ( o_read_data    ),
+        .o_ecall_instr ( o_ecall_instr  ),
+        .o_a0_reg_lsb  ( o_a0_reg_lsb   ),
         .o_rd_addr    ( o_rd_addr_preg )
     );
 
@@ -122,5 +137,6 @@ module memory_stage
     // Continious assignment of outputs.
     //--------------------------------------------
     assign o_rd_addr    = i_rd_addr;
+    assign o_dcache_hit = s_dcache_hit;
 
 endmodule
