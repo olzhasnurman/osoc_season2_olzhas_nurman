@@ -53,12 +53,12 @@ module hazard_unit
 
     assign o_stall_fetch = s_load_instr_stall | i_stall_i | i_stall_d;
     assign o_stall_dec   = s_load_instr_stall | i_stall_i | i_stall_d;
-    assign o_stall_exec  = i_stall_d;
-    assign o_stall_mem   = i_stall_d;
+    assign o_stall_exec  = ( ( i_stall_d | i_stall_i ) );
+    assign o_stall_mem   = ( ( i_stall_d | i_stall_i ) );
 
     assign s_flush_dec  = i_branch_mispred_exec & ( ~ ( i_stall_i | i_stall_d) );
     assign o_flush_dec  = s_flush_dec;
-    assign o_flush_exec = s_load_instr_stall | s_flush_dec;
+    assign o_flush_exec = ( s_load_instr_stall & ( ~ ( i_stall_d | i_stall_i ) ) ) | s_flush_dec;
 
 
 endmodule
