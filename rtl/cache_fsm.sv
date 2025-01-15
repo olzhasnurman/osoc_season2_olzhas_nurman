@@ -67,7 +67,7 @@ module cache_fsm
             end
             ALLOCATE_I: if ( i_axi_done  ) NS = IDLE;
             ALLOCATE_D: if ( i_axi_done  ) NS = IDLE;
-            WRITE_BACK: if ( i_axi_done  ) NS = IDLE;
+            WRITE_BACK: if ( i_axi_done  ) NS = ALLOCATE_D;
             default : NS = PS; 
         endcase
     end
