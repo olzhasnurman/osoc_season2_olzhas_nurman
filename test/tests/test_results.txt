@@ -8,31 +8,31 @@ _________________________________________________
 | and            | PASS           | PASS        |
 | andi           | PASS           | PASS        |
 | auipc          | PASS           | PASS        |
-| beq            | NOT TESTED     | PASS        |
-| bge            | NOT TESTED     | PASS        |
-| bgeu           | NOT TESTED     | PASS        |
-| blt            | NOT TESTED     | PASS        |
-| bltu           | NOT TESTED     | PASS        |
-| bne            | NOT TESTED     | PASS        |
-| fence          | NOT TESTED     | -           |
-| fence_i        | -              | NOT TESTED  |
+| beq            | PASS           | PASS        |
+| bge            | PASS           | PASS        |
+| bgeu           | PASS           | PASS        |
+| blt            | PASS           | PASS        |
+| bltu           | PASS           | PASS        |
+| bne            | PASS           | PASS        |
+| fence          | ***            | -           |
+| fence_i        | -              | ***         |
 | jal            | -              | PASS        |
-| jalr           | NOT TESTED     | PASS        |
-| lb-align       | NOT TESTED     | PASS        |
-| lbu-align      | NOT TESTED     | PASS        |
-| ld-align       | NOT TESTED     | PASS        |
-| lh-align       | NOT TESTED     | PASS        |
-| lhu-align      | NOT TESTED     | PASS        |
+| jalr           | PASS           | PASS        |
+| lb-align       | PASS           | PASS        |
+| lbu-align      | PASS           | PASS        |
+| ld-align       | PASS           | PASS        |
+| lh-align       | PASS           | PASS        |
+| lhu-align      | PASS           | PASS        |
 | lui            | PASS           | PASS        |
-| lw-align       | NOT TESTED     | PASS        |
-| lwu-align      | NOT TESTED     | PASS        |
-| misalign1-jalr | NOT TESTED***  | -           |
-| ma_data        | -              | ***         |
+| lw-align       | PASS           | PASS        |
+| lwu-align      | PASS           | PASS        |
+| misalign1-jalr | ****           | -           |
+| ma_data        | -              | ****        |
 | or             | PASS           | PASS        |
 | ori            | PASS           | PASS        |
-| sb-align       | NOT TESTED     | PASS        |
-| sd-align       | NOT TESTED     | PASS        |
-| sh-align       | NOT TESTED     | PASS        |
+| sb-align       | PASS           | FAIL        |
+| sd-align       | PASS           | PASS        |
+| sh-align       | PASS           | FAIL        |
 | sll            | PASS           | PASS        |
 | slli           | PASS           | PASS        |
 | slliw          | PASS           | PASS        |
@@ -51,14 +51,15 @@ _________________________________________________
 | srlw           | PASS           | PASS        |
 | sub            | PASS           | PASS        |
 | subw           | PASS           | PASS        |
-| sw-align       | NOT TESTED     | PASS        |
+| sw-align       | PASS           | PASS        |
 | xor            | PASS           | PASS        |
 | xori           | PASS           | PASS        |
 |________________|________________|_____________|
 
-*   Source: https://github.com/riscv-non-isa/riscv-arch-test
-**  Source: https://github.com/riscv-software-src/riscv-tests
-*** Misaligned data access/jump ( lh	t2,1(s0), where s0 = 0x80003000 )
+*    Source: https://github.com/riscv-non-isa/riscv-arch-test
+**   Source: https://github.com/riscv-software-src/riscv-tests
+***  CONTAINS NOT IMPLEMENTED INSTR (FENCE, FENCE.I)
+****  Misaligned data access/jump ( lh	t2,1(s0), where s0 = 0x80003000 )
 
 
 __________________________________
@@ -68,23 +69,30 @@ __________________________________
 |  add           | PASS          |
 |  bit           | PASS          |
 |  bubble-sort   | PASS          |
-|  crc32         | PASS          |
+|  crc32         | FAIL          |
+|  div           | **            |
+|  dummy         | PASS          |
+|  fact          | **            |
 |  fib           | PASS          |
-|  goldbach      | PASS***       |
+|  goldbach      | **            |
 |  hello-str     | PASS          |
 |  if-else       | PASS          |
 |  leap-year     | **            | 
 |  load-store    | PASS          |
+|  matrix-mul    | **            |
 |  max           | PASS          |
+|  mersenne      | **            |
 |  min3          | PASS          |
 |  mov-c         | PASS          |
 |  movsx         | PASS          |
+|  mul-longlong  | **            |
 |  pascal        | PASS          |
 |  prime         | **            |
 |  quick-sort    | PASS          |
-|  recursion     | NOT TESTED**  |
+|  recursion     | **            |
 |  select-sort   | PASS          |
 |  shift         | PASS          |
+|  shuixianhua   | **            |
 |  string        | PASS          |
 |  sub-longlong  | PASS          |
 |  sum           | PASS          |
@@ -95,5 +103,4 @@ __________________________________
 |________________|_______________|
 
 *   Source: https://github.com/NJU-ProjectN/am-kernels
-**  CONTAINS NOT IMPLEMENTED INSTR (REMW, DIVW)
-*** CONTAINS NOT IMPLEMENTED INSTR, BUT IT ISN'T USED (REMW).
+**  CONTAINS NOT IMPLEMENTED INSTR (REMW, DIVW, MULW)
