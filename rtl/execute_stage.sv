@@ -41,6 +41,8 @@ module execute_stage
     input  logic [              1:0 ] i_forward_rs2_exec,
     input  logic [ ADDR_WIDTH - 1:0 ] i_pc_target_pred,
     input  logic [              1:0 ] i_btb_way,
+    input  logic                      i_ecall_instr,
+    input  logic                      i_a0_reg_lsb,
     input  logic                      i_branch_pred_taken,
 
     // Output interface.
@@ -65,6 +67,8 @@ module execute_stage
     output logic                      o_branch_taken_exec,
     output logic [              1:0 ] o_btb_way_exec,
     output logic [ ADDR_WIDTH - 1:0 ] o_pc_exec,
+    output logic                      o_ecall_instr,
+    output logic                      o_a0_reg_lsb,
     output logic                      o_load_instr
 );
 
@@ -200,6 +204,8 @@ module execute_stage
         .i_forward_src ( i_forward_src    ),
         .i_func3       ( i_func3          ),
         .i_mem_access  ( i_mem_access     ),
+        .i_ecall_instr ( i_ecall_instr    ),
+        .i_a0_reg_lsb  ( i_a0_reg_lsb     ),
         .i_rd_addr     ( i_rd_addr        ),
         .o_result_src  ( o_result_src     ),
         .o_mem_we      ( o_mem_we         ),
@@ -212,6 +218,8 @@ module execute_stage
         .o_forward_src ( o_forward_src    ),
         .o_func3       ( o_func3          ),
         .o_mem_access  ( o_mem_access     ),
+        .o_ecall_instr ( o_ecall_instr    ),
+        .o_a0_reg_lsb  ( o_a0_reg_lsb     ),
         .o_rd_addr     ( o_rd_addr_preg   )
     );
 
