@@ -31,7 +31,6 @@ module memory_stage
     input  logic [ BLOCK_WIDTH - 1:0 ] i_data_block,
     input  logic                       i_ecall_instr,
     input  logic [               3:0 ] i_cause,
-    input  logic                       i_a0_reg_lsb,
     input  logic                       i_mem_access,
 
     // Output interface.
@@ -50,7 +49,6 @@ module memory_stage
     output logic [ BLOCK_WIDTH - 1:0 ] o_data_block,
     output logic                       o_ecall_instr,
     output logic [               3:0 ] o_cause,
-    output logic                       o_a0_reg_lsb,
     output logic                       o_reg_we
 );
 
@@ -122,7 +120,6 @@ module memory_stage
         .i_read_data  ( s_read_data    ),
         .i_ecall_instr ( i_ecall_instr  ),
         .i_cause       ( i_cause        ),
-        .i_a0_reg_lsb  ( i_a0_reg_lsb   ),
         .i_rd_addr    ( i_rd_addr      ),
         .o_result_src ( o_result_src   ),
         .o_reg_we     ( o_reg_we       ),
@@ -133,7 +130,6 @@ module memory_stage
         .o_read_data  ( o_read_data    ),
         .o_ecall_instr ( o_ecall_instr  ),
         .o_cause       ( o_cause        ),
-        .o_a0_reg_lsb  ( o_a0_reg_lsb   ),
         .o_rd_addr    ( o_rd_addr_preg )
     );
 

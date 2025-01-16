@@ -26,7 +26,6 @@ module preg_memory
     input  logic [ DATA_WIDTH - 1:0 ] i_read_data,
     input  logic                      i_ecall_instr,
     input  logic [              3:0 ] i_cause,
-    input  logic                      i_a0_reg_lsb,
     input  logic [ REG_ADDR_W - 1:0 ] i_rd_addr,
     
     // Output interface.
@@ -39,7 +38,6 @@ module preg_memory
     output logic [ DATA_WIDTH - 1:0 ] o_read_data,
     output logic                      o_ecall_instr,
     output logic [              3:0 ] o_cause,
-    output logic                      o_a0_reg_lsb,
     output logic [ REG_ADDR_W - 1:0 ] o_rd_addr
 );
 
@@ -55,7 +53,6 @@ module preg_memory
             o_read_data   <= '0;
             o_ecall_instr <= '0;
             o_cause       <= '0;
-            o_a0_reg_lsb  <= '0;
             o_rd_addr     <= '0;
         end
         else if ( ~ i_stall_wb ) begin
@@ -68,7 +65,6 @@ module preg_memory
             o_read_data   <= i_read_data;
             o_ecall_instr <= i_ecall_instr;
             o_cause       <= i_cause;
-            o_a0_reg_lsb  <= i_a0_reg_lsb;
             o_rd_addr     <= i_rd_addr;
         end
     end

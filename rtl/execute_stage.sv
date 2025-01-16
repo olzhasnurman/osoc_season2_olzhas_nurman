@@ -43,7 +43,6 @@ module execute_stage
     input  logic [              1:0 ] i_btb_way,
     input  logic                      i_ecall_instr,
     input  logic [              3:0 ] i_cause,
-    input  logic                      i_a0_reg_lsb,
     input  logic                      i_branch_pred_taken,
 
     // Output interface.
@@ -70,7 +69,6 @@ module execute_stage
     output logic [ ADDR_WIDTH - 1:0 ] o_pc_exec,
     output logic                      o_ecall_instr,
     output logic [              3:0 ] o_cause,
-    output logic                      o_a0_reg_lsb,
     output logic                      o_load_instr
 );
 
@@ -208,7 +206,6 @@ module execute_stage
         .i_mem_access  ( i_mem_access     ),
         .i_ecall_instr ( i_ecall_instr    ),
         .i_cause       ( i_cause          ),
-        .i_a0_reg_lsb  ( i_a0_reg_lsb     ),
         .i_rd_addr     ( i_rd_addr        ),
         .o_result_src  ( o_result_src     ),
         .o_mem_we      ( o_mem_we         ),
@@ -223,7 +220,6 @@ module execute_stage
         .o_mem_access  ( o_mem_access     ),
         .o_ecall_instr ( o_ecall_instr    ),
         .o_cause       ( o_cause          ),
-        .o_a0_reg_lsb  ( o_a0_reg_lsb     ),
         .o_rd_addr     ( o_rd_addr_preg   )
     );
 

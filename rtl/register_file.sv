@@ -37,6 +37,9 @@ module register_file
     logic s_write_en_3;
     logic s_addr_3;
     
+    //-----------------------------------------------------------------------------------------
+    // NOTE: NEED TO REMOVE THIS PART SINCE IT ALREADY WAS HANDLED IN DECODE STAGE TOP MODULE.
+    //-----------------------------------------------------------------------------------------
     assign s_addr_3    = | i_addr_3;
     assign s_write_en_3 = i_write_en_3 & ( s_addr_3 );
 

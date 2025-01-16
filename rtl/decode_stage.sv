@@ -96,7 +96,6 @@ module decode_stage
     logic [ REG_ADDR_W - 1:0 ] s_rd_addr;
 
     // Simulation stop signals.
-    logic         s_a0_reg_lsb;
     logic         s_ecall_instr;
     logic [ 3:0 ] s_cause;
 
@@ -126,7 +125,6 @@ module decode_stage
         .i_op            ( s_op            ),
         .i_func3         ( s_func3         ),
         .i_func7_5       ( s_func7_5       ),
-        .i_a0_reg_lsb    ( s_a0_reg_lsb    ),
         .i_instr_25      ( s_instr_25      ),
         .o_imm_src       ( s_imm_src       ),
         .o_result_src    ( s_result_src    ),
@@ -160,7 +158,7 @@ module decode_stage
         .i_addr_2       ( s_rs2_addr      ),
         .i_addr_3       ( i_rd_addr       ),
         .i_write_data_3 ( i_rd_write_data ),
-        .o_a0_reg_lsb   ( s_a0_reg_lsb    ),
+        .o_a0_reg_lsb   ( o_a0_reg_lsb    ),
         .o_read_data_1  ( s_rs1_data      ),
         .o_read_data_2  ( s_rs2_data      )
     );
@@ -200,7 +198,6 @@ module decode_stage
         .i_branch_pred_taken ( i_branch_pred_taken ),
         .i_ecall_instr       ( s_ecall_instr       ),
         .i_cause             ( s_cause             ),
-        .i_a0_reg_lsb        ( s_a0_reg_lsb        ),
         .i_load_instr        ( s_load_instr        ),
         .o_result_src        ( o_result_src        ),
         .o_alu_control       ( o_alu_control       ),
@@ -226,7 +223,6 @@ module decode_stage
         .o_branch_pred_taken ( o_branch_pred_taken ),
         .o_ecall_instr       ( o_ecall_instr       ),
         .o_cause             ( o_cause             ),
-        .o_a0_reg_lsb        ( o_a0_reg_lsb        ),
         .o_load_instr        ( o_load_instr        )
     );
 

@@ -101,7 +101,6 @@ module datapath
     logic                       s_branch_pred_taken_exec;
     logic                       s_ecall_instr_exec;
     logic [               3:0 ] s_cause_exec;
-    logic                       s_a0_reg_lsb_exec;
 
 
     // Memory stage signals.
@@ -119,7 +118,6 @@ module datapath
     logic                      s_mem_access_mem;
     logic                      s_ecall_instr_mem;
     logic [              3:0 ] s_cause_mem;
-    logic                      s_a0_reg_lsb_mem;
 
 
     // Write-back stage signals.
@@ -212,7 +210,7 @@ module datapath
         .o_branch_pred_taken ( s_branch_pred_taken_exec ),
         .o_ecall_instr       ( s_ecall_instr_exec       ),
         .o_cause             ( s_cause_exec             ),
-        .o_a0_reg_lsb        ( s_a0_reg_lsb_exec        ),
+        .o_a0_reg_lsb        ( s_a0_reg_lsb_wb          ),
         .o_load_instr        ( s_load_instr_exec        )
     );
 
@@ -251,7 +249,6 @@ module datapath
         .i_btb_way           ( s_btb_way_exec           ),
         .i_ecall_instr       ( s_ecall_instr_exec       ),
         .i_cause             ( s_cause_exec             ),
-        .i_a0_reg_lsb        ( s_a0_reg_lsb_exec        ),
         .i_branch_pred_taken ( s_branch_pred_taken_exec ),
         .o_pc_plus4          ( s_pc_plus4_mem           ),
         .o_pc_target         ( s_pc_target_fetch        ),
@@ -276,7 +273,6 @@ module datapath
         .o_pc_exec           ( s_pc_fetch               ),
         .o_ecall_instr       ( s_ecall_instr_mem        ),
         .o_cause             ( s_cause_mem              ),
-        .o_a0_reg_lsb        ( s_a0_reg_lsb_mem         ),
         .o_load_instr        ( o_load_instr_exec        )
     );
 
@@ -318,7 +314,6 @@ module datapath
         .i_data_block      ( i_data_block         ),
         .i_ecall_instr     ( s_ecall_instr_mem    ),
         .i_cause           ( s_cause_mem          ),
-        .i_a0_reg_lsb      ( s_a0_reg_lsb_mem     ),
         .i_mem_access      ( s_mem_access_mem     ),
         .o_pc_plus4        ( s_pc_plus4_wb        ),
         .o_pc_target       ( s_pc_target_wb       ),
@@ -335,7 +330,6 @@ module datapath
         .o_data_block      ( o_data_block         ),
         .o_ecall_instr     ( s_ecall_instr_wb     ),
         .o_cause           ( s_cause_wb           ),
-        .o_a0_reg_lsb      ( s_a0_reg_lsb_wb      ),
         .o_reg_we          ( s_reg_we_wb          )
     );
 
