@@ -109,12 +109,12 @@ rv-tests-lhu: PASS
 rv-tests-lui: PASS
 rv-tests-lw: PASS
 rv-tests-lwu: PASS
-rv-tests-ma_data: PASS
+rv-tests-ma_data: FAIL
 rv-tests-or: PASS
 rv-tests-ori: PASS
-rv-tests-sb: FAIL
+rv-tests-sb: PASS
 rv-tests-sd: PASS
-rv-tests-sh: FAIL
+rv-tests-sh: PASS
 rv-tests-simple: 
 rv-tests-sll: PASS
 rv-tests-slli: PASS
