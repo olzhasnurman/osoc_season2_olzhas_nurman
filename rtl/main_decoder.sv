@@ -8,7 +8,6 @@ module main_decoder
 (
     // Input interface.
     input  logic [ 6:0 ] i_op,
-    input  logic         i_a0_reg_lsb,
     input  logic         i_instr_25,
 
     // Output interface.
