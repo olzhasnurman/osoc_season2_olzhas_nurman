@@ -68,7 +68,9 @@ module memory_stage
     //-------------------------------------
 
     // Data memory.
-    dcache DATA_CACHE (
+    dcache # (
+        .SET_WIDTH ( BLOCK_WIDTH )  
+    ) DATA_CACHE (
         .i_clk        ( i_clk           ),
         .i_arst       ( i_arst          ),
         .i_write_en   ( i_mem_we        ),

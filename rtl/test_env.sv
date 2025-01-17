@@ -8,7 +8,7 @@ module test_env
 #(
     parameter AXI_ADDR_WIDTH = 64,
               AXI_DATA_WIDTH = 32,
-              DATA_WIDTH     = 512
+              BLOCK_WIDTH    = 512
 ) 
 (
     input logic i_clk,
@@ -20,26 +20,26 @@ module test_env
     //------------------------
 
     // Memory module signals.
-    logic [ AXI_ADDR_WIDTH - 1:0 ] s_mem_addr;
-    logic [ AXI_DATA_WIDTH - 1:0 ] s_mem_data_in;
-    logic [ AXI_DATA_WIDTH - 1:0 ] s_mem_data_out;
-    logic                          s_mem_we;
-    logic                          s_successful_access;
-    logic                          s_successful_read;
-    logic                          s_successful_write;
+    logic [ AXI_ADDR_WIDTH  - 1:0 ] s_mem_addr;
+    logic [ AXI_DATA_WIDTH  - 1:0 ] s_mem_data_in;
+    logic [ AXI_DATA_WIDTH  - 1:0 ] s_mem_data_out;
+    logic                           s_mem_we;
+    logic                           s_successful_access;
+    logic                           s_successful_read;
+    logic                           s_successful_write;
 
     // Top module signals.
-    logic                          s_count_done;
-    logic                          s_start_read;
-    logic                          s_start_write;
-    logic [ DATA_WIDTH     - 1:0 ] s_cache_data_in;
-    logic [ DATA_WIDTH     - 1:0 ] s_cache_data_out;
-    logic [ AXI_ADDR_WIDTH - 1:0 ] s_cache_addr;
+    logic                           s_count_done;
+    logic                           s_start_read;
+    logic                           s_start_write;
+    logic [ BLOCK_WIDTH     - 1:0 ] s_cache_data_in;
+    logic [ BLOCK_WIDTH     - 1:0 ] s_cache_data_out;
+    logic [ AXI_ADDR_WIDTH  - 1:0 ] s_cache_addr;
 
     // AXI module signals.
-    logic [ AXI_ADDR_WIDTH - 1:0 ] s_axi_addr;
-    logic [ AXI_DATA_WIDTH - 1:0 ] s_axi_data_in;
-    logic [ AXI_DATA_WIDTH - 1:0 ] s_axi_data_out;
+    logic [ AXI_ADDR_WIDTH  - 1:0 ] s_axi_addr;
+    logic [ AXI_DATA_WIDTH  - 1:0 ] s_axi_data_in;
+    logic [ AXI_DATA_WIDTH  - 1:0 ] s_axi_data_out;
     logic                          s_axi_done;
 
     // Signalling messages.
@@ -60,7 +60,9 @@ module test_env
     //--------------------------------
     // Top processing module Instance.
     //--------------------------------
-    top TOP_M (
+    top #(
+        .BLOCK_WIDTH ( BLOCK_WIDTH )
+    ) TOP_M (
         .i_clk             ( i_clk            ),
         .i_arst            ( i_arst           ),
         .i_axi_done        ( s_count_done     ),

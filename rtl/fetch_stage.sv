@@ -91,7 +91,9 @@ module fetch_stage
     );
 
     // Instruction cache.
-    icache I_CACHE (
+    icache # (
+        .BLOCK_WIDTH ( BLOCK_WIDTH )
+    )I_CACHE (
         .i_clk         ( i_clk         ),
         .i_arst        ( i_arst        ),
         .i_write_en    ( i_instr_we    ),

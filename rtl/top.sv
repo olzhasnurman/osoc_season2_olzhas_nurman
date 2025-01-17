@@ -74,7 +74,9 @@ module top
     //-------------------------------------
     // Datapath module.
     //-------------------------------------
-    datapath D0 (
+    datapath #(
+        .BLOCK_WIDTH ( BLOCK_WIDTH )
+    ) DATAPATH0 (
         .i_clk                 ( i_clk                 ),
         .i_arst                ( i_arst                ),
         .i_stall_fetch         ( s_stall_fetch         ),

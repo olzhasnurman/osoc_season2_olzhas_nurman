@@ -142,7 +142,9 @@ module datapath
     //-------------------------------------
     // Fetch stage module.
     //-------------------------------------
-    fetch_stage STAGE1_FETCH (
+    fetch_stage # (
+        .BLOCK_WIDTH ( BLOCK_WIDTH )
+    ) STAGE1_FETCH (
         .i_clk               ( i_clk                   ),
         .i_arst              ( i_arst                  ),
         .i_pc_target         ( s_pc_target_fetch       ),
@@ -295,7 +297,9 @@ module datapath
     //-------------------------------------
     // Memory stage module.
     //-------------------------------------
-    memory_stage STAGE4_MEM (
+    memory_stage #(
+        .BLOCK_WIDTH ( BLOCK_WIDTH )
+    ) STAGE4_MEM (
         .i_clk             ( i_clk                ),
         .i_arst            ( i_arst               ),
         .i_stall_wb        ( i_stall_mem          ),

@@ -7,7 +7,7 @@
 
 module dcache 
 #(
-    parameter SET_COUNT  = 4,
+    parameter SET_COUNT  = 2,
               WORD_WIDTH = 32,
               SET_WIDTH  = 512,
               N          = 4, // N-way set-associative.
