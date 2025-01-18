@@ -88,9 +88,9 @@ module cache_fsm
             IDLE: begin
                 o_stall_i          = ( ~ i_icache_hit ) & ( ~ i_branch_mispred_exec );
                 o_stall_d          = ( ~ i_dcache_hit & i_mem_access );
-                o_axi_write_start  = ~ i_dcache_hit & i_mem_access & i_dcache_dirty;
-                o_axi_read_start_i = ( ~ i_icache_hit ) & ( ~ i_branch_mispred_exec ); 
-                o_axi_read_start_d = ( ~ i_dcache_hit & i_mem_access & ( ~ i_dcache_dirty ) );
+                // o_axi_write_start  = ~ i_dcache_hit & i_mem_access & i_dcache_dirty;
+                // o_axi_read_start_i = ( ~ i_icache_hit ) & ( ~ i_branch_mispred_exec ); 
+                // o_axi_read_start_d = ( ~ i_dcache_hit & i_mem_access & ( ~ i_dcache_dirty ) );
             end
 
             ALLOCATE_I: begin
