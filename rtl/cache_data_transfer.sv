@@ -9,8 +9,7 @@ module cache_data_transfer
     parameter AXI_DATA_WIDTH = 32,
               AXI_ADDR_WIDTH = 64,
               BLOCK_WIDTH    = 512,
-              COUNT_LIMIT    = 4'b1111,
-              COUNT_TO       = 16,
+              WORD_WIDTH     = 32,
               ADDR_INCR_VAL  = 64'd4
 ) 
 (
@@ -30,6 +29,7 @@ module cache_data_transfer
     output logic [ AXI_DATA_WIDTH - 1:0 ] o_data_axi,
     output logic [ AXI_ADDR_WIDTH - 1:0 ] o_addr_axi
 );
+    localparam COUNT_LIMIT = BLOCK_WIDTH/WORD_WIDTH;
 
     //------------------------
     // INTERNAL NETS.
@@ -44,8 +44,8 @@ module cache_data_transfer
 
     // Counter module instance.
     counter # (
-        .LIMIT ( COUNT_LIMIT ), 
-        .SIZE  ( COUNT_TO    )  
+        .LIMIT ( COUNT_LIMIT - 1 ), 
+        .SIZE  ( COUNT_LIMIT     )  
     ) COUNT0 (
         .i_clk      ( i_clk        ),
         .i_arst     ( i_arst       ),

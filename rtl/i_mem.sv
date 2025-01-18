@@ -4,7 +4,7 @@
 // This is a instruction memory simulation file.
 // --------------------------------------------------------------------------------------
 
-`define PATH_TO_MEM "./test/tests/instr/am-kernels/add-longlong-riscv64-nemu.txt"
+`define PATH_TO_MEM "./test/tests/instr/riscv-tests/rv64ui-p-xori.txt"
 
 module i_mem
 // Parameters.

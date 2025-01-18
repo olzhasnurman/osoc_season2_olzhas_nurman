@@ -179,167 +179,15 @@ module dcache
         end
         else if ( s_write_en ) begin
             case ( i_store_type )
+            /* verilator lint_off WIDTH */
                 // SD Instruction.
-                2'b11: begin
-                    case ( s_word_offset_in [ 3:1 ] )
-                        3'b000:  d_mem [ s_index_in ][ s_way ][ 63 :0   ] <= i_write_data; 
-                        3'b001:  d_mem [ s_index_in ][ s_way ][ 127:64  ] <= i_write_data; 
-                        3'b010:  d_mem [ s_index_in ][ s_way ][ 191:128 ] <= i_write_data; 
-                        3'b011:  d_mem [ s_index_in ][ s_way ][ 255:192 ] <= i_write_data; 
-                        3'b100:  d_mem [ s_index_in ][ s_way ][ 319:256 ] <= i_write_data; 
-                        3'b101:  d_mem [ s_index_in ][ s_way ][ 383:320 ] <= i_write_data; 
-                        3'b110:  d_mem [ s_index_in ][ s_way ][ 447:384 ] <= i_write_data; 
-                        3'b111:  d_mem [ s_index_in ][ s_way ][ 511:448 ] <= i_write_data;
-                        default: d_mem [ s_index_in ][ s_way ][ 63:0    ] <= '0;
-                    endcase                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-                end
-
+                2'b11: d_mem [ s_index_in ][ s_way ][ ( (   s_word_offset_in [ WORD_OFFSET_WIDTH - 1:1 ] + 1 ) * 64 - 1 ) -: 64 ] <= i_write_data;
                 // SW Instruction.
-                2'b10: begin
-                    case ( s_word_offset_in )
-                        4'b0000: d_mem [ s_index_in ][ s_way ][ 31 :0   ] <= i_write_data [ 31:0 ]; 
-                        4'b0001: d_mem [ s_index_in ][ s_way ][ 63 :32  ] <= i_write_data [ 31:0 ]; 
-                        4'b0010: d_mem [ s_index_in ][ s_way ][ 95 :64  ] <= i_write_data [ 31:0 ]; 
-                        4'b0011: d_mem [ s_index_in ][ s_way ][ 127:96  ] <= i_write_data [ 31:0 ]; 
-                        4'b0100: d_mem [ s_index_in ][ s_way ][ 159:128 ] <= i_write_data [ 31:0 ]; 
-                        4'b0101: d_mem [ s_index_in ][ s_way ][ 191:160 ] <= i_write_data [ 31:0 ]; 
-                        4'b0110: d_mem [ s_index_in ][ s_way ][ 223:192 ] <= i_write_data [ 31:0 ]; 
-                        4'b0111: d_mem [ s_index_in ][ s_way ][ 255:224 ] <= i_write_data [ 31:0 ]; 
-                        4'b1000: d_mem [ s_index_in ][ s_way ][ 287:256 ] <= i_write_data [ 31:0 ]; 
-                        4'b1001: d_mem [ s_index_in ][ s_way ][ 319:288 ] <= i_write_data [ 31:0 ]; 
-                        4'b1010: d_mem [ s_index_in ][ s_way ][ 351:320 ] <= i_write_data [ 31:0 ]; 
-                        4'b1011: d_mem [ s_index_in ][ s_way ][ 383:352 ] <= i_write_data [ 31:0 ]; 
-                        4'b1100: d_mem [ s_index_in ][ s_way ][ 415:384 ] <= i_write_data [ 31:0 ]; 
-                        4'b1101: d_mem [ s_index_in ][ s_way ][ 447:416 ] <= i_write_data [ 31:0 ];
-                        4'b1110: d_mem [ s_index_in ][ s_way ][ 479:448 ] <= i_write_data [ 31:0 ];
-                        4'b1111: d_mem [ s_index_in ][ s_way ][ 511:480 ] <= i_write_data [ 31:0 ];
-                        default: d_mem [ s_index_in ][ s_way ][ 31:0    ] <= '0;
-                    endcase    
-                end 
-
+                2'b10: d_mem [ s_index_in ][ s_way ][ ( (   s_word_offset_in                             + 1 ) * 32 - 1 ) -: 32 ] <= i_write_data [ 31:0 ];
                 // SH Instruction.
-                2'b01: begin
-                    case ( { s_word_offset_in, s_byte_offset_in [ 1 ] } )
-                        5'b00000: d_mem [ s_index_in ][ s_way ][ 15 :0   ] <= i_write_data [ 15:0 ]; 
-                        5'b00001: d_mem [ s_index_in ][ s_way ][ 31 :16  ] <= i_write_data [ 15:0 ]; 
-                        5'b00010: d_mem [ s_index_in ][ s_way ][ 47 :32  ] <= i_write_data [ 15:0 ]; 
-                        5'b00011: d_mem [ s_index_in ][ s_way ][ 63 :48  ] <= i_write_data [ 15:0 ]; 
-                        5'b00100: d_mem [ s_index_in ][ s_way ][ 79 :64  ] <= i_write_data [ 15:0 ]; 
-                        5'b00101: d_mem [ s_index_in ][ s_way ][ 95 :80  ] <= i_write_data [ 15:0 ]; 
-                        5'b00110: d_mem [ s_index_in ][ s_way ][ 111:96  ] <= i_write_data [ 15:0 ]; 
-                        5'b00111: d_mem [ s_index_in ][ s_way ][ 127:112 ] <= i_write_data [ 15:0 ]; 
-                        5'b01000: d_mem [ s_index_in ][ s_way ][ 143:128 ] <= i_write_data [ 15:0 ]; 
-                        5'b01001: d_mem [ s_index_in ][ s_way ][ 159:144 ] <= i_write_data [ 15:0 ]; 
-                        5'b01010: d_mem [ s_index_in ][ s_way ][ 175:160 ] <= i_write_data [ 15:0 ]; 
-                        5'b01011: d_mem [ s_index_in ][ s_way ][ 191:176 ] <= i_write_data [ 15:0 ]; 
-                        5'b01100: d_mem [ s_index_in ][ s_way ][ 207:192 ] <= i_write_data [ 15:0 ]; 
-                        5'b01101: d_mem [ s_index_in ][ s_way ][ 223:208 ] <= i_write_data [ 15:0 ]; 
-                        5'b01110: d_mem [ s_index_in ][ s_way ][ 239:224 ] <= i_write_data [ 15:0 ];
-                        5'b01111: d_mem [ s_index_in ][ s_way ][ 255:240 ] <= i_write_data [ 15:0 ]; 
-                        5'b10000: d_mem [ s_index_in ][ s_way ][ 271:256 ] <= i_write_data [ 15:0 ]; 
-                        5'b10001: d_mem [ s_index_in ][ s_way ][ 287:272 ] <= i_write_data [ 15:0 ]; 
-                        5'b10010: d_mem [ s_index_in ][ s_way ][ 303:288 ] <= i_write_data [ 15:0 ]; 
-                        5'b10011: d_mem [ s_index_in ][ s_way ][ 319:304 ] <= i_write_data [ 15:0 ]; 
-                        5'b10100: d_mem [ s_index_in ][ s_way ][ 335:320 ] <= i_write_data [ 15:0 ]; 
-                        5'b10101: d_mem [ s_index_in ][ s_way ][ 351:336 ] <= i_write_data [ 15:0 ]; 
-                        5'b10110: d_mem [ s_index_in ][ s_way ][ 367:352 ] <= i_write_data [ 15:0 ]; 
-                        5'b10111: d_mem [ s_index_in ][ s_way ][ 383:368 ] <= i_write_data [ 15:0 ]; 
-                        5'b11000: d_mem [ s_index_in ][ s_way ][ 399:384 ] <= i_write_data [ 15:0 ]; 
-                        5'b11001: d_mem [ s_index_in ][ s_way ][ 415:400 ] <= i_write_data [ 15:0 ]; 
-                        5'b11010: d_mem [ s_index_in ][ s_way ][ 431:416 ] <= i_write_data [ 15:0 ];
-                        5'b11011: d_mem [ s_index_in ][ s_way ][ 447:432 ] <= i_write_data [ 15:0 ];
-                        5'b11100: d_mem [ s_index_in ][ s_way ][ 463:448 ] <= i_write_data [ 15:0 ];
-                        5'b11101: d_mem [ s_index_in ][ s_way ][ 479:464 ] <= i_write_data [ 15:0 ];
-                        5'b11110: d_mem [ s_index_in ][ s_way ][ 495:480 ] <= i_write_data [ 15:0 ];
-                        5'b11111: d_mem [ s_index_in ][ s_way ][ 511:496 ] <= i_write_data [ 15:0 ];
-                        default:  d_mem [ s_index_in ][ s_way ][ 31:0    ] <= '0;
-                    endcase
-                end
-
+                2'b01: d_mem [ s_index_in ][ s_way ][ ( ( { s_word_offset_in, s_byte_offset_in [ 1 ] }   + 1 ) * 16 - 1 ) -: 16 ] <= i_write_data [ 15:0 ];
                 // SB Instruction.
-                2'b00: begin
-                    case ( { s_word_offset_in, s_byte_offset_in } )
-                        6'b000000: d_mem [ s_index_in ][ s_way ][ 7  :0   ] <= i_write_data [ 7:0 ]; 
-                        6'b000001: d_mem [ s_index_in ][ s_way ][ 15 :8   ] <= i_write_data [ 7:0 ]; 
-                        6'b000010: d_mem [ s_index_in ][ s_way ][ 23 :16  ] <= i_write_data [ 7:0 ]; 
-                        6'b000011: d_mem [ s_index_in ][ s_way ][ 31 :24  ] <= i_write_data [ 7:0 ];
-
-                        6'b000100: d_mem [ s_index_in ][ s_way ][ 39 :32  ] <= i_write_data [ 7:0 ]; 
-                        6'b000101: d_mem [ s_index_in ][ s_way ][ 47 :40  ] <= i_write_data [ 7:0 ]; 
-                        6'b000110: d_mem [ s_index_in ][ s_way ][ 55 :48  ] <= i_write_data [ 7:0 ]; 
-                        6'b000111: d_mem [ s_index_in ][ s_way ][ 63 :56  ] <= i_write_data [ 7:0 ]; 
-
-                        6'b001000: d_mem [ s_index_in ][ s_way ][ 71 :64  ] <= i_write_data [ 7:0 ]; 
-                        6'b001001: d_mem [ s_index_in ][ s_way ][ 79 :72  ] <= i_write_data [ 7:0 ]; 
-                        6'b001010: d_mem [ s_index_in ][ s_way ][ 87 :80  ] <= i_write_data [ 7:0 ]; 
-                        6'b001011: d_mem [ s_index_in ][ s_way ][ 95 :88  ] <= i_write_data [ 7:0 ]; 
-
-                        6'b001100: d_mem [ s_index_in ][ s_way ][ 103:96  ] <= i_write_data [ 7:0 ]; 
-                        6'b001101: d_mem [ s_index_in ][ s_way ][ 111:104 ] <= i_write_data [ 7:0 ]; 
-                        6'b001110: d_mem [ s_index_in ][ s_way ][ 119:112 ] <= i_write_data [ 7:0 ]; 
-                        6'b001111: d_mem [ s_index_in ][ s_way ][ 127:120 ] <= i_write_data [ 7:0 ]; 
-
-                        6'b010000: d_mem [ s_index_in ][ s_way ][ 135:128 ] <= i_write_data [ 7:0 ]; 
-                        6'b010001: d_mem [ s_index_in ][ s_way ][ 143:136 ] <= i_write_data [ 7:0 ]; 
-                        6'b010010: d_mem [ s_index_in ][ s_way ][ 151:144 ] <= i_write_data [ 7:0 ]; 
-                        6'b010011: d_mem [ s_index_in ][ s_way ][ 159:152 ] <= i_write_data [ 7:0 ];
-
-                        6'b010100: d_mem [ s_index_in ][ s_way ][ 167:160 ] <= i_write_data [ 7:0 ]; 
-                        6'b010101: d_mem [ s_index_in ][ s_way ][ 175:168 ] <= i_write_data [ 7:0 ]; 
-                        6'b010110: d_mem [ s_index_in ][ s_way ][ 183:176 ] <= i_write_data [ 7:0 ]; 
-                        6'b010111: d_mem [ s_index_in ][ s_way ][ 191:184 ] <= i_write_data [ 7:0 ];
-
-                        6'b011000: d_mem [ s_index_in ][ s_way ][ 199:192 ] <= i_write_data [ 7:0 ]; 
-                        6'b011001: d_mem [ s_index_in ][ s_way ][ 207:200 ] <= i_write_data [ 7:0 ]; 
-                        6'b011010: d_mem [ s_index_in ][ s_way ][ 215:208 ] <= i_write_data [ 7:0 ]; 
-                        6'b011011: d_mem [ s_index_in ][ s_way ][ 223:216 ] <= i_write_data [ 7:0 ];
-
-                        6'b011100: d_mem [ s_index_in ][ s_way ][ 231:224 ] <= i_write_data [ 7:0 ];
-                        6'b011101: d_mem [ s_index_in ][ s_way ][ 239:232 ] <= i_write_data [ 7:0 ]; 
-                        6'b011110: d_mem [ s_index_in ][ s_way ][ 247:240 ] <= i_write_data [ 7:0 ]; 
-                        6'b011111: d_mem [ s_index_in ][ s_way ][ 255:248 ] <= i_write_data [ 7:0 ];
-
-                        6'b100000: d_mem [ s_index_in ][ s_way ][ 263:256 ] <= i_write_data [ 7:0 ]; 
-                        6'b100001: d_mem [ s_index_in ][ s_way ][ 271:264 ] <= i_write_data [ 7:0 ]; 
-                        6'b100010: d_mem [ s_index_in ][ s_way ][ 279:272 ] <= i_write_data [ 7:0 ]; 
-                        6'b100011: d_mem [ s_index_in ][ s_way ][ 287:280 ] <= i_write_data [ 7:0 ];
-
-                        6'b100100: d_mem [ s_index_in ][ s_way ][ 295:288 ] <= i_write_data [ 7:0 ];  
-                        6'b100101: d_mem [ s_index_in ][ s_way ][ 303:296 ] <= i_write_data [ 7:0 ]; 
-                        6'b100110: d_mem [ s_index_in ][ s_way ][ 311:304 ] <= i_write_data [ 7:0 ]; 
-                        6'b100111: d_mem [ s_index_in ][ s_way ][ 319:312 ] <= i_write_data [ 7:0 ]; 
-
-                        6'b101000: d_mem [ s_index_in ][ s_way ][ 327:320 ] <= i_write_data [ 7:0 ]; 
-                        6'b101001: d_mem [ s_index_in ][ s_way ][ 335:328 ] <= i_write_data [ 7:0 ]; 
-                        6'b101010: d_mem [ s_index_in ][ s_way ][ 343:336 ] <= i_write_data [ 7:0 ]; 
-                        6'b101011: d_mem [ s_index_in ][ s_way ][ 351:344 ] <= i_write_data [ 7:0 ]; 
-
-                        6'b101100: d_mem [ s_index_in ][ s_way ][ 359:352 ] <= i_write_data [ 7:0 ]; 
-                        6'b101101: d_mem [ s_index_in ][ s_way ][ 367:360 ] <= i_write_data [ 7:0 ]; 
-                        6'b101110: d_mem [ s_index_in ][ s_way ][ 375:368 ] <= i_write_data [ 7:0 ]; 
-                        6'b101111: d_mem [ s_index_in ][ s_way ][ 383:376 ] <= i_write_data [ 7:0 ];
-
-                        6'b110000: d_mem [ s_index_in ][ s_way ][ 391:384 ] <= i_write_data [ 7:0 ];
-                        6'b110001: d_mem [ s_index_in ][ s_way ][ 399:392 ] <= i_write_data [ 7:0 ];
-                        6'b110010: d_mem [ s_index_in ][ s_way ][ 407:400 ] <= i_write_data [ 7:0 ]; 
-                        6'b110011: d_mem [ s_index_in ][ s_way ][ 415:408 ] <= i_write_data [ 7:0 ];
-
-                        6'b110100: d_mem [ s_index_in ][ s_way ][ 423:416 ] <= i_write_data [ 7:0 ]; 
-                        6'b110101: d_mem [ s_index_in ][ s_way ][ 431:424 ] <= i_write_data [ 7:0 ];
-                        6'b110110: d_mem [ s_index_in ][ s_way ][ 439:432 ] <= i_write_data [ 7:0 ]; 
-                        6'b110111: d_mem [ s_index_in ][ s_way ][ 447:440 ] <= i_write_data [ 7:0 ];
-
-                        6'b111000: d_mem [ s_index_in ][ s_way ][ 455:448 ] <= i_write_data [ 7:0 ]; 
-                        6'b111001: d_mem [ s_index_in ][ s_way ][ 463:456 ] <= i_write_data [ 7:0 ]; 
-                        6'b111010: d_mem [ s_index_in ][ s_way ][ 471:464 ] <= i_write_data [ 7:0 ]; 
-                        6'b111011: d_mem [ s_index_in ][ s_way ][ 479:472 ] <= i_write_data [ 7:0 ]; 
-
-                        6'b111100: d_mem [ s_index_in ][ s_way ][ 487:480 ] <= i_write_data [ 7:0 ]; 
-                        6'b111101: d_mem [ s_index_in ][ s_way ][ 495:488 ] <= i_write_data [ 7:0 ]; 
-                        6'b111110: d_mem [ s_index_in ][ s_way ][ 503:496 ] <= i_write_data [ 7:0 ]; 
-                        6'b111111: d_mem [ s_index_in ][ s_way ][ 511:504 ] <= i_write_data [ 7:0 ]; 
-                    endcase
-                end
+                2'b00: d_mem [ s_index_in ][ s_way ][ ( ( { s_word_offset_in, s_byte_offset_in       }   + 1 ) * 8  - 1 ) -: 8  ] <= i_write_data [ 7:0 ];
             endcase   
         end
     end
@@ -348,19 +196,8 @@ module dcache
     //-------------------------------------------
     // Memory read logic.
     //-------------------------------------------
-    always_comb begin
-        case ( s_word_offset_in [ 3:1 ] )
-            3'b000 : o_read_data = d_mem [ s_index_in ][ s_way ][ 63 :0   ]; 
-            3'b001 : o_read_data = d_mem [ s_index_in ][ s_way ][ 127:64  ]; 
-            3'b010 : o_read_data = d_mem [ s_index_in ][ s_way ][ 191:128 ]; 
-            3'b011 : o_read_data = d_mem [ s_index_in ][ s_way ][ 255:192 ]; 
-            3'b100 : o_read_data = d_mem [ s_index_in ][ s_way ][ 319:256 ]; 
-            3'b101 : o_read_data = d_mem [ s_index_in ][ s_way ][ 383:320 ]; 
-            3'b110 : o_read_data = d_mem [ s_index_in ][ s_way ][ 447:384 ]; 
-            3'b111 : o_read_data = d_mem [ s_index_in ][ s_way ][ 511:448 ];
-            default: o_read_data = '0;
-        endcase
-    end
+    assign o_read_data = d_mem [ s_index_in ][ s_way ][ ( ( s_word_offset_in [ WORD_OFFSET_WIDTH - 1:1 ] + 1 ) * 64 - 1 ) -: 64 ];
+    /* verilator lint_off WIDTH */
 
 
     //--------------------------------------
@@ -368,7 +205,7 @@ module dcache
     //--------------------------------------
     assign o_hit        = s_hit;
     assign o_dirty      = s_dirty; 
-    assign o_addr_wb    = { tag_mem [ s_index_in ][ s_plru ], s_index_in, 6'b0 };
+    assign o_addr_wb    = { tag_mem [ s_index_in ][ s_plru ], s_index_in, { ( WORD_OFFSET_WIDTH ) {1'b0} }, 2'b0 };
     assign o_data_block = d_mem [ s_index_in ][ s_plru ];
 
 endmodule

@@ -101,27 +101,9 @@ module icache
     //-------------------------------------------------------
     // Memory block instruction read logic.
     //-------------------------------------------------------
-    always_comb begin
-        case ( s_word_offset_in ) 
-            4'b0000: o_instruction = i_mem [ s_index_in ][ 31 :0   ]; 
-            4'b0001: o_instruction = i_mem [ s_index_in ][ 63 :32  ]; 
-            4'b0010: o_instruction = i_mem [ s_index_in ][ 95 :64  ]; 
-            4'b0011: o_instruction = i_mem [ s_index_in ][ 127:96  ]; 
-            4'b0100: o_instruction = i_mem [ s_index_in ][ 159:128 ]; 
-            4'b0101: o_instruction = i_mem [ s_index_in ][ 191:160 ]; 
-            4'b0110: o_instruction = i_mem [ s_index_in ][ 223:192 ]; 
-            4'b0111: o_instruction = i_mem [ s_index_in ][ 255:224 ]; 
-            4'b1000: o_instruction = i_mem [ s_index_in ][ 287:256 ]; 
-            4'b1001: o_instruction = i_mem [ s_index_in ][ 319:288 ]; 
-            4'b1010: o_instruction = i_mem [ s_index_in ][ 351:320 ]; 
-            4'b1011: o_instruction = i_mem [ s_index_in ][ 383:352 ]; 
-            4'b1100: o_instruction = i_mem [ s_index_in ][ 415:384 ]; 
-            4'b1101: o_instruction = i_mem [ s_index_in ][ 447:416 ];
-            4'b1110: o_instruction = i_mem [ s_index_in ][ 479:448 ];
-            4'b1111: o_instruction = i_mem [ s_index_in ][ 511:480 ];
-            default: o_instruction = '0;
-        endcase
-    end
+    /* verilator lint_off WIDTH */
+    assign o_instruction = i_mem [ s_index_in ][ ( ( s_word_offset_in + 1 ) * 32 - 1 ) -: 32 ];
+    /* verilator lint_off WIDTH */
 
 
 endmodule

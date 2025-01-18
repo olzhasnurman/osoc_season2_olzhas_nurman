@@ -337,7 +337,7 @@ module datapath
         .o_reg_we          ( s_reg_we_wb          )
     );
 
-    assign o_axi_read_addr_d = { s_alu_result_mem [ ADDR_WIDTH - 1:6 ], 6'b0 };
+    assign o_axi_read_addr_d = s_alu_result_mem;
     assign o_mem_access      = s_mem_access_mem;
 
 

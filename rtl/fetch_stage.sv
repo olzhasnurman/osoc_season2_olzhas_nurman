@@ -145,6 +145,6 @@ module fetch_stage
         .o_pc_plus4          ( o_pc_plus4          )
     );
 
-    assign o_axi_read_addr = { s_pc_reg [ ADDR_WIDTH - 1:6 ], 6'b0 };
+    assign o_axi_read_addr = s_pc_reg;
 
 endmodule

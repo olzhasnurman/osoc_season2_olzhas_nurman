@@ -19,19 +19,20 @@ module counter
     // Output interface.
     output logic o_done
 );
+    localparam WIDTH = $clog2( SIZE );
 
-    logic [ $clog2( SIZE ) - 1:0 ] s_count;
+    logic [ WIDTH - 1:0 ] s_count;
 
     always_ff @( posedge i_clk, posedge i_arst ) begin
         if      ( i_arst     ) s_count <= '0;
         else if ( i_axi_free ) s_count <= '0;
-        else if ( i_enable   ) s_count <= s_count + 4'b1; 
+        else if ( i_enable   ) s_count <= s_count + { { ( WIDTH - 1 ) { 1'b0 } }, 1'b1 }; 
     end
 
     always_ff @( posedge i_clk, posedge i_arst ) begin
-        if      ( i_arst                         ) o_done <= 1'b0;
-        else if ( (s_count == LIMIT ) & i_enable ) o_done <= 1'b1;
-        else                                       o_done <= 1'b0;
+        if      ( i_arst                                         ) o_done <= 1'b0;
+        else if ( (s_count == LIMIT [ WIDTH - 1:0 ] ) & i_enable ) o_done <= 1'b1;
+        else                                                       o_done <= 1'b0;
     end
     
 endmodule

@@ -8,7 +8,7 @@ module test_env
 #(
     parameter AXI_ADDR_WIDTH = 64,
               AXI_DATA_WIDTH = 32,
-              BLOCK_WIDTH    = 512
+              BLOCK_WIDTH    = 128
 ) 
 (
     input logic i_clk,
@@ -116,7 +116,9 @@ module test_env
     //------------------------------------
     // Cache data transfer unit instance.
     //------------------------------------
-    cache_data_transfer DATA_T0 (
+    cache_data_transfer # (
+        .BLOCK_WIDTH ( BLOCK_WIDTH )
+    ) DATA_T0 (
         .i_clk              ( i_clk             ),
         .i_arst             ( i_arst            ),
         .i_start_read       ( s_start_read_axi  ),

@@ -8,6 +8,7 @@ module top
 #(
     parameter REG_ADDR_W  = 5,
               ADDR_WIDTH  = 64,
+              WORD_WIDTH  = 32,
               BLOCK_WIDTH = 512
 ) 
 (
@@ -50,6 +51,7 @@ module top
     logic [ ADDR_WIDTH - 1:0 ] s_axi_read_addr_i;
     logic [ ADDR_WIDTH - 1:0 ] s_axi_read_addr_d;
     logic [ ADDR_WIDTH - 1:0 ] s_axi_wb_addr_d;
+    logic [ ADDR_WIDTH - 1:0 ] s_axi_addr;
 
     logic s_axi_read_start_i;
     logic s_axi_read_start_d;
@@ -167,6 +169,9 @@ module top
     assign o_axi_write_start = s_axi_write_start;
     assign o_axi_read_start  = s_axi_read_start_i | s_axi_read_start_d;
 
-    assign o_axi_addr = s_axi_write_start ? s_axi_wb_addr_d : ( s_axi_read_start_d ? s_axi_read_addr_d : s_axi_read_addr_i );
+    localparam WORD_OFFSET_WIDTH = $clog2 ( BLOCK_WIDTH/WORD_WIDTH ); // 4 bit.
+
+    assign s_axi_addr = s_axi_write_start ? s_axi_wb_addr_d : ( s_axi_read_start_d ? s_axi_read_addr_d : s_axi_read_addr_i );
+    assign o_axi_addr = { s_axi_addr [ ADDR_WIDTH - 1:WORD_OFFSET_WIDTH + 2 ], { ( WORD_OFFSET_WIDTH ) {1'b0} }, 2'b0 };
 
 endmodule
