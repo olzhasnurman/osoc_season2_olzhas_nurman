@@ -61,8 +61,6 @@ module dcache
     logic [ WORD_OFFSET_WIDTH - 1:0 ] s_word_offset_in;
     logic [ BYTE_OFFSET_WIDTH - 1:0 ] s_byte_offset_in;
 
-    logic [ TAG_WIDTH    - 1:0 ] s_tag;
-    logic                        s_valid;
     logic                        s_dirty;
 
     logic [ N            - 1:0 ] s_hit_find;
@@ -92,8 +90,6 @@ module dcache
     assign s_word_offset_in = i_addr [ WORD_OFFSET_MSB : WORD_OFFSET_LSB ];
     assign s_byte_offset_in = i_addr [ BYTE_OFFSET_MSB : 0               ];
 
-    assign s_tag   = tag_mem   [ s_index_in ][ s_way  ];
-    assign s_valid = valid_mem [ s_index_in ][ s_way  ];
     assign s_dirty = dirty_mem [ s_index_in ][ s_plru ];
 
     assign s_write_en = i_write_en & s_hit;

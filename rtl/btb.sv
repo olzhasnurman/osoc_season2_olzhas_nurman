@@ -46,9 +46,6 @@ module btb
     logic [ BIA_WIDTH   - 1:0 ] s_bia_read;  // Branch instruction address.
     logic [ INDEX_WIDTH - 1:0 ] s_index_read;
 
-    logic [ BIA_WIDTH - 1:0 ] s_bia;
-    logic                     s_valid;
-
     logic                        s_hit;
     logic [ N            - 1:0 ] s_hit_find;
     logic [ $clog2 ( N ) - 1:0 ] s_way_read;
@@ -70,9 +67,6 @@ module btb
     //-----------------------------------
     assign s_bia_read   = i_pc [ BIA_MSB   : BIA_LSB   ];
     assign s_index_read = i_pc [ INDEX_MSB : INDEX_LSB ];
-
-    assign s_bia   = bia_mem   [ s_index_read ][ s_way_read ];
-    assign s_valid = valid_mem [ s_index_read ][ s_way_read ];
 
     assign s_btb_update = i_branch_taken & ( ~ i_stall_fetch );
 
