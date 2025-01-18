@@ -7,6 +7,7 @@ RV_TESTS_DIR = "./test/tests/list/list-rv-tests.txt"
 TEST_DIR = "./test/tests/list/list.txt"
 
 MEMORY_FILE = "./rtl/i_mem.sv"
+TB_FILE     = "./test/tb/tb_test_env.cpp"
 RESULT_FILE = "result.txt"
 
 TEST_AM = []
@@ -44,8 +45,8 @@ with open(TEST_DIR, 'r') as file_in:
 
 
 COMPILE_C_COMMAND = "gcc -c -o ./check.o ./test/tb/check.c"
-#VERILATE_COMMAND = "verilator --assert -I./rtl --Wall --cc ./rtl/test_env.sv --exe ./test/tb/tb_test_env.cpp ./test/tb/check.c"
-VERILATE_COMMAND = "verilator --assert -I./rtl --Wall --trace --cc ./rtl/test_env.sv --exe ./test/tb/tb_test_env.cpp ./test/tb/check.c"
+VERILATE_COMMAND = "verilator --assert -I./rtl --Wall --cc ./rtl/test_env.sv --exe ./test/tb/tb_test_env.cpp ./test/tb/check.c"
+VERILATE_COMMAND_TRACE = "verilator --assert -I./rtl --Wall --trace --cc ./rtl/test_env.sv --exe ./test/tb/tb_test_env.cpp ./test/tb/check.c"
 MAKE_COMMAND = "make -C obj_dir -f Vtest_env.mk"
 SAVE_COMMAND = "./obj_dir/Vtest_env | tee -a res.txt"
 CLEAN_COMMAND = "rm -r ./obj_dir check.o"
@@ -58,10 +59,14 @@ def clean_before():
         file_out.write("")
 
 
-def compile_single(test):
+def compile_single(test, gen_wave):
+    modify_testbench(not gen_wave)
     modify_memory(TEST[test])
     os.system(COMPILE_C_COMMAND)
-    os.system(VERILATE_COMMAND)
+    if gen_wave:
+        os.system(VERILATE_COMMAND_TRACE)
+    else:
+        os.system(VERILATE_COMMAND)
     os.system(MAKE_COMMAND)
     save_result(test)
     clean_after()
@@ -130,6 +135,32 @@ def modify_memory(mem_directory):
     with open (MEMORY_FILE, 'w') as file_out:
           file_out.writelines(new_lines)
 
+
+def modify_testbench(comment):
+    with open (TB_FILE, 'r') as file_in:
+        lines = file_in.readlines()
+    new_lines = []
+    for line in lines:
+        if 'trace' in line:
+            if '//' in line:
+                if comment:
+                    new_lines.append(line)
+                else:
+                    new_line = "  " + line[2:]
+                    new_lines.append(new_line)
+            else:
+                if comment: 
+                    new_line = '//' + line[2:]
+                    new_lines.append(new_line)
+                else:
+                    new_lines.append(line)
+        else:
+            new_lines.append(line)
+
+    with open (TB_FILE, 'w') as file_out:
+          file_out.writelines(new_lines)
+         
+
 def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument('-a', '--compile-all', action='store_true', default=False)
@@ -137,6 +168,7 @@ def parse_arguments():
     parser.add_argument('-s', '--compile-single', type=str)
     parser.add_argument('-g', '--compile-group', type=str)
     parser.add_argument('-c', '--clean', action='store_true', default=False)
+    parser.add_argument('-t', '--trace', action='store_true', default=False)
 
     return parser.parse_args()
 
@@ -145,7 +177,7 @@ def main():
     args = parse_arguments()
 
     if args.compile_single:
-        compile_single(args.compile_single)
+        compile_single(args.compile_single, args.trace)
     elif args.list_tests:
          print_all_tests()
     elif args.compile_all:
