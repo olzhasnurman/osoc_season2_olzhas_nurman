@@ -27,6 +27,7 @@ module mem_simulated
     output logic                      o_successful_write
 );
     logic [ DATA_WIDTH - 1:0 ] mem [ 524287:0];
+    logic s_access;
 
 
     always_ff @( posedge i_clk, posedge i_arst ) begin
@@ -40,14 +41,32 @@ module mem_simulated
     assign o_successful_write  = 1'b1;
 
 
-    // Simulating multiple clock cycle memory access.
-    logic [ 2:0 ] s_count;
+    // Simulating random multiple clock cycle memory access.
+    logic [ 7:0 ] s_count;
+
     always_ff @( posedge i_clk, posedge i_arst ) begin
-        if ( i_arst ) s_count <= '0;
-        else          s_count <= s_count + 3'b1;
+        if ( i_arst    ) s_count <= '0;
+        if ( s_access  ) s_count <= '0;
+        else             s_count <= s_count + 8'b1;
     end
 
-    assign o_successful_access = ( s_count == 3'b111 ); 
+    assign s_access            = ( s_count == s_lfsr ); 
+    assign o_successful_access = s_access; 
+
+
+    //---------------------------------------------
+    // LFSR for generating pseudo-random sequence.
+    //---------------------------------------------
+    logic [ 7:0 ] s_lfsr;
+    logic         s_lfsr_msb;
+
+    assign s_lfsr_msb = s_lfsr [ 7 ] ^ s_lfsr [ 5 ] ^ s_lfsr [ 4 ] ^ s_lfsr [ 3 ];
+
+    // Primitive Polynomial: x^8+x^6+x^5+x^4+1
+    always_ff @( posedge i_clk, posedge i_arst ) begin
+        if      ( i_arst   ) s_lfsr <= 8'b00010101; // Initial value.
+        else if ( s_access ) s_lfsr <= { s_lfsr_msb, s_lfsr [ 7:1 ] };
+    end
 
     
 endmodule
