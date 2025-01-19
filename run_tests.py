@@ -106,7 +106,7 @@ def compile_varying_cache():
            
                with open(RESULT_FILE, 'w') as file_out:
                     file_out.writelines(old_lines)
-                    message = "\n\nCACHE LINE WIDTH: " +  str(block_size) + " bits, SET_COUNT: " + str(set_count) + "\n"
+                    message = "\n\nCACHE_LINE_WIDTH: " +  str(block_size) + " bits, SET_COUNT: " + str(set_count) + "\n"
                     file_out.write(message)   
 
                # compile_single("am-add", False)

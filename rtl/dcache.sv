@@ -7,12 +7,12 @@
 
 module dcache 
 #(
-    parameter SET_COUNT  = 2,
-              WORD_WIDTH = 32,
+    parameter WORD_WIDTH = 32,
               SET_WIDTH  = 512,
               N          = 4, // N-way set-associative.
               ADDR_WIDTH = 64,
-              DATA_WIDTH = 64
+              DATA_WIDTH = 64,
+              SET_COUNT  = 2
 )
 (
     // Input interface.
@@ -35,7 +35,7 @@ module dcache
 );
 
     //----------------------------------------------------
-    // Local parameters for cache size reconfigurability.
+    // Local param for cache size reconfigurability.
     //----------------------------------------------------
     localparam WORD_COUNT = SET_WIDTH/WORD_WIDTH; // 16 words.
 
