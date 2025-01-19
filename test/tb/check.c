@@ -10,9 +10,9 @@ int check(int8_t a0, int8_t mcause) {
         else printf ("UNDEFINED value stored in a0 register\n");
     }
     else if ( mcause == 2 ) printf("ILLEGAL INSTRUCTION\n");
-    else if ( mcause == 0 ) printf("INSTRUCTION ADDR MA\n");
-    else if ( mcause == 4 ) printf("LOAD ADDR MA\n");
-    else if ( mcause == 6 ) printf("STORE ADDR MA\n");
+    else if ( mcause == 0 ) printf("INSTRUCTION ADDR MISALIGNED\n");
+    else if ( mcause == 4 ) printf("LOAD ADDR MISALIGNED\n");
+    else if ( mcause == 6 ) printf("STORE ADDR MISALIGNED\n");
     else printf ("UNDEFINED ERROR\n");
 
     return 0;
