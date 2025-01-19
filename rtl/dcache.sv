@@ -31,6 +31,7 @@ module dcache
     output logic                      o_dirty,
     output logic [ ADDR_WIDTH - 1:0 ] o_addr_wb,    // write-back address in case of dirty block.
     output logic [ SET_WIDTH  - 1:0 ] o_data_block, // write-back data.
+    output logic                      o_store_addr_ma,
     output logic [ DATA_WIDTH - 1:0 ] o_read_data
 );
 
@@ -70,6 +71,9 @@ module dcache
 
     logic s_write_en;
 
+    logic s_store_addr_ma_sh;
+    logic s_store_addr_ma_sw;
+    logic s_store_addr_ma_sd;
 
     //---------------------------------------------------------
     // Memory blocks.
@@ -93,6 +97,10 @@ module dcache
     assign s_dirty = dirty_mem [ s_index_in ][ s_plru ];
 
     assign s_write_en = i_write_en & s_hit;
+
+    assign s_store_addr_ma_sh = i_addr [ 0 ];
+    assign s_store_addr_ma_sw = | i_addr [ 1:0 ];
+    assign s_store_addr_ma_sd = | i_addr [ 2:0 ];
 
 
     //---------------------------------------------------
@@ -176,15 +184,26 @@ module dcache
         else if ( s_write_en ) begin
             case ( i_store_type )
             /* verilator lint_off WIDTH */
-                // SD Instruction.
-                2'b11: d_mem [ s_index_in ][ s_way ][ ( (   s_word_offset_in [ WORD_OFFSET_WIDTH - 1:1 ] + 1 ) * 64 - 1 ) -: 64 ] <= i_write_data;
-                // SW Instruction.
-                2'b10: d_mem [ s_index_in ][ s_way ][ ( (   s_word_offset_in                             + 1 ) * 32 - 1 ) -: 32 ] <= i_write_data [ 31:0 ];
-                // SH Instruction.
-                2'b01: d_mem [ s_index_in ][ s_way ][ ( ( { s_word_offset_in, s_byte_offset_in [ 1 ] }   + 1 ) * 16 - 1 ) -: 16 ] <= i_write_data [ 15:0 ];
-                // SB Instruction.
-                2'b00: d_mem [ s_index_in ][ s_way ][ ( ( { s_word_offset_in, s_byte_offset_in       }   + 1 ) * 8  - 1 ) -: 8  ] <= i_write_data [ 7:0 ];
+                2'b11: d_mem [ s_index_in ][ s_way ][ ( (   s_word_offset_in [ WORD_OFFSET_WIDTH - 1:1 ] + 1 ) * 64 - 1 ) -: 64 ] <= i_write_data;          // SD Instruction.
+                2'b10: d_mem [ s_index_in ][ s_way ][ ( (   s_word_offset_in                             + 1 ) * 32 - 1 ) -: 32 ] <= i_write_data [ 31:0 ]; // SW Instruction.
+                2'b01: d_mem [ s_index_in ][ s_way ][ ( ( { s_word_offset_in, s_byte_offset_in [ 1 ] }   + 1 ) * 16 - 1 ) -: 16 ] <= i_write_data [ 15:0 ]; // SH Instruction.
+                2'b00: d_mem [ s_index_in ][ s_way ][ ( ( { s_word_offset_in, s_byte_offset_in       }   + 1 ) * 8  - 1 ) -: 8  ] <= i_write_data [  7:0 ]; // SB Instruction.
             endcase   
+        end
+    end
+
+    // Store address misalignment detection.
+    always_comb begin
+        // Default value.
+        o_store_addr_ma = 1'b0;
+
+        if ( i_write_en ) begin
+            case ( i_store_type )
+                2'b11: o_store_addr_ma = s_store_addr_ma_sd;
+                2'b10: o_store_addr_ma = s_store_addr_ma_sw;
+                2'b01: o_store_addr_ma = s_store_addr_ma_sh;
+                default: o_store_addr_ma = 1'b0; 
+            endcase
         end
     end
 

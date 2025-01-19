@@ -66,9 +66,11 @@ module memory_stage
     logic         s_call_load_addr_ma;
     logic         s_ecall_instr;
 
+    logic s_store_addr_ma;
+
     assign s_call_load_addr_ma = i_mem_access & s_load_addr_ma;
-    assign s_ecall_instr       = i_ecall_instr | s_call_load_addr_ma;
-    assign s_cause             = ( i_ecall_instr ) ? i_cause : ( s_call_load_addr_ma ) ? 4'd4 : '0; // Load address misaligned.
+    assign s_ecall_instr       = i_ecall_instr | s_call_load_addr_ma | s_store_addr_ma;
+    assign s_cause             = ( i_ecall_instr ) ? i_cause : ( s_store_addr_ma ) ? 4'd6 : 4'd4; // 6: Store addr misaligned, 4: Load address misaligned.
 
     assign s_reg_we = ( i_reg_we & s_dcache_hit & i_mem_access ) | ( i_reg_we & ( ~ i_mem_access ) );
 
@@ -80,20 +82,21 @@ module memory_stage
     dcache # (
         .SET_WIDTH ( BLOCK_WIDTH )  
     ) DATA_CACHE (
-        .i_clk        ( i_clk           ),
-        .i_arst       ( i_arst          ),
-        .i_write_en   ( i_mem_we        ),
-        .i_block_we   ( i_mem_block_we  ),
-        .i_mem_access ( i_mem_access    ),
-        .i_store_type ( i_func3 [ 1:0 ] ),
-        .i_addr       ( i_alu_result    ), 
-        .i_data_block ( i_data_block    ),
-        .i_write_data ( i_write_data    ),
-        .o_hit        ( s_dcache_hit    ),
-        .o_dirty      ( o_dcache_dirty  ),
-        .o_addr_wb    ( o_axi_addr_wb   ),
-        .o_data_block ( o_data_block    ),
-        .o_read_data  ( s_read_mem      )
+        .i_clk           ( i_clk           ),
+        .i_arst          ( i_arst          ),
+        .i_write_en      ( i_mem_we        ),
+        .i_block_we      ( i_mem_block_we  ),
+        .i_mem_access    ( i_mem_access    ),
+        .i_store_type    ( i_func3 [ 1:0 ] ),
+        .i_addr          ( i_alu_result    ), 
+        .i_data_block    ( i_data_block    ),
+        .i_write_data    ( i_write_data    ),
+        .o_hit           ( s_dcache_hit    ),
+        .o_dirty         ( o_dcache_dirty  ),
+        .o_addr_wb       ( o_axi_addr_wb   ),
+        .o_data_block    ( o_data_block    ),
+        .o_store_addr_ma ( s_store_addr_ma ),
+        .o_read_data     ( s_read_mem      )
     );
 
 
