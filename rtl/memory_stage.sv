@@ -61,6 +61,15 @@ module memory_stage
     logic s_dcache_hit;
     logic s_reg_we;
 
+    logic         s_load_addr_ma;
+    logic [ 3:0 ] s_cause;
+    logic         s_call_load_addr_ma;
+    logic         s_ecall_instr;
+
+    assign s_call_load_addr_ma = i_mem_access & s_load_addr_ma;
+    assign s_ecall_instr       = i_ecall_instr | s_call_load_addr_ma;
+    assign s_cause             = ( i_ecall_instr ) ? i_cause : ( s_call_load_addr_ma ) ? 4'd4 : '0; // Load address misaligned.
+
     assign s_reg_we = ( i_reg_we & s_dcache_hit & i_mem_access ) | ( i_reg_we & ( ~ i_mem_access ) );
 
     //-------------------------------------
@@ -90,10 +99,11 @@ module memory_stage
 
     // Load MUX.
     load_mux LMUX0 (
-        .i_func3       ( i_func3              ),
-        .i_data        ( s_read_mem           ),
-        .i_addr_offset ( i_alu_result [ 2:0 ] ),
-        .o_data        ( s_read_data          )
+        .i_func3        ( i_func3              ),
+        .i_data         ( s_read_mem           ),
+        .i_addr_offset  ( i_alu_result [ 2:0 ] ),
+        .o_load_addr_ma ( s_load_addr_ma       ),
+        .o_data         ( s_read_data          )
     );
 
     // Forwarding value MUX.
@@ -120,8 +130,8 @@ module memory_stage
         .i_imm_ext    ( i_imm_ext      ),
         .i_alu_result ( i_alu_result   ),
         .i_read_data  ( s_read_data    ),
-        .i_ecall_instr ( i_ecall_instr  ),
-        .i_cause       ( i_cause        ),
+        .i_ecall_instr ( s_ecall_instr  ),
+        .i_cause       ( s_cause        ),
         .i_rd_addr    ( i_rd_addr      ),
         .o_result_src ( o_result_src   ),
         .o_reg_we     ( o_reg_we       ),

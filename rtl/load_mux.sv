@@ -16,12 +16,21 @@ module load_mux
     input  logic [              2:0 ] i_addr_offset,
 
     // Output interface
+    output logic                      o_load_addr_ma,
     output logic [ DATA_WIDTH - 1:0 ] o_data
 );
 
     logic [  7:0 ] s_byte;
     logic [ 15:0 ] s_half;
     logic [ 31:0 ] s_word;
+
+    logic s_load_addr_ma_lh;
+    logic s_load_addr_ma_lw;
+    logic s_load_addr_ma_ld;
+
+    assign s_load_addr_ma_lh = i_addr_offset [ 0 ];
+    assign s_load_addr_ma_lw = | i_addr_offset [ 1:0 ];
+    assign s_load_addr_ma_ld = | i_addr_offset;
 
     always_comb begin
         case ( i_addr_offset [ 2:0 ] )
@@ -50,16 +59,42 @@ module load_mux
 
 
     always_comb begin
-        case ( i_func3 )
-            3'b000:  o_data = { { 56 { s_byte [ 7  ] } }, s_byte }; // LB  Instruction.              
-            3'b001:  o_data = { { 48 { s_half [ 15 ] } }, s_half }; // LH  Instruction.
-            3'b010:  o_data = { { 32 { s_word [ 31 ] } }, s_word }; // LW  Instruction.
-            3'b011:  o_data = i_data;                               // LD  Instruction.
-            3'b100:  o_data = { { 56 { 1'b0 } }, s_byte };          // LBU Instruction. 
-            3'b101:  o_data = { { 48 { 1'b0 } }, s_half };          // LHU Instruction.
-            3'b110:  o_data = { { 32 { 1'b0 } }, s_word };          // LWU Instruction.
-            default: o_data = '0;
+        // Default values.
+        o_data         = '0;
+        o_load_addr_ma = '0;
 
+        case ( i_func3 )
+            3'b000:  begin 
+                o_data         = { { 56 { s_byte [ 7  ] } }, s_byte }; // LB  Instruction.
+                o_load_addr_ma = 1'b0;
+            end              
+            3'b001:  begin 
+                o_data         = { { 48 { s_half [ 15 ] } }, s_half }; // LH  Instruction.
+                o_load_addr_ma = s_load_addr_ma_lh;
+            end
+            3'b010:  begin 
+                o_data         = { { 32 { s_word [ 31 ] } }, s_word }; // LW  Instruction.
+                o_load_addr_ma = s_load_addr_ma_lw;
+            end
+            3'b011:  begin 
+                o_data         = i_data;                               // LD  Instruction.
+                o_load_addr_ma = s_load_addr_ma_ld;
+            end
+            3'b100:  begin 
+                o_data         = { { 56 { 1'b0 } }, s_byte };          // LBU Instruction.
+                o_load_addr_ma = 1'b0;
+            end 
+            3'b101:  begin 
+                o_data         = { { 48 { 1'b0 } }, s_half };          // LHU Instruction.
+                o_load_addr_ma = s_load_addr_ma_lh;
+            end
+            3'b110:  begin 
+                o_data         = { { 32 { 1'b0 } }, s_word };          // LWU Instruction.
+                o_load_addr_ma = s_load_addr_ma_lw;
+            end
+            default: begin 
+                o_data = '0;
+            end
         endcase
     end
     
