@@ -1,6 +1,8 @@
 import os
 import argparse
 
+
+
 AM_TEST_DIR = "./test/tests/list/list-am.txt"
 RV_ARCH_TEST_DIR = "./test/tests/list/list-rv-arch-test.txt"
 RV_TESTS_DIR = "./test/tests/list/list-rv-tests.txt"
@@ -17,6 +19,8 @@ TEST_RV_ARCH= []
 TEST_RV = []
 TEST = {}
 
+
+
 with open(AM_TEST_DIR, 'r') as file_in:
     for line in file_in:
                 TEST_AM.append(line.strip())
@@ -28,7 +32,6 @@ with open(RV_ARCH_TEST_DIR, 'r') as file_in:
 with open(RV_TESTS_DIR, 'r') as file_in:
     for line in file_in:
                 TEST_RV.append(line.strip())
-
 
 with open(TEST_DIR, 'r') as file_in:
     for line in file_in:
@@ -55,6 +58,7 @@ CLEAN_COMMAND = "rm -r ./obj_dir check.o"
 CLEAN_RESULT = "rm result.txt"
 
 
+
 def clean_before():
     os.system(CLEAN_RESULT)
     with open (RESULT_FILE, 'w') as file_out:
@@ -73,9 +77,11 @@ def compile_single(test, gen_wave=False):
     save_result(test)
     clean_after()
 
+
 def compile_all():
     for key in TEST.keys():
         compile_single(key)
+
 
 def compile_group(group):
     if group == 'am':
@@ -89,6 +95,7 @@ def compile_group(group):
              compile_single(test)
     else:
         print("Unrecognized test group")
+
 
 def compile_varying_cache():
      block_size = 128
@@ -113,6 +120,7 @@ def compile_varying_cache():
                compile_all()
                set_count *= 2
           block_size *= 2
+
 
 def modify_cache_size(block_size, set_count):
     with open ( TEST_ENV_FILE, 'r' ) as file_in:
@@ -184,17 +192,19 @@ def save_result(test):
                 i += 1
             if i == 0:
                  file_out.write("\n")
-                 
 
-                 
+
     os.system("rm res.txt")
+
 
 def clean_after():
     os.system(CLEAN_COMMAND)
 
+
 def print_all_tests():
     for key in TEST.keys():
          print(key)
+
 
 def modify_memory(mem_directory):
     with open (MEMORY_FILE, 'r') as file_in:
@@ -234,13 +244,15 @@ def modify_testbench(comment):
 
     with open (TB_FILE, 'w') as file_out:
           file_out.writelines(new_lines)
-         
+
+
 def initial_note():
     with open(RESULT_FILE, 'w') as file_out:
         message_1 = "NOTE: ILLEGAL INSTRUCTION REFERS TO INSTRUCTIONS THAT WERE NOT (YET) IMPLEMENTED IN MAVERIC CORE 2.0 PROCESSOR. THE SYSTEM REGOGNIZES THOSE INSTRUCTIONS AS ILLEGAL.\n"
         message_2 = "THE LIST INCLUDES, BUT NOT LIMITED TO, MUL, DIV, FENCE INSTRUCTIONS.\n"
         file_out.write(message_1)
         file_out.write(message_2)        
+
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
@@ -253,6 +265,7 @@ def parse_arguments():
     parser.add_argument('-v', '--compile-varying-cache', action='store_true', default=False)
 
     return parser.parse_args()
+
 
 def main():
     clean_before()
