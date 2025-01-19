@@ -6,7 +6,7 @@
 
 `define PATH_TO_MEM "./test/tests/instr/riscv-tests/rv64ui-p-xori.txt"
 
-module i_mem
+module mem_simulated
 // Parameters.
 #(
     parameter DATA_WIDTH = 32,

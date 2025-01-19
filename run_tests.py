@@ -6,7 +6,7 @@ RV_ARCH_TEST_DIR = "./test/tests/list/list-rv-arch-test.txt"
 RV_TESTS_DIR = "./test/tests/list/list-rv-tests.txt"
 TEST_DIR = "./test/tests/list/list.txt"
 
-MEMORY_FILE = "./rtl/i_mem.sv"
+MEMORY_FILE = "./rtl/mem_simulated.sv"
 TB_FILE     = "./test/tb/tb_test_env.cpp"
 RESULT_FILE = "result.txt"
 TEST_ENV_FILE = "./rtl/test_env.sv"

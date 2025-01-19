@@ -100,7 +100,7 @@ module test_env
     //---------------------------
     // Memory Unit Instance.
     //---------------------------
-    i_mem MEM_M (
+    mem_simulated MEM_M (
         .i_clk               ( i_clk               ),
         .i_arst              ( i_arst              ),
         .i_write_en          ( s_mem_we            ),

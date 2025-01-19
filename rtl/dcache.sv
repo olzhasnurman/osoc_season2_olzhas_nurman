@@ -78,7 +78,7 @@ module dcache
     logic [ N         - 1:0 ] valid_mem [ SET_COUNT - 1:0 ];            // Valid memory.
     logic [ N         - 1:0 ] dirty_mem [ SET_COUNT - 1:0 ];            // Dirty memory.
     logic [ N         - 2:0 ] plru_mem  [ SET_COUNT - 1:0 ];            // Tree Pseudo-LRU memory.
-    logic [ SET_WIDTH - 1:0 ] d_mem     [ SET_COUNT - 1:0 ][ N - 1:0 ]; // Instruction memory.
+    logic [ SET_WIDTH - 1:0 ] d_mem     [ SET_COUNT - 1:0 ][ N - 1:0 ]; // Data memory.
 
 
 
